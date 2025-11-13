@@ -40,10 +40,10 @@ interface JobData {
     salary: string;
 }
 
-interface Props {
-    job: JobData;
-    onSuccess: () => void;
-}
+// interface Props {
+//     job: JobData;
+//     onSuccess: () => void;
+// }
 
 // interface ConfirmAlertProps {
 //     id: number;
