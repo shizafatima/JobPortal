@@ -1,7 +1,6 @@
 import { login } from '@/routes';
 import { store } from '@/routes/register';
 import { Form, Head } from '@inertiajs/react';
-
 import InputError from '@/components/input-error';
 import TextLink from '@/components/text-link';
 import { Button } from '@/components/ui/button';
@@ -9,8 +8,12 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Spinner } from '@/components/ui/spinner';
 import AuthLayout from '@/layouts/auth-layout';
+import { NativeSelect, NativeSelectOption } from '@/components/ui/native-select';
+import { useState } from 'react';
 
 export default function Register() {
+    const [role, setRole] = useState('');
+    const [company, setCompany] = useState('');
     return (
         <AuthLayout
             title="Create an account"
@@ -57,6 +60,35 @@ export default function Register() {
                                 />
                                 <InputError message={errors.email} />
                             </div>
+
+                            <div className='grid gap-2'>
+                                <Label htmlFor='role'>Are you looking for job or hiring?</Label>
+                                <NativeSelect
+                                    id='role'
+                                    name='role'
+                                    value={role}
+                                    onChange={(e) => setRole(e.target.value)}>
+                                    <NativeSelectOption value="">Select Role</NativeSelectOption>
+                                    <NativeSelectOption value="jobSeeker">Job Seeker</NativeSelectOption>
+                                    <NativeSelectOption value="recruiter">Recruiter</NativeSelectOption>
+                                </NativeSelect>
+                            </div>
+
+                            {role === 'recruiter' && (
+                                <div className="grid gap-2">
+                                    <Label htmlFor="company">Company</Label>
+                                    <Input
+                                        value={company}
+                                        onChange={(e) => setCompany(e.target.value)}
+                                        id="company"
+                                        type="text"
+                                        name="company"
+                                        placeholder="e.g Microsoft"
+                                    />
+                                </div>
+                            )}
+
+
 
                             <div className="grid gap-2">
                                 <Label htmlFor="password">Password</Label>
