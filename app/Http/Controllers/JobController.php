@@ -4,7 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Job;
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Auth as FacadesAuth;
 use Inertia\Inertia;
 
 class JobController extends Controller
@@ -14,7 +15,8 @@ class JobController extends Controller
     public function index()
     {
         // dd('Hello from all jobs created by every employer');
-        $jobs = Job::paginate(5);
+        $jobs = Job::with('company')->latest()->paginate(6);
+        // dd($jobs);
         return Inertia::render('jobs/Index', [
             'jobs' => $jobs,
         ]);
@@ -32,21 +34,32 @@ class JobController extends Controller
             'salary' => ['required'],
         ]);
 
+        $validated['company_id'] = Auth::user()->company_id;
+        $validated['user_id'] = Auth::user()->id; 
 
 
-        $job = Job::create($validated);
+
+        Job::create($validated);
         return redirect()->route('jobs.index');
     }
 
     public function myJobs()
     {
-        $jobs = Job::paginate(5);
+
+        // $jobs = Auth::user()
+        //     ->jobs()
+        //     ->with('company')
+        //     ->get();
+
+        $jobs = Auth::user()->jobs()->with('company')->latest()->paginate(6);
+        // dd($jobs);
         return Inertia::render('jobs/MyJobs', [
             'jobs' => $jobs,
         ]);
     }
 
-    public function edit(Job $job){
+    public function edit(Job $job)
+    {
         return Inertia::render('jobs/Edit', [
             'job' => $job,
         ]);
@@ -81,5 +94,4 @@ class JobController extends Controller
         //redirect 
         // return redirect('/jobs');
     }
-
 }

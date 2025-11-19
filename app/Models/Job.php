@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Job extends Model
 {
@@ -16,4 +17,12 @@ class Job extends Model
     // protected $fillable = ['employer_id', 'title', 'salary'];
 
     protected $guarded = [];
+
+    public function recruiter(): BelongsTo{
+        return $this->belongsTo(User::class, 'id');
+    }
+
+    public function company(){
+        return $this->belongsTo(Company::class);
+    }
 }

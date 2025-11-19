@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('title');
             $table->string('salary');
             $table->timestamps();
+            // added foreign id of company  and user in job listing table "company_id and user_id" respectively
         });
     }
 

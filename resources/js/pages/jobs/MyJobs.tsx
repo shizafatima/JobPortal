@@ -11,6 +11,7 @@ import { Dialog, DialogFooter, DialogHeader, DialogContent, DialogTitle, DialogT
 import { Card, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Field } from '@/components/ui/field';
 import { Edit2, Trash2 } from 'lucide-react';
+import { Pagination, PaginationContent, PaginationEllipsis, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious } from '@/components/ui/pagination';
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
@@ -21,8 +22,14 @@ const breadcrumbs: BreadcrumbItem[] = [
 
 interface Job {
     id: number;
+    company: Company;
     title: string;
     salary: number;
+}
+
+interface Company {
+    id: number;
+    name: string;
 }
 
 interface MyJobsProps {
@@ -92,6 +99,10 @@ export default function MyJobs({ jobs }: MyJobsProps) {
     const [isDialogOpen, setIsDialogOpen] = useState(false);
     const [selectedJob, setSelectedJob] = useState<JobData | null>(null);
     const [isEditOpen, setIsEditOpen] = useState(false);
+    const handlePagination = (url?: string | null) => {
+        if (!url) return
+        Inertia.get(url, {}, { preserveState: true })
+    }
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
             <Head title="My Jobs" />
@@ -156,6 +167,7 @@ export default function MyJobs({ jobs }: MyJobsProps) {
                             <CardHeader>
                                 <div className='flex justify-between'>
                                     <div>
+                                        <CardTitle>{job.company?.name ?? "No Company"}</CardTitle>
                                         <CardTitle className="text-blue-600">{job.title}</CardTitle>
                                         <CardDescription>Salary: {job.salary}</CardDescription>
                                     </div>
@@ -186,6 +198,44 @@ export default function MyJobs({ jobs }: MyJobsProps) {
                     ))
                 )}
             </div>
+
+            {/* PAGINATION */}
+            <Pagination>
+                <PaginationContent>
+                    {/* previous */}
+                    <PaginationPrevious
+                        onClick={() => handlePagination(jobs.links[0].url)}
+                        className={!jobs.links[0].url ? "opacity-50 pointer-events-none" : ""}
+                    />
+
+                    {/* page numbers */}
+                    {jobs.links.slice(1, -1).map((link, index) => {
+                        if (link.label === '…') {
+                            return (
+                                <PaginationEllipsis key={index} />
+                            )
+                        }
+
+                        return (
+                            <PaginationItem key={index}>
+                                <PaginationLink 
+                                isActive={link.active}
+                                onClick={() => handlePagination(link.url)}
+                                >
+                                    {link.label.replace(/&laquo;|&raquo;/g, '')}
+                                </PaginationLink>
+                            </PaginationItem>
+                        )
+                    }
+
+                    )}
+
+                    {/* next */}
+                    <PaginationNext
+                    onClick={() => handlePagination(jobs.links[jobs.links.length - 1].url)}
+                    className={!jobs.links[jobs.links.length - 1].url ? "opacity-50 pointer-events-none" : ""}/>
+                </PaginationContent>
+            </Pagination>
 
 
 
