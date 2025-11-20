@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\JobController;
+use App\Http\Controllers\SeekerController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use Laravel\Fortify\Features;
@@ -26,12 +27,8 @@ Route::middleware(['auth', 'verified', 'role:recruiter'])->group(function () {
 });
 
 
-// Route::middleware(['auth', 'verified', 'role:jobSeeker'])->group(function () {
-//     Route::get('dashboard', function () {
-//         return Inertia::render('dashboard');
-//     })->name('dashboard');
-
-//     Route::get('jobs', [JobController::class, 'index'])->name('jobs.index');
-// });
+Route::middleware(['auth', 'verified', 'role:jobSeeker'])->group(function () {
+        Route::get('/jobSeeker/index', [SeekerController::class, 'index'])->name('jobSeeker.index');
+});
 
 require __DIR__ . '/settings.php';

@@ -17,6 +17,8 @@ public function handle(Request $request, Closure $next, ?string $role = null): R
 {
     $user = $request->user();
 
+    // dd($user->role, $role);
+
     // Check if user exists and has the role passed from the route
     if ($user && $role && $user->role === $role) {
         return $next($request);
