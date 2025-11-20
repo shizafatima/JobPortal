@@ -29,6 +29,19 @@ Route::middleware(['auth', 'verified', 'role:recruiter'])->group(function () {
 
 Route::middleware(['auth', 'verified', 'role:jobSeeker'])->group(function () {
         Route::get('/jobSeeker/index', [SeekerController::class, 'index'])->name('jobSeeker.index');
+
+        Route::get('/jobSeeker/appliedJobs', function(){
+            return Inertia::render('jobSeeker/AppliedJobs');
+        })->name('jobSeeker.appliedJobs');
+
+        Route::get('/jobSeeker/aboutUs', function(){
+            return Inertia::render('jobSeeker/AboutUs');
+        })->name('jobSeeker.aboutUs');
+
+        Route::get('/jobSeeker/contactUs', function(){
+            return Inertia::render('jobSeeker/ContactUs');
+        })->name('jobSeeker.contactUs');
+
 });
 
 require __DIR__ . '/settings.php';

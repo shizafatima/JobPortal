@@ -1,22 +1,22 @@
-import { Button } from "@/components/ui/button"
 import { NavigationMenu, NavigationMenuItem, NavigationMenuLink, NavigationMenuList } from "@/components/ui/navigation-menu"
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip"
 import { useIsMobile } from "@/hooks/use-mobile"
 import { Link, usePage } from "@inertiajs/react"
 import { Bookmark, BriefcaseBusiness } from "lucide-react"
 
+export default function AboutUs(){
 
-export default function Index() {
     const isMobile = useIsMobile()
-    const { url } = usePage()
+        const { url } = usePage()
 
-    const links = [
-        { href: "/jobSeeker/index", label: "Home" },
-        { href: "/jobSeeker/aboutUs", label: "About Us" },
-        { href: "/jobSeeker/appliedJobs", label: "Applied Jobs" },
-        { href: "/jobSeeker/contactUs", label: "Contact Us" },
-    ]
-    return (
+    
+        const links = [
+            { href: "/jobSeeker/index", label: "Home" },
+            { href: "/jobSeeker/aboutUs", label: "About Us" },
+            { href: "/jobSeeker/appliedJobs", label: "Applied Jobs" },
+            { href: "/jobSeeker/contactUs", label: "Contact Us" },
+        ]
+    return(
         <div>
             <header className="flex items-center justify-between w-full px-6 py-4">
                 <div className="flex flex-wrap items-center font-bold text-2xl">
@@ -70,7 +70,6 @@ export default function Index() {
 
 
             </header>
-
-        </div >
+        </div>
     )
 }
