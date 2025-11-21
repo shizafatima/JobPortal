@@ -42,6 +42,11 @@ Route::middleware(['auth', 'verified', 'role:jobSeeker'])->group(function () {
             return Inertia::render('jobSeeker/ContactUs');
         })->name('jobSeeker.contactUs');
 
+        Route::get('/jobSeeker/savedJobs', function(){
+            return Inertia::render('jobSeeker/SavedJobs');
+        })->name('jobSeeker.savedJobs');
+
+
 });
 
 require __DIR__ . '/settings.php';
