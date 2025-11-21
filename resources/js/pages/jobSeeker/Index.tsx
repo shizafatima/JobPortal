@@ -6,9 +6,11 @@ import { useIsMobile } from "@/hooks/use-mobile"
 import { login, logout, register } from "@/routes"
 import { SharedData } from "@/types"
 import { Link, router, usePage } from "@inertiajs/react"
-import { Bell, Bookmark, BriefcaseBusiness, CircleUser, LogOut } from "lucide-react"
+import { Bell, Bookmark, BriefcaseBusiness, CircleUser, LogOut, Search } from "lucide-react"
 import { useMobileNavigation } from '@/hooks/use-mobile-navigation'
 import { useState } from "react"
+import { Input } from "@/components/ui/input"
+import { Button } from "@/components/ui/button"
 
 
 export default function Index({
@@ -94,22 +96,22 @@ export default function Index({
 
                         <Tooltip>
                             <TooltipTrigger asChild>
-                            <DropdownMenuTrigger asChild>
-                                
-                                        <button className="p-2 rounded transition"
-                                            onClick={() => setHasUnread(false)}>
-                                            <Bell
-                                                className={`h-6 w-6 ${hasUnread ? "text-[#309689]" : "text-gray-600"
-                                                    }`}
-                                            />
-                                        </button>
+                                <DropdownMenuTrigger asChild>
 
-                                    </DropdownMenuTrigger>
-                                </TooltipTrigger>
+                                    <button className="p-2 rounded transition"
+                                        onClick={() => setHasUnread(false)}>
+                                        <Bell
+                                            className={`h-6 w-6 ${hasUnread ? "text-[#309689]" : "text-gray-600"
+                                                }`}
+                                        />
+                                    </button>
 
-                                <TooltipContent>
-                                    <p>Notifications</p>
-                                </TooltipContent>
+                                </DropdownMenuTrigger>
+                            </TooltipTrigger>
+
+                            <TooltipContent>
+                                <p>Notifications</p>
+                            </TooltipContent>
                         </Tooltip>
 
 
@@ -187,6 +189,28 @@ export default function Index({
 
 
             </header >
+
+            <div className="h-full flex justify-center flex-col">
+                <h1 className="flex text-4xl font-bold justify-center items-center mt-20">Find Your Dream Job Here</h1>
+                <p className="flex text-md justify-center items-center mt-5 text-gray-400">Connecting talent with Opportunity:Your Gateway to Success</p>
+                <div className="flex justify-center mt-5">
+                    <div className="relative w-[50%] mb-5">
+                        <Input className="w-full h-15 pr-20 rounded-full px-6"
+                        placeholder="Search here..."
+                        />
+                        <Button
+                            // onClick={handleSearch}
+                            className="absolute right-0 top-0 h-full bg-teal-500 hover:bg-teal-600 text-white px-6 py-3 rounded-full flex items-center gap-2 transition-colors ml-2"
+                        >
+                            <Search size={18} />
+                            <span className="font-medium">Search Job</span>
+                        </Button>
+                    </div>
+
+
+                </div>
+            </div>
+
 
         </div >
     )
