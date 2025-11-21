@@ -4,22 +4,51 @@ import { NavigationMenu, NavigationMenuItem, NavigationMenuLink, NavigationMenuL
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip"
 import { useIsMobile } from "@/hooks/use-mobile"
 import { login, logout, register } from "@/routes"
-import { SharedData } from "@/types"
+import { BreadcrumbItem, SharedData } from "@/types"
 import { Link, router, usePage } from "@inertiajs/react"
 import { Bell, Bookmark, BriefcaseBusiness, CircleUser, LogOut, Search } from "lucide-react"
 import { useMobileNavigation } from '@/hooks/use-mobile-navigation'
 import { useState } from "react"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
+import { Card, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 
+// const breadcrumbs: BreadcrumbItem[] = [
+//     {
+//         title: 'Jobs',
+//         href: '/jobs',
+//     },
+// ];
 
-export default function Index({
-    canRegister = true,
-}: {
+interface Job {
+    id: number;
+    company: Company;
+    title: string;
+    salary: number;
+}
+
+interface Company {
+    id: number;
+    name: string;
+}
+
+interface IndexProps {
+    jobs: {
+        data: Job[];
+        links: { url: string | null; label: string; active: boolean }[];
+    };
     canRegister?: boolean;
-}) {
+}
+
+
+
+export default function Index({ jobs, canRegister = true }: IndexProps) {
     const isMobile = useIsMobile()
     const { url } = usePage()
+    const { auth } = usePage<SharedData>().props;
+
+    // console.log("jobs:", jobs);
+    // console.log("auth:", auth);
 
     const links = [
         { href: "/jobSeeker/index", label: "Home" },
@@ -27,12 +56,11 @@ export default function Index({
         { href: "/jobSeeker/appliedJobs", label: "Applied Jobs" },
         { href: "/jobSeeker/contactUs", label: "Contact Us" },
     ]
-    const { auth } = usePage<SharedData>().props;
+
 
     const cleanup = useMobileNavigation();
     const handleLogout = () => {
         cleanup();
-        router.flushAll();
     };
 
     const [hasUnread, setHasUnread] = useState(true);
@@ -196,11 +224,11 @@ export default function Index({
                 <div className="flex justify-center mt-5">
                     <div className="relative w-[50%] mb-5">
                         <Input className="w-full h-15 pr-20 rounded-full px-6"
-                        placeholder="Search here..."
+                            placeholder="Search here..."
                         />
                         <Button
                             // onClick={handleSearch}
-                            className="absolute right-0 top-0 h-full bg-teal-500 hover:bg-teal-600 text-white px-6 py-3 rounded-full flex items-center gap-2 transition-colors ml-2"
+                            className="absolute right-0 top-0 h-full bg-[#309689] hover:bg-teal-500 text-white px-6 py-3 rounded-full flex items-center gap-2 transition-colors ml-2"
                         >
                             <Search size={18} />
                             <span className="font-medium">Search Job</span>
@@ -211,6 +239,45 @@ export default function Index({
                 </div>
             </div>
 
+
+            <div>
+                <div>
+                    <h1 className="flex text-4xl font-bold items-center mx-20 my-3">Recent Jobs</h1>
+                    <p className="flex items-center mx-20">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Vero ipsum, doloribus sint vitae fugit est porro!</p>
+                    {/* ✅ Job Cards Section */}
+                    {jobs.data.map((job) => (
+                        <Card key={job.id} className="block mx-20 my-5 transition-transform hover:scale-[1.01]">
+                            <CardHeader className="flex flex-row justify-between items-start">
+                                <div>
+                                    <CardTitle className="font-mono">{job.company?.name ?? "No Company"}</CardTitle>
+                                    <CardTitle className="text-[#309689]">{job.title}</CardTitle>
+                                    <CardDescription>Salary: {job.salary}</CardDescription>
+                                </div>
+                                <div className="flex gap-2 self-start">
+                                    <Link
+                                        // href="/jobSeeker/savedJobs"
+                                        className="p-2 rounded transition">
+                                        {url === "/jobSeeker/savedJobs" ? (
+                                            <Bookmark className="h-6 w-6 text-[#309689]" fill="currentColor" />
+                                        ) : (
+                                            <Bookmark className="h-6 w-6 text-gray-600" />
+                                        )}
+                                    </Link>
+                                    <Link
+                                        href={`/jobSeeker/apply/${job.id}`}
+                                        className="text-white bg-[#309689] px-4 py-2 rounded hover:bg-teal-600 transition-colors"
+                                    >
+                                        Apply
+                                    </Link>
+                                </div>
+
+
+                            </CardHeader>
+                        </Card>
+                    ))
+                    }
+                </div>
+            </div>
 
         </div >
     )
