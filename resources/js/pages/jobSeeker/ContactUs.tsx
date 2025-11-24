@@ -20,7 +20,7 @@ export default function Index({
     const { url } = usePage()
 
     const links = [
-        { href: "/jobSeeker/index", label: "Home" },
+        { href: "/", label: "Home" },
         { href: "/jobSeeker/aboutUs", label: "About Us" },
         { href: "/jobSeeker/appliedJobs", label: "Applied Jobs" },
         { href: "/jobSeeker/contactUs", label: "Contact Us" },

@@ -10,13 +10,13 @@ class SeekerController extends Controller
 {
     //
 
-    public function index()
-    {
+    // public function index()
+    // {
 
-        $jobs = Job::with('company')->latest()->paginate(6);
+    //     $jobs = Job::with('company')->latest()->paginate(6);
 
-        return Inertia::render('jobSeeker/Index', [
-            'jobs' => $jobs,
-        ]);
-    }
+    //     return Inertia::render('jobSeeker/Index', [
+    //         'jobs' => $jobs,
+    //     ]);
+    // }
 }

@@ -2,12 +2,14 @@
 
 use App\Http\Controllers\JobController;
 use App\Http\Controllers\SeekerController;
+use App\Models\Job;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use Laravel\Fortify\Features;
 
 Route::get('/', function () {
     return Inertia::render('welcome', [
+        'jobs' => Job::with('company')->paginate(10),
         'canRegister' => Features::enabled(Features::registration()),
     ]);
 })->name('home');
@@ -28,25 +30,29 @@ Route::middleware(['auth', 'verified', 'role:recruiter'])->group(function () {
 
 
 Route::middleware(['auth', 'verified', 'role:jobSeeker'])->group(function () {
-        Route::get('/jobSeeker/index', [SeekerController::class, 'index'])->name('jobSeeker.index');
+    // Route::get('/jobSeeker/index', [SeekerController::class, 'index'])->name('jobSeeker.home');
+    // Route::get('/', function () {
+    //     return Inertia::render('welcome', [
+    //         'jobs' => Job::with('company')->paginate(10),
+    //         'canRegister' => Features::enabled(Features::registration()),
+    //     ]);
+    // })->name('home');
 
-        Route::get('/jobSeeker/appliedJobs', function(){
-            return Inertia::render('jobSeeker/AppliedJobs');
-        })->name('jobSeeker.appliedJobs');
+    Route::get('/jobSeeker/appliedJobs', function () {
+        return Inertia::render('jobSeeker/AppliedJobs');
+    })->name('jobSeeker.appliedJobs');
 
-        Route::get('/jobSeeker/aboutUs', function(){
-            return Inertia::render('jobSeeker/AboutUs');
-        })->name('jobSeeker.aboutUs');
+    Route::get('/jobSeeker/aboutUs', function () {
+        return Inertia::render('jobSeeker/AboutUs');
+    })->name('jobSeeker.aboutUs');
 
-        Route::get('/jobSeeker/contactUs', function(){
-            return Inertia::render('jobSeeker/ContactUs');
-        })->name('jobSeeker.contactUs');
+    Route::get('/jobSeeker/contactUs', function () {
+        return Inertia::render('jobSeeker/ContactUs');
+    })->name('jobSeeker.contactUs');
 
-        Route::get('/jobSeeker/savedJobs', function(){
-            return Inertia::render('jobSeeker/SavedJobs');
-        })->name('jobSeeker.savedJobs');
-
-
+    Route::get('/jobSeeker/savedJobs', function () {
+        return Inertia::render('jobSeeker/SavedJobs');
+    })->name('jobSeeker.savedJobs');
 });
 
 require __DIR__ . '/settings.php';

@@ -14,7 +14,7 @@ class LoginResponse implements LoginResponseContract
         }
 
         if ($user->role === 'jobSeeker') {
-            return redirect()->intended('/jobSeeker/index');
+            return redirect()->intended('/');
         }
 
         return redirect()->intended('/');
