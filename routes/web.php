@@ -53,6 +53,13 @@ Route::middleware(['auth', 'verified', 'role:jobSeeker'])->group(function () {
     Route::get('/jobSeeker/savedJobs', function () {
         return Inertia::render('jobSeeker/SavedJobs');
     })->name('jobSeeker.savedJobs');
+
+    //bookmark jobs
+    Route::post('/jobSeeker/save-job/{job}', [SeekerController::class, 'saveJob'])->name('s.saveJob');
+    Route::get('/jobSeeker/savedJobs', [SeekerController::class, 'savedJob'])->name('s.savedJobs');
+
+    Route::get('/api/user/saved-jobs', [SeekerController::class, 'getSavedJobIds']);
+
 });
 
 require __DIR__ . '/settings.php';

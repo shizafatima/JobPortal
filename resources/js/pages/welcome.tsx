@@ -8,7 +8,7 @@ import { BreadcrumbItem, SharedData } from "@/types"
 import { Link, router, usePage } from "@inertiajs/react"
 import { Bell, Bookmark, BriefcaseBusiness, CircleUser, LogOut, Search } from "lucide-react"
 import { useMobileNavigation } from '@/hooks/use-mobile-navigation'
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { Card, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
@@ -64,6 +64,17 @@ export default function Index({ jobs, canRegister = true }: IndexProps) {
     };
 
     const [hasUnread, setHasUnread] = useState(true);
+
+    const [savedJobs, setSavedJobs] = useState<number[]>([]); // store saved job IDs
+
+    useEffect(() => {
+        if (auth.user) {
+            // Fetch saved job IDs from API endpoint
+            fetch('/api/user/saved-jobs')
+                .then(res => res.json())
+                .then((data: number[]) => setSavedJobs(data));
+        }
+    }, []);
     return (
         <div>
             <header className="flex items-center justify-between w-full px-6 py-4">
@@ -256,8 +267,22 @@ export default function Index({ jobs, canRegister = true }: IndexProps) {
                                 <div className="flex gap-2 self-start">
                                     <Link
                                         // href="/jobSeeker/savedJobs"
-                                        className="p-2 rounded transition">
-                                        {url === "/jobSeeker/savedJobs" ? (
+                                        className="p-2 rounded transition"
+                                        onClick={() => {
+                                            if (!auth.user) return;
+
+                                            router.post(`/jobSeeker/save-job/${job.id}`, {}, {
+                                                onSuccess: (page) => {
+                                                    // toggle in UI
+                                                    setSavedJobs(prev =>
+                                                        prev.includes(job.id)
+                                                            ? prev.filter(id => id !== job.id)
+                                                            : [...prev, job.id]
+                                                    );
+                                                }
+                                            })
+                                        }}>
+                                        {savedJobs.includes(job.id) ? (
                                             <Bookmark className="h-6 w-6 text-[#309689]" fill="currentColor" />
                                         ) : (
                                             <Bookmark className="h-6 w-6 text-gray-600" />

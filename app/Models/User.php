@@ -4,6 +4,7 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -70,5 +71,9 @@ class User extends Authenticatable
     public function jobs(): HasMany
     {
         return $this->hasMany(Job::class);
+    }
+
+    public function savedJobs(): BelongsToMany {
+        return $this->belongsToMany(Job::class, 'saved_jobs', 'user_id', 'job_id');
     }
 }

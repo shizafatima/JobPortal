@@ -8,19 +8,36 @@ import { SharedData } from "@/types"
 import { Link, router, usePage } from "@inertiajs/react"
 import { Bell, Bookmark, BriefcaseBusiness, CircleUser, LogOut } from "lucide-react"
 import { useMobileNavigation } from '@/hooks/use-mobile-navigation'
-import { useState } from "react"
+import { useEffect, useState } from "react"
+import { Card, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 
 
-export default function Index({
-    canRegister = true,
-}: {
+interface Job {
+    id: number;
+    company: Company;
+    title: string;
+    salary: number;
+}
+
+interface Company {
+    id: number;
+    name: string;
+}
+
+interface SavedProps {
+    jobs: {
+        data: Job[];
+        links: { url: string | null; label: string; active: boolean }[];
+    };
     canRegister?: boolean;
-}) {
+}
+
+export default function savedJobs({ jobs, canRegister = true }: SavedProps) {
     const isMobile = useIsMobile()
     const { url } = usePage()
 
     const links = [
-        { href: "/jobSeeker/index", label: "Home" },
+        { href: "/", label: "Home" },
         { href: "/jobSeeker/aboutUs", label: "About Us" },
         { href: "/jobSeeker/appliedJobs", label: "Applied Jobs" },
         { href: "/jobSeeker/contactUs", label: "Contact Us" },
@@ -30,8 +47,17 @@ export default function Index({
     const cleanup = useMobileNavigation();
     const handleLogout = () => {
         cleanup();
-        router.flushAll();
     };
+    const [savedJobs, setSavedJobs] = useState<number[]>([]); // store saved job IDs
+
+    useEffect(() => {
+            if (auth.user) {
+                // Fetch saved job IDs from API endpoint
+                fetch('/api/user/saved-jobs')
+                    .then(res => res.json())
+                    .then((data: number[]) => setSavedJobs(data));
+            }
+        }, []);
 
     const [hasUnread, setHasUnread] = useState(true);
     return (
@@ -187,6 +213,57 @@ export default function Index({
 
 
             </header >
+            <div>
+            <h1 className="flex text-4xl font-bold items-center mx-20 my-3">Saved Jobs</h1>
+            {jobs?.data?.map(job => (
+                <Card key={job.id} className="block mx-20 my-5 transition-transform hover:scale-[1.01]">
+                    <CardHeader className="flex flex-row justify-between items-start">
+                        <div>
+                            <CardTitle className="font-mono">{job.company?.name}</CardTitle>
+                            <CardTitle className="text-[#309689]">{job.title}</CardTitle>
+                            <CardDescription>Salary: {job.salary}</CardDescription>
+                        </div>
+
+                        <div className="flex gap-2 self-start">
+                                    <Link
+                                        // href="/jobSeeker/savedJobs"
+                                        className="p-2 rounded transition"
+                                        onClick={() => {
+                                            if (!auth.user) return;
+
+                                            router.post(`/jobSeeker/save-job/${job.id}`, {}, {
+                                                onSuccess: (page) => {
+                                                    // toggle in UI
+                                                    setSavedJobs(prev =>
+                                                        prev.includes(job.id)
+                                                            ? prev.filter(id => id !== job.id)
+                                                            : [...prev, job.id]
+                                                    );
+                                                }
+                                            })
+                                        }}>
+                                        {savedJobs.includes(job.id) ? (
+                                            <Bookmark className="h-6 w-6 text-[#309689]" fill="currentColor" />
+                                        ) : (
+                                            <Bookmark className="h-6 w-6 text-gray-600" />
+                                        )}
+                                        {/* {url === "/jobSeeker/savedJobs" ? (
+                                            <Bookmark className="h-6 w-6 text-[#309689]" fill="currentColor" />
+                                        ) : (
+                                            <Bookmark className="h-6 w-6 text-gray-600" />
+                                        )} */}
+                                    </Link>
+                                    <Link
+                                        href={`/jobSeeker/apply/${job.id}`}
+                                        className="text-white bg-[#309689] px-4 py-2 rounded hover:bg-teal-600 transition-colors"
+                                    >
+                                        Apply
+                                    </Link>
+                                </div>
+                    </CardHeader>
+                </Card>
+            ))}
+        </div>
 
         </div >
     )
