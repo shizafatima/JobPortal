@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ApplicationController;
 use App\Http\Controllers\JobController;
 use App\Http\Controllers\SeekerController;
 use App\Models\Job;
@@ -59,6 +60,10 @@ Route::middleware(['auth', 'verified', 'role:jobSeeker'])->group(function () {
     Route::get('/jobSeeker/savedJobs', [SeekerController::class, 'savedJob'])->name('s.savedJobs');
 
     Route::get('/api/user/saved-jobs', [SeekerController::class, 'getSavedJobIds']);
+
+    //apply for jobs
+    Route::get('/jobs/apply/{job}', [ApplicationController::class, 'apply'])->name('jobs.apply');
+    Route::post('/jobs/apply/{job}', [ApplicationController::class, 'store'])->name('jobs.apply.store');
 
 });
 

@@ -289,7 +289,7 @@ export default function Index({ jobs, canRegister = true }: IndexProps) {
                                         )}
                                     </Link>
                                     <Link
-                                        href={`/jobSeeker/apply/${job.id}`}
+                                        href={`/jobs/apply/${job.id}`}
                                         className="text-white bg-[#309689] px-4 py-2 rounded hover:bg-teal-600 transition-colors"
                                     >
                                         Apply

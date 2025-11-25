@@ -1,0 +1,58 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Models\Job;
+use App\Models\JobApplication;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Inertia\Inertia;
+
+class ApplicationController extends Controller
+{
+    //
+    public function apply(Job $job)
+    {
+        $job->load('company');
+        return Inertia::render('jobs/Apply', [
+            'jobs' => [
+                'data' => [$job],
+            ],
+        ]);
+    }
+
+    public function store(Request $request, Job $job)
+    {
+        $validated = $request->validate([
+            'full_name' => 'required|string',
+            'email' => 'required|email',
+            'phone_no' => 'required|string',
+            'resume' => 'required|file|mimes:pdf,doc,docx|max:2048',
+            'cover_letter' => 'nullable|string',
+
+        ]);
+        // dd($validated);
+
+        $alreadyApplied = JobApplication::where('job_id', $job->id)
+            ->where('user_id', Auth::id()) // use Auth::id() for currently logged-in user
+            ->exists();
+
+        if ($alreadyApplied) {
+            return back()->withErrors(['error' => 'You have already applied for this job.']);
+        }
+
+        // Store the resume
+        $path = $request->file('resume')->store('resumes', 'public');
+
+        // Create the application
+        JobApplication::create([
+            'job_id' => $job->id,
+            'user_id' => Auth::id(),   // link to current user
+            'full_name' => $request->full_name,
+            'email' => $request->email,
+            'phone_no' => $request->phone_no,
+            'resume' => $path,
+            'cover_letter' => $request->cover_letter,
+        ]);
+    }
+}
