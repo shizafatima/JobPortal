@@ -4,20 +4,38 @@ import { NavigationMenu, NavigationMenuItem, NavigationMenuLink, NavigationMenuL
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip"
 import { useIsMobile } from "@/hooks/use-mobile"
 import { login, logout, register } from "@/routes"
-import { SharedData } from "@/types"
+import { SharedData} from "@/types"
 import { Link, router, usePage } from "@inertiajs/react"
 import { Bell, Bookmark, BriefcaseBusiness, CircleUser, LogOut } from "lucide-react"
 import { useMobileNavigation } from '@/hooks/use-mobile-navigation'
-import { useState } from "react"
+import { useEffect, useState } from "react"
+import { Card, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 
+interface JobApplication {
+    id: number;
+    company: Company;
+    title: string;
+    salary: number;
+}
 
-export default function Index({
-    canRegister = true,
-}: {
+interface Company {
+    id: number;
+    name: string;
+}
+
+interface AppliedProps {
+    jobs: {
+        data: JobApplication[];
+        links: { url: string | null; label: string; active: boolean }[];
+    };
     canRegister?: boolean;
-}) {
+}
+
+
+export default function AppliedJobs({jobs, canRegister = true}: AppliedProps) {
     const isMobile = useIsMobile()
     const { url } = usePage()
+    const { auth } = usePage<SharedData>().props;
 
     const links = [
         { href: "/", label: "Home" },
@@ -25,15 +43,28 @@ export default function Index({
         { href: "/jobSeeker/appliedJobs", label: "Applied Jobs" },
         { href: "/jobSeeker/contactUs", label: "Contact Us" },
     ]
-    const { auth } = usePage<SharedData>().props;
+    
 
     const cleanup = useMobileNavigation();
     const handleLogout = () => {
         cleanup();
-        router.flushAll();
     };
 
     const [hasUnread, setHasUnread] = useState(true);
+
+    const [appliedJobs, setAppliedJobs] = useState<JobApplication[]>([])
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        fetch('api/user/applied-jobs')
+        .then ((res) =>res.json())
+        .then ((data) => {
+            setAppliedJobs(data);
+            setLoading(false);
+        });
+    }, []);
+
+    
     return (
         <div>
             <header className="flex items-center justify-between w-full px-6 py-4">
@@ -187,6 +218,21 @@ export default function Index({
 
 
             </header >
+            <div>
+                <h2 className="flex text-4xl font-bold items-center mx-20 my-3">Applied Jobs</h2>
+
+                {jobs?.data?.map(job => (
+                    <Card key={job.id} className="block mx-20 my-5 transition-transform hover:scale-[1.01]">
+                        <CardHeader className="flex flex-row justify-between items-start">
+                            <div>
+                                <CardTitle className="font-mono">{job.company?.name}</CardTitle>
+                                <CardTitle className="text-[#309689]">{job.title}</CardTitle>
+                                <CardDescription>Salary: {job.salary}</CardDescription>
+                            </div>   
+                        </CardHeader>
+                    </Card>
+                ))}
+            </div>
 
         </div >
     )

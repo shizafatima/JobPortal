@@ -73,11 +73,18 @@ class User extends Authenticatable
         return $this->hasMany(Job::class);
     }
 
-    public function savedJobs(): BelongsToMany {
+    public function savedJobs(): BelongsToMany
+    {
         return $this->belongsToMany(Job::class, 'saved_jobs', 'user_id', 'job_id');
     }
 
-    public function applications(){
+    public function applications()
+    {
         return $this->hasMany(JobApplication::class);
+    }
+
+    public function appliedJobs()
+    {
+        return $this->belongsToMany(Job::class, 'applied_jobs', 'user_id', 'job_id');
     }
 }

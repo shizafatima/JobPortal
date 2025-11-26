@@ -65,6 +65,10 @@ Route::middleware(['auth', 'verified', 'role:jobSeeker'])->group(function () {
     Route::get('/jobs/apply/{job}', [ApplicationController::class, 'apply'])->name('jobs.apply');
     Route::post('/jobs/apply/{job}', [ApplicationController::class, 'store'])->name('jobs.apply.store');
 
+    Route::get('/jobSeeker/appliedJobs', [ApplicationController::class, 'appliedJob'])->name('s.appliedJobs');
+
+    Route::get('/api/user/applied-jobs', [ApplicationController::class, 'getAppliedJobIds']);
+
 });
 
 require __DIR__ . '/settings.php';
