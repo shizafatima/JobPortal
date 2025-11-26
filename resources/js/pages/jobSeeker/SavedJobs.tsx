@@ -49,15 +49,16 @@ export default function savedJobs({ jobs, canRegister = true }: SavedProps) {
         cleanup();
     };
     const [savedJobs, setSavedJobs] = useState<number[]>([]); // store saved job IDs
+    const [animateId, setAnimateId] = useState<number | null>(null);
 
     useEffect(() => {
-            if (auth.user) {
-                // Fetch saved job IDs from API endpoint
-                fetch('/api/user/saved-jobs')
-                    .then(res => res.json())
-                    .then((data: number[]) => setSavedJobs(data));
-            }
-        }, []);
+        if (auth.user) {
+            // Fetch saved job IDs from API endpoint
+            fetch('/api/user/saved-jobs')
+                .then(res => res.json())
+                .then((data: number[]) => setSavedJobs(data));
+        }
+    }, []);
 
     const [hasUnread, setHasUnread] = useState(true);
     return (
@@ -120,22 +121,22 @@ export default function savedJobs({ jobs, canRegister = true }: SavedProps) {
 
                         <Tooltip>
                             <TooltipTrigger asChild>
-                            <DropdownMenuTrigger asChild>
-                                
-                                        <button className="p-2 rounded transition"
-                                            onClick={() => setHasUnread(false)}>
-                                            <Bell
-                                                className={`h-6 w-6 ${hasUnread ? "text-[#309689]" : "text-gray-600"
-                                                    }`}
-                                            />
-                                        </button>
+                                <DropdownMenuTrigger asChild>
 
-                                    </DropdownMenuTrigger>
-                                </TooltipTrigger>
+                                    <button className="p-2 rounded transition"
+                                        onClick={() => setHasUnread(false)}>
+                                        <Bell
+                                            className={`h-6 w-6 ${hasUnread ? "text-[#309689]" : "text-gray-600"
+                                                }`}
+                                        />
+                                    </button>
 
-                                <TooltipContent>
-                                    <p>Notifications</p>
-                                </TooltipContent>
+                                </DropdownMenuTrigger>
+                            </TooltipTrigger>
+
+                            <TooltipContent>
+                                <p>Notifications</p>
+                            </TooltipContent>
                         </Tooltip>
 
 
@@ -214,56 +215,59 @@ export default function savedJobs({ jobs, canRegister = true }: SavedProps) {
 
             </header >
             <div>
-            <h1 className="flex text-4xl font-bold items-center mx-20 my-3">Saved Jobs</h1>
-            {jobs?.data?.map(job => (
-                <Card key={job.id} className="block mx-20 my-5 transition-transform hover:scale-[1.01]">
-                    <CardHeader className="flex flex-row justify-between items-start">
-                        <div>
-                            <CardTitle className="font-mono">{job.company?.name}</CardTitle>
-                            <CardTitle className="text-[#309689]">{job.title}</CardTitle>
-                            <CardDescription>Salary: {job.salary}</CardDescription>
-                        </div>
+                <h1 className="flex text-4xl font-bold items-center mx-20 my-3">Saved Jobs</h1>
+                {jobs?.data?.map(job => (
+                    <Card key={job.id} className="block mx-20 my-5 transition-transform hover:scale-[1.01]">
+                        <CardHeader className="flex flex-row justify-between items-start">
+                            <div>
+                                <CardTitle className="font-mono">{job.company?.name}</CardTitle>
+                                <CardTitle className="text-[#309689]">{job.title}</CardTitle>
+                                <CardDescription>Salary: {job.salary}</CardDescription>
+                            </div>
 
-                        <div className="flex gap-2 self-start">
-                                    <Link
-                                        // href="/jobSeeker/savedJobs"
-                                        className="p-2 rounded transition"
-                                        onClick={() => {
-                                            if (!auth.user) return;
+                            <div className="flex gap-2 self-start">
+                                <Link
+                                    // href="/jobSeeker/savedJobs"
+                                    className="p-2 rounded transition"
+                                    onClick={() => {
+                                        if (!auth.user) return;
 
-                                            router.post(`/jobSeeker/save-job/${job.id}`, {}, {
-                                                onSuccess: (page) => {
-                                                    // toggle in UI
-                                                    setSavedJobs(prev =>
-                                                        prev.includes(job.id)
-                                                            ? prev.filter(id => id !== job.id)
-                                                            : [...prev, job.id]
-                                                    );
-                                                }
-                                            })
-                                        }}>
-                                        {savedJobs.includes(job.id) ? (
-                                            <Bookmark className="h-6 w-6 text-[#309689]" fill="currentColor" />
-                                        ) : (
-                                            <Bookmark className="h-6 w-6 text-gray-600" />
-                                        )}
-                                        {/* {url === "/jobSeeker/savedJobs" ? (
+                                        setAnimateId(job.id);
+                                        setTimeout(() => setAnimateId(null), 300);
+
+                                        router.post(`/jobSeeker/save-job/${job.id}`, {}, {
+                                            onSuccess: (page) => {
+                                                // toggle in UI
+                                                setSavedJobs(prev =>
+                                                    prev.includes(job.id)
+                                                        ? prev.filter(id => id !== job.id)
+                                                        : [...prev, job.id]
+                                                );
+                                            }
+                                        })
+                                    }}>
+                                    {savedJobs.includes(job.id) ? (
+                                        <Bookmark className={`h-6 w-6 text-[#309689] ${animateId === job.id ? "animate-pop" : ""}`} fill="currentColor" />
+                                    ) : (
+                                        <Bookmark className={`h-6 w-6 text-gray-600 ${animateId === job.id ? "animate-pop" : ""}`} />
+                                    )}
+                                    {/* {url === "/jobSeeker/savedJobs" ? (
                                             <Bookmark className="h-6 w-6 text-[#309689]" fill="currentColor" />
                                         ) : (
                                             <Bookmark className="h-6 w-6 text-gray-600" />
                                         )} */}
-                                    </Link>
-                                    <Link
-                                        href={`/jobSeeker/apply/${job.id}`}
-                                        className="text-white bg-[#309689] px-4 py-2 rounded hover:bg-teal-600 transition-colors"
-                                    >
-                                        Apply
-                                    </Link>
-                                </div>
-                    </CardHeader>
-                </Card>
-            ))}
-        </div>
+                                </Link>
+                                <Link
+                                    href={`/jobSeeker/apply/${job.id}`}
+                                    className="text-white bg-[#309689] px-4 py-2 rounded hover:bg-teal-600 transition-colors"
+                                >
+                                    Apply
+                                </Link>
+                            </div>
+                        </CardHeader>
+                    </Card>
+                ))}
+            </div>
 
         </div >
     )

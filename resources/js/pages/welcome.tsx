@@ -67,6 +67,9 @@ export default function Index({ jobs, canRegister = true }: IndexProps) {
 
     const [savedJobs, setSavedJobs] = useState<number[]>([]); // store saved job IDs
 
+    const [animateId, setAnimateId] = useState<number | null>(null);
+
+
     useEffect(() => {
         if (auth.user) {
             // Fetch saved job IDs from API endpoint
@@ -265,14 +268,19 @@ export default function Index({ jobs, canRegister = true }: IndexProps) {
                                     <CardDescription>Salary: {job.salary}</CardDescription>
                                 </div>
                                 <div className="flex gap-2 self-start">
-                                
+
                                     <Link
                                         // href="/jobSeeker/savedJobs"
                                         className="p-2 rounded transition"
                                         onClick={(e) => {
                                             e.preventDefault();
-                                            if (!auth.user) 
+                                            if (!auth.user)
                                                 return router.visit(login());
+
+                                            // trigger animation
+                                            setAnimateId(job.id);
+                                            setTimeout(() => setAnimateId(null), 300);
+
 
                                             router.post(`/jobSeeker/save-job/${job.id}`, {}, {
                                                 onSuccess: (page) => {
@@ -286,9 +294,9 @@ export default function Index({ jobs, canRegister = true }: IndexProps) {
                                             })
                                         }}>
                                         {auth.user && savedJobs.includes(job.id) ? (
-                                            <Bookmark className="h-6 w-6 text-[#309689]" fill="currentColor" />
+                                            <Bookmark className={`h-6 w-6 text-[#309689] ${animateId === job.id ? "animate-pop" : ""}`} fill="currentColor" />
                                         ) : (
-                                            <Bookmark className="h-6 w-6 text-gray-600" />
+                                            <Bookmark className={`h-6 w-6 text-gray-600 ${animateId === job.id ? "animate-pop" : ""}`} />
                                         )}
                                     </Link>
                                     <Link

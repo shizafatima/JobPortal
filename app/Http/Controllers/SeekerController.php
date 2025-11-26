@@ -16,11 +16,13 @@ class SeekerController extends Controller
 
         if ($user->savedJobs()->where('job_id',$job->id)->exists()){
             $user->savedJobs()->detach($job->id);
-            return response()->json(['status' => 'removed']);
+            // return response()->json(['status' => 'removed']);
+            return back();
         }
 
         $user->savedJobs()->attach($job->id);
-        return response()->json(['status' => 'saved']);
+        // return response()->json(['status' => 'saved']);
+        return back();
     }
 
     public function savedJob(){
@@ -35,6 +37,7 @@ class SeekerController extends Controller
     $user = Auth::user();
     $savedJobIds = $user->savedJobs()->pluck('job_id'); // get only IDs
     return response()->json($savedJobIds);
+    
 }
 
 }
