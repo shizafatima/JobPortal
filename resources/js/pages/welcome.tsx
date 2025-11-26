@@ -4,7 +4,7 @@ import { NavigationMenu, NavigationMenuItem, NavigationMenuLink, NavigationMenuL
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip"
 import { useIsMobile } from "@/hooks/use-mobile"
 import { login, logout, register } from "@/routes"
-import { BreadcrumbItem, SharedData } from "@/types"
+import { SharedData } from "@/types"
 import { Link, router, usePage } from "@inertiajs/react"
 import { Bell, Bookmark, BriefcaseBusiness, CircleUser, LogOut, Search } from "lucide-react"
 import { useMobileNavigation } from '@/hooks/use-mobile-navigation'
@@ -12,13 +12,6 @@ import { useEffect, useState } from "react"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { Card, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-
-// const breadcrumbs: BreadcrumbItem[] = [
-//     {
-//         title: 'Jobs',
-//         href: '/jobs',
-//     },
-// ];
 
 interface Job {
     id: number;
