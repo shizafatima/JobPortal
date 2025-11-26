@@ -4,7 +4,7 @@ import { NavigationMenu, NavigationMenuItem, NavigationMenuLink, NavigationMenuL
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip"
 import { useIsMobile } from "@/hooks/use-mobile"
 import { login, logout, register } from "@/routes"
-import { SharedData} from "@/types"
+import { SharedData } from "@/types"
 import { Link, router, usePage } from "@inertiajs/react"
 import { Bell, Bookmark, BriefcaseBusiness, CircleUser, LogOut } from "lucide-react"
 import { useMobileNavigation } from '@/hooks/use-mobile-navigation'
@@ -32,7 +32,7 @@ interface AppliedProps {
 }
 
 
-export default function AppliedJobs({jobs, canRegister = true}: AppliedProps) {
+export default function AppliedJobs({ jobs, canRegister = true }: AppliedProps) {
     const isMobile = useIsMobile()
     const { url } = usePage()
     const { auth } = usePage<SharedData>().props;
@@ -43,7 +43,7 @@ export default function AppliedJobs({jobs, canRegister = true}: AppliedProps) {
         { href: "/jobSeeker/appliedJobs", label: "Applied Jobs" },
         { href: "/jobSeeker/contactUs", label: "Contact Us" },
     ]
-    
+
 
     const cleanup = useMobileNavigation();
     const handleLogout = () => {
@@ -57,14 +57,14 @@ export default function AppliedJobs({jobs, canRegister = true}: AppliedProps) {
 
     useEffect(() => {
         fetch('api/user/applied-jobs')
-        .then ((res) =>res.json())
-        .then ((data) => {
-            setAppliedJobs(data);
-            setLoading(false);
-        });
+            .then((res) => res.json())
+            .then((data) => {
+                setAppliedJobs(data);
+                setLoading(false);
+            });
     }, []);
 
-    
+
     return (
         <div>
             <header className="flex items-center justify-between w-full px-6 py-4">
@@ -125,22 +125,22 @@ export default function AppliedJobs({jobs, canRegister = true}: AppliedProps) {
 
                         <Tooltip>
                             <TooltipTrigger asChild>
-                            <DropdownMenuTrigger asChild>
-                                
-                                        <button className="p-2 rounded transition"
-                                            onClick={() => setHasUnread(false)}>
-                                            <Bell
-                                                className={`h-6 w-6 ${hasUnread ? "text-[#309689]" : "text-gray-600"
-                                                    }`}
-                                            />
-                                        </button>
+                                <DropdownMenuTrigger asChild>
 
-                                    </DropdownMenuTrigger>
-                                </TooltipTrigger>
+                                    <button className="p-2 rounded transition"
+                                        onClick={() => setHasUnread(false)}>
+                                        <Bell
+                                            className={`h-6 w-6 ${hasUnread ? "text-[#309689]" : "text-gray-600"
+                                                }`}
+                                        />
+                                    </button>
 
-                                <TooltipContent>
-                                    <p>Notifications</p>
-                                </TooltipContent>
+                                </DropdownMenuTrigger>
+                            </TooltipTrigger>
+
+                            <TooltipContent>
+                                <p>Notifications</p>
+                            </TooltipContent>
                         </Tooltip>
 
 
@@ -228,12 +228,11 @@ export default function AppliedJobs({jobs, canRegister = true}: AppliedProps) {
                                 <CardTitle className="font-mono">{job.company?.name}</CardTitle>
                                 <CardTitle className="text-[#309689]">{job.title}</CardTitle>
                                 <CardDescription>Salary: {job.salary}</CardDescription>
-                            </div>   
+                            </div>
                         </CardHeader>
                     </Card>
                 ))}
             </div>
-
-        </div >
+        </div>
     )
 }
