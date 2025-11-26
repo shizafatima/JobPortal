@@ -265,11 +265,14 @@ export default function Index({ jobs, canRegister = true }: IndexProps) {
                                     <CardDescription>Salary: {job.salary}</CardDescription>
                                 </div>
                                 <div className="flex gap-2 self-start">
+                                
                                     <Link
                                         // href="/jobSeeker/savedJobs"
                                         className="p-2 rounded transition"
-                                        onClick={() => {
-                                            if (!auth.user) return;
+                                        onClick={(e) => {
+                                            e.preventDefault();
+                                            if (!auth.user) 
+                                                return router.visit(login());
 
                                             router.post(`/jobSeeker/save-job/${job.id}`, {}, {
                                                 onSuccess: (page) => {
@@ -282,7 +285,7 @@ export default function Index({ jobs, canRegister = true }: IndexProps) {
                                                 }
                                             })
                                         }}>
-                                        {savedJobs.includes(job.id) ? (
+                                        {auth.user && savedJobs.includes(job.id) ? (
                                             <Bookmark className="h-6 w-6 text-[#309689]" fill="currentColor" />
                                         ) : (
                                             <Bookmark className="h-6 w-6 text-gray-600" />
