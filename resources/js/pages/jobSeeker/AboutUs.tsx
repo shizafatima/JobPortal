@@ -94,22 +94,22 @@ export default function Index({
 
                         <Tooltip>
                             <TooltipTrigger asChild>
-                            <DropdownMenuTrigger asChild>
-                                
-                                        <button className="p-2 rounded transition"
-                                            onClick={() => setHasUnread(false)}>
-                                            <Bell
-                                                className={`h-6 w-6 ${hasUnread ? "text-[#309689]" : "text-gray-600"
-                                                    }`}
-                                            />
-                                        </button>
+                                <DropdownMenuTrigger asChild>
 
-                                    </DropdownMenuTrigger>
-                                </TooltipTrigger>
+                                    <button className="p-2 rounded transition"
+                                        onClick={() => setHasUnread(false)}>
+                                        <Bell
+                                            className={`h-6 w-6 cursor-pointer ${hasUnread ? "text-[#309689]" : "text-gray-600"
+                                                }`}
+                                        />
+                                    </button>
 
-                                <TooltipContent>
-                                    <p>Notifications</p>
-                                </TooltipContent>
+                                </DropdownMenuTrigger>
+                            </TooltipTrigger>
+
+                            <TooltipContent>
+                                <p>Notifications</p>
+                            </TooltipContent>
                         </Tooltip>
 
 
@@ -137,6 +137,7 @@ export default function Index({
                             <DropdownMenuTrigger asChild>
                                 <Avatar>
                                     <AvatarImage
+                                        className="cursor-pointer"
                                         src="/avatar.jpg"
                                         alt="avatar image" />
                                     <AvatarFallback>IMG</AvatarFallback>

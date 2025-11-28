@@ -133,7 +133,7 @@ export default function savedJobs({ jobs, canRegister = true }: SavedProps) {
                                     <button className="p-2 rounded transition"
                                         onClick={() => setHasUnread(false)}>
                                         <Bell
-                                            className={`h-6 w-6 ${hasUnread ? "text-[#309689]" : "text-gray-600"
+                                            className={`h-6 w-6 cursor-pointer ${hasUnread ? "text-[#309689]" : "text-gray-600"
                                                 }`}
                                         />
                                     </button>
@@ -171,6 +171,7 @@ export default function savedJobs({ jobs, canRegister = true }: SavedProps) {
                             <DropdownMenuTrigger asChild>
                                 <Avatar>
                                     <AvatarImage
+                                        className="cursor-pointer"
                                         src="/avatar.jpg"
                                         alt="avatar image" />
                                     <AvatarFallback>IMG</AvatarFallback>
@@ -276,41 +277,41 @@ export default function savedJobs({ jobs, canRegister = true }: SavedProps) {
                 ))}
             </div>
             <Pagination className="mb-4">
-                    <PaginationContent>
-                        {/* previous */}
-                        <PaginationPrevious
-                            onClick={() => handlePagination(jobs.links[0].url)}
-                            className={!jobs.links[0].url ? "opacity-50 pointer-events-none" : ""}
-                        />
+                <PaginationContent>
+                    {/* previous */}
+                    <PaginationPrevious
+                        onClick={() => handlePagination(jobs.links[0].url)}
+                        className={!jobs.links[0].url ? "opacity-50 pointer-events-none" : ""}
+                    />
 
-                        {/* page numbers */}
-                        {jobs.links.slice(1, -1).map((link, index) => {
-                            if (link.label === '…') {
-                                return (
-                                    <PaginationEllipsis key={index} />
-                                )
-                            }
-
+                    {/* page numbers */}
+                    {jobs.links.slice(1, -1).map((link, index) => {
+                        if (link.label === '…') {
                             return (
-                                <PaginationItem key={index}>
-                                    <PaginationLink
-                                        isActive={link.active}
-                                        onClick={() => handlePagination(link.url)}
-                                    >
-                                        {link.label.replace(/&laquo;|&raquo;/g, '')}
-                                    </PaginationLink>
-                                </PaginationItem>
+                                <PaginationEllipsis key={index} />
                             )
                         }
 
-                        )}
+                        return (
+                            <PaginationItem key={index}>
+                                <PaginationLink
+                                    isActive={link.active}
+                                    onClick={() => handlePagination(link.url)}
+                                >
+                                    {link.label.replace(/&laquo;|&raquo;/g, '')}
+                                </PaginationLink>
+                            </PaginationItem>
+                        )
+                    }
 
-                        {/* next */}
-                        <PaginationNext
-                            onClick={() => handlePagination(jobs.links[jobs.links.length - 1].url)}
-                            className={!jobs.links[jobs.links.length - 1].url ? "opacity-50 pointer-events-none" : ""} />
-                    </PaginationContent>
-                </Pagination>
+                    )}
+
+                    {/* next */}
+                    <PaginationNext
+                        onClick={() => handlePagination(jobs.links[jobs.links.length - 1].url)}
+                        className={!jobs.links[jobs.links.length - 1].url ? "opacity-50 pointer-events-none" : ""} />
+                </PaginationContent>
+            </Pagination>
 
         </div >
     )

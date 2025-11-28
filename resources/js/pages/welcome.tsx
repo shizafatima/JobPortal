@@ -143,7 +143,7 @@ export default function Index({ jobs, canRegister = true }: IndexProps) {
                                     <button className="p-2 rounded transition"
                                         onClick={() => setHasUnread(false)}>
                                         <Bell
-                                            className={`h-6 w-6 ${hasUnread ? "text-[#309689]" : "text-gray-600"
+                                            className={`h-6 w-6 cursor-pointer ${hasUnread ? "text-[#309689]" : "text-gray-600"
                                                 }`}
                                         />
                                     </button>
@@ -181,6 +181,7 @@ export default function Index({ jobs, canRegister = true }: IndexProps) {
                             <DropdownMenuTrigger asChild>
                                 <Avatar>
                                     <AvatarImage
+                                        className="cursor-pointer"
                                         src="/avatar.jpg"
                                         alt="avatar image" />
                                     <AvatarFallback>IMG</AvatarFallback>
