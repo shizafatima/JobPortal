@@ -19,6 +19,8 @@ class CreateNewUser implements CreatesNewUsers
      */
     public function create(array $input): User
     {
+
+        $role = $input['role'] ?? 'jobSeeker';
         Validator::make($input, [
             'name' => ['required', 'string', 'max:255'],
             'email' => [
@@ -35,7 +37,7 @@ class CreateNewUser implements CreatesNewUsers
 
         $companyId = null;
 
-        if ($input['role'] === 'recruiter' && !empty($input['company'])) {
+        if ($role === 'recruiter' && !empty($input['company'])) {
             $company = Company::firstOrCreate(['name' => $input['company']]);
             $companyId = $company->id; // use the ID of the newly created or existing company
         }
@@ -44,7 +46,7 @@ class CreateNewUser implements CreatesNewUsers
             'name' => $input['name'],
             'email' => $input['email'],
             'password' => $input['password'],
-            'role' => $input['role'],
+            'role' => $role,
             'company_id' => $companyId,
         ]);
     }

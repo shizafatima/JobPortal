@@ -11,8 +11,14 @@ import AuthLayout from '@/layouts/auth-layout';
 import { NativeSelect, NativeSelectOption } from '@/components/ui/native-select';
 import { useState } from 'react';
 
-export default function Register() {
-    const [role, setRole] = useState('');
+type RegisterProps = {
+    type: 'recruiter' | 'jobSeeker'; // only these two values allowed
+};
+
+
+
+export default function Register({ type }: RegisterProps) {
+    // const [role, setRole] = useState('');
     const [company, setCompany] = useState('');
     return (
         <AuthLayout
@@ -61,7 +67,9 @@ export default function Register() {
                                 <InputError message={errors.email} />
                             </div>
 
-                            <div className='grid gap-2'>
+                            <Input type="hidden" name="role" value={type === 'recruiter' ? 'recruiter' : 'jobSeeker'} />
+
+                            {/* <div className='grid gap-2'>
                                 <Label htmlFor='role'>Are you looking for job or hiring?</Label>
                                 <NativeSelect
                                     id='role'
@@ -72,9 +80,9 @@ export default function Register() {
                                     <NativeSelectOption value="jobSeeker">Job Seeker</NativeSelectOption>
                                     <NativeSelectOption value="recruiter">Recruiter</NativeSelectOption>
                                 </NativeSelect>
-                            </div>
+                            </div> */}
 
-                            {role === 'recruiter' && (
+                            {type === 'recruiter' && (
                                 <div className="grid gap-2">
                                     <Label htmlFor="company">Company</Label>
                                     <Input

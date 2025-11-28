@@ -215,6 +215,9 @@ export default function Index({ jobs, canRegister = true }: IndexProps) {
                                     Register
                                 </Link>
                             )}
+                            <Link
+                            href={'/jobSeeker/forEmployers'}
+                            className=" inline-block border-[#19140035] text-sm hover:border-[#1915014a] dark:border-[#3E3E3A] dark:text-[#EDEDEC] dark:hover:border-[#62605b]">For Employers/Post a Job</Link>
                         </>
                     )}
 

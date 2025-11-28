@@ -15,6 +15,16 @@ Route::get('/', function () {
     ]);
 })->name('home');
 
+// Recruiter registration
+Route::get('/register/recruiter', function () {
+    return Inertia::render('auth/register', ['type' => 'recruiter']);
+})->name('register.recruiter');
+
+// Job Seeker registration
+Route::get('/register/jobseeker', function () {
+    return Inertia::render('auth/register', ['type' => 'jobSeeker']);
+})->name('register.jobseeker');
+
 Route::middleware(['auth', 'verified', 'role:recruiter'])->group(function () {
     Route::get('dashboard', function () {
         return Inertia::render('dashboard');
@@ -29,16 +39,11 @@ Route::middleware(['auth', 'verified', 'role:recruiter'])->group(function () {
     Route::delete('/jobs/{job}', [JobController::class, 'delete']);
 });
 
+Route::get('jobSeeker/forEmployers', function () {
+    return Inertia::render('jobSeeker/ForEmployers');
+})->name('s.forEmployers');
 
-Route::middleware(['auth', 'verified', 'role:jobSeeker'])->group(function () {
-    // Route::get('/jobSeeker/index', [SeekerController::class, 'index'])->name('jobSeeker.home');
-    // Route::get('/', function () {
-    //     return Inertia::render('welcome', [
-    //         'jobs' => Job::with('company')->paginate(10),
-    //         'canRegister' => Features::enabled(Features::registration()),
-    //     ]);
-    // })->name('home');
-
+Route::middleware(['auth', 'role:jobSeeker'])->group(function () {
     Route::get('/jobSeeker/appliedJobs', function () {
         return Inertia::render('jobSeeker/AppliedJobs');
     })->name('jobSeeker.appliedJobs');
@@ -51,9 +56,9 @@ Route::middleware(['auth', 'verified', 'role:jobSeeker'])->group(function () {
         return Inertia::render('jobSeeker/ContactUs');
     })->name('jobSeeker.contactUs');
 
-    Route::get('/jobSeeker/savedJobs', function () {
-        return Inertia::render('jobSeeker/SavedJobs');
-    })->name('jobSeeker.savedJobs');
+    // Route::get('/jobSeeker/savedJobs', function () {
+    //     return Inertia::render('jobSeeker/SavedJobs');
+    // })->name('jobSeeker.savedJobs');
 
     //bookmark jobs
     Route::post('/jobSeeker/save-job/{job}', [SeekerController::class, 'saveJob'])->name('s.saveJob');
