@@ -132,7 +132,7 @@ export default function Register({ type }: RegisterProps) {
 
                             <Button
                                 type="submit"
-                                className="mt-2 w-full"
+                                className="mt-2 w-full bg-[#309689]"
                                 tabIndex={5}
                                 data-test="register-user-button"
                             >
