@@ -22,8 +22,14 @@ export default function Register({ type }: RegisterProps) {
     const [company, setCompany] = useState('');
     return (
         <AuthLayout
-            title="Create an account"
-            description="Enter your details below to create your account"
+            title={
+                type === 'recruiter' ? 'Create a Recruiter Account' : 'Create a Job Seeker Account'
+            }
+            description={
+                type === 'recruiter'
+                    ? 'Enter your details below to create your recruiter account'
+                    : 'Enter your details below to create your job seeker account'
+            }
         >
             <Head title="Register" />
             <Form
