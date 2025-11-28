@@ -10,6 +10,8 @@ import { Bell, Bookmark, BriefcaseBusiness, CircleUser, LogOut } from "lucide-re
 import { useMobileNavigation } from '@/hooks/use-mobile-navigation'
 import { useEffect, useState } from "react"
 import { Card, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { Pagination, PaginationContent, PaginationEllipsis, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious } from "@/components/ui/pagination"
+import { Inertia } from "@inertiajs/inertia"
 
 interface JobApplication {
     id: number;
@@ -63,6 +65,11 @@ export default function AppliedJobs({ jobs, canRegister = true }: AppliedProps) 
                 setLoading(false);
             });
     }, []);
+
+    const handlePagination = (url?: string | null) => {
+        if (!url) return
+        Inertia.get(url, {}, { preserveState: true })
+    }
 
 
     return (
@@ -233,6 +240,42 @@ export default function AppliedJobs({ jobs, canRegister = true }: AppliedProps) 
                     </Card>
                 ))}
             </div>
+            <Pagination className="mb-4">
+                <PaginationContent>
+                    {/* previous */}
+                    <PaginationPrevious
+                        onClick={() => handlePagination(jobs.links[0].url)}
+                        className={!jobs.links[0].url ? "opacity-50 pointer-events-none" : ""}
+                    />
+
+                    {/* page numbers */}
+                    {jobs.links.slice(1, -1).map((link, index) => {
+                        if (link.label === '…') {
+                            return (
+                                <PaginationEllipsis key={index} />
+                            )
+                        }
+
+                        return (
+                            <PaginationItem key={index}>
+                                <PaginationLink
+                                    isActive={link.active}
+                                    onClick={() => handlePagination(link.url)}
+                                >
+                                    {link.label.replace(/&laquo;|&raquo;/g, '')}
+                                </PaginationLink>
+                            </PaginationItem>
+                        )
+                    }
+
+                    )}
+
+                    {/* next */}
+                    <PaginationNext
+                        onClick={() => handlePagination(jobs.links[jobs.links.length - 1].url)}
+                        className={!jobs.links[jobs.links.length - 1].url ? "opacity-50 pointer-events-none" : ""} />
+                </PaginationContent>
+            </Pagination>
         </div>
     )
 }

@@ -59,11 +59,11 @@ class ApplicationController extends Controller
     }
 
     public function appliedJob(){
-        $applications = Auth::user()->appliedJobs()->with('company')->latest()->get();
+        $applications = Auth::user()->appliedJobs()->with('company')->latest()->paginate(5);
 
         // dd($applications);
 
-        $jobs = $applications->map(function($job) {
+        $jobs = $applications->through(function($job) {
         return [
             'id' => $job->id,
             'title' => $job->title,
@@ -78,9 +78,7 @@ class ApplicationController extends Controller
         // dd($jobs);
 
         return Inertia::render('jobSeeker/AppliedJobs', [
-            'jobs' => [
-                'data' => $jobs,
-            ],
+            'jobs' =>  $jobs,
         ]);
     }
 

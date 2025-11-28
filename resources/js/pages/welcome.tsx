@@ -12,6 +12,8 @@ import { useEffect, useState } from "react"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { Card, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { Pagination, PaginationContent, PaginationEllipsis, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious } from "@/components/ui/pagination"
+import { Inertia } from "@inertiajs/inertia"
 
 interface Job {
     id: number;
@@ -71,6 +73,11 @@ export default function Index({ jobs, canRegister = true }: IndexProps) {
                 .then((data: number[]) => setSavedJobs(data));
         }
     }, []);
+
+    const handlePagination = (url?: string | null) => {
+        if (!url) return
+        Inertia.get(url, {}, { preserveState: true })
+    }
     return (
         <div>
             <header className="flex items-center justify-between w-full px-6 py-4">
@@ -216,8 +223,8 @@ export default function Index({ jobs, canRegister = true }: IndexProps) {
                                 </Link>
                             )}
                             <Link
-                            href={'/jobSeeker/forEmployers'}
-                            className=" inline-block border-[#19140035] text-sm hover:border-[#1915014a] dark:border-[#3E3E3A] dark:text-[#EDEDEC] dark:hover:border-[#62605b]">For Employers/Post a Job</Link>
+                                href={'/jobSeeker/forEmployers'}
+                                className=" inline-block border-[#19140035] text-sm hover:border-[#1915014a] dark:border-[#3E3E3A] dark:text-[#EDEDEC] dark:hover:border-[#62605b]">For Employers/Post a Job</Link>
                         </>
                     )}
 
@@ -309,6 +316,42 @@ export default function Index({ jobs, canRegister = true }: IndexProps) {
                     ))
                     }
                 </div>
+                <Pagination className="mb-4">
+                    <PaginationContent>
+                        {/* previous */}
+                        <PaginationPrevious
+                            onClick={() => handlePagination(jobs.links[0].url)}
+                            className={!jobs.links[0].url ? "opacity-50 pointer-events-none" : ""}
+                        />
+
+                        {/* page numbers */}
+                        {jobs.links.slice(1, -1).map((link, index) => {
+                            if (link.label === '…') {
+                                return (
+                                    <PaginationEllipsis key={index} />
+                                )
+                            }
+
+                            return (
+                                <PaginationItem key={index}>
+                                    <PaginationLink
+                                        isActive={link.active}
+                                        onClick={() => handlePagination(link.url)}
+                                    >
+                                        {link.label.replace(/&laquo;|&raquo;/g, '')}
+                                    </PaginationLink>
+                                </PaginationItem>
+                            )
+                        }
+
+                        )}
+
+                        {/* next */}
+                        <PaginationNext
+                            onClick={() => handlePagination(jobs.links[jobs.links.length - 1].url)}
+                            className={!jobs.links[jobs.links.length - 1].url ? "opacity-50 pointer-events-none" : ""} />
+                    </PaginationContent>
+                </Pagination>
             </div>
 
         </div >

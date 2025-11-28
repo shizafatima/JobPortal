@@ -43,7 +43,7 @@ Route::get('jobSeeker/forEmployers', function () {
     return Inertia::render('jobSeeker/ForEmployers');
 })->name('s.forEmployers');
 
-Route::middleware(['auth', 'role:jobSeeker'])->group(function () {
+Route::middleware(['auth', 'verified', 'role:jobSeeker'])->group(function () {
     Route::get('/jobSeeker/appliedJobs', function () {
         return Inertia::render('jobSeeker/AppliedJobs');
     })->name('jobSeeker.appliedJobs');

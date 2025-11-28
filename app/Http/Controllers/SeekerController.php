@@ -26,7 +26,7 @@ class SeekerController extends Controller
     }
 
     public function savedJob(){
-        $jobs = Auth::user()->savedJobs()->with('company')->latest()->paginate(6);
+        $jobs = Auth::user()->savedJobs()->with('company')->latest()->paginate(5);
 
         return Inertia::render('jobSeeker/SavedJobs', [
             'jobs' => $jobs,
