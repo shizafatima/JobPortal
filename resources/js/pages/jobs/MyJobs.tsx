@@ -158,7 +158,7 @@ export default function MyJobs({ jobs }: MyJobsProps) {
             </div>
 
             {/* Job Cards Section */}
-            <div className="p-3 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            <div className="p-3 grid gap-4 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2">
                 {jobs.data.length === 0 ? (
                     <p className="text-gray-500">No jobs found.</p>
                 ) : (
