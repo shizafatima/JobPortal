@@ -77,6 +77,7 @@ export default function Edit({ job, onSuccess }: Props) {
                 <Field>
                     <div className="flex justify-end space-x-2">
                         <Button
+                            className='bg-[#309689] hover:bg-gray-300 hover:text-black'
                             type="submit" disabled={processing}>
                             {processing ? 'Updating...' : 'Edit'}
                         </Button>

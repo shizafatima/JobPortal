@@ -25,11 +25,11 @@ export default function CreateJobForm({ onSuccess }: Props) {
         post('/jobs', {
             onSuccess: () => {
                 toast("Job has been created", {
-                action: {
-                    label: "Undo",
-                    onClick: () => console.log("Undo"),
-                },
-            });
+                    action: {
+                        label: "Undo",
+                        onClick: () => console.log("Undo"),
+                    },
+                });
                 onSuccess(); // close modal or refresh list
             },
 
@@ -70,6 +70,7 @@ export default function CreateJobForm({ onSuccess }: Props) {
                 <Field>
                     <div className="flex justify-end space-x-2">
                         <Button
+                            className='bg-[#309689]'
                             type="submit" disabled={processing}>
                             {processing ? 'Saving...' : 'Create Job'}
                         </Button>

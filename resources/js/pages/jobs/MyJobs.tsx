@@ -81,7 +81,7 @@ function ConfirmAlert({ id }: ConfirmAlertProps) {
                     </p>
 
                     <DialogFooter className="mt-4">
-                        
+
 
                         <Button variant="destructive" onClick={handleDelete}>
                             Confirm
@@ -114,7 +114,7 @@ export default function MyJobs({ jobs }: MyJobsProps) {
                 <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
                     <DialogTrigger asChild>
 
-                        <Button>Create Job</Button>
+                        <Button className='bg-[#309689] hover:bg-gray-300 hover:text-black'>Create Job</Button>
                     </DialogTrigger>
                     <DialogContent>
                         <DialogHeader>
@@ -167,8 +167,8 @@ export default function MyJobs({ jobs }: MyJobsProps) {
                             <CardHeader>
                                 <div className='flex justify-between'>
                                     <div>
-                                        <CardTitle>{job.company?.name ?? "No Company"}</CardTitle>
-                                        <CardTitle className="text-blue-600">{job.title}</CardTitle>
+                                        <CardTitle >{job.company?.name ?? "No Company"}</CardTitle>
+                                        <CardTitle className="text-[#309689] text-lg">{job.title}</CardTitle>
                                         <CardDescription>Salary: {job.salary}</CardDescription>
                                     </div>
                                     <div>
@@ -183,7 +183,7 @@ export default function MyJobs({ jobs }: MyJobsProps) {
                                                     });
                                                     setIsEditOpen(true);
                                                 }}
-                                            ><Edit2 className="" /></Button>
+                                            ><Edit2 /></Button>
 
 
                                             <ConfirmAlert id={job.id} />
@@ -218,9 +218,9 @@ export default function MyJobs({ jobs }: MyJobsProps) {
 
                         return (
                             <PaginationItem key={index}>
-                                <PaginationLink 
-                                isActive={link.active}
-                                onClick={() => handlePagination(link.url)}
+                                <PaginationLink
+                                    isActive={link.active}
+                                    onClick={() => handlePagination(link.url)}
                                 >
                                     {link.label.replace(/&laquo;|&raquo;/g, '')}
                                 </PaginationLink>
@@ -232,8 +232,8 @@ export default function MyJobs({ jobs }: MyJobsProps) {
 
                     {/* next */}
                     <PaginationNext
-                    onClick={() => handlePagination(jobs.links[jobs.links.length - 1].url)}
-                    className={!jobs.links[jobs.links.length - 1].url ? "opacity-50 pointer-events-none" : ""}/>
+                        onClick={() => handlePagination(jobs.links[jobs.links.length - 1].url)}
+                        className={!jobs.links[jobs.links.length - 1].url ? "opacity-50 pointer-events-none" : ""} />
                 </PaginationContent>
             </Pagination>
 
