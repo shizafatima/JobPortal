@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ApplicationController;
 use App\Http\Controllers\JobController;
+use App\Http\Controllers\ResumeController;
 use App\Http\Controllers\SeekerController;
 use App\Models\Job;
 use Illuminate\Support\Facades\Route;
@@ -37,7 +38,12 @@ Route::middleware(['auth', 'verified', 'role:recruiter'])->group(function () {
     Route::get('/jobs/edit/{job}', [JobController::class, 'edit'])->name('jobs.edit');
     Route::patch('/jobs/{job}', [JobController::class, 'update']);
     Route::delete('/jobs/{job}', [JobController::class, 'delete']);
+    Route::get('/jobs/jobsApplied', [ApplicationController::class, 'jobsApplied'])->name('recruiter.jobsApplied');
+    Route::get('/resume/{filename}', [ResumeController::class, 'viewPdf'])->name('resume.viewPdf');
+    // web.php
+    // Route::get('/resume/{filename}', [ResumeController::class, 'download'])->name('resume.download');
 });
+
 
 Route::get('jobSeeker/forEmployers', function () {
     return Inertia::render('jobSeeker/ForEmployers');
@@ -75,5 +81,6 @@ Route::middleware(['auth', 'verified', 'role:jobSeeker'])->group(function () {
     Route::get('/api/user/applied-jobs', [ApplicationController::class, 'getAppliedJobIds']);
 
 });
+
 
 require __DIR__ . '/settings.php';

@@ -20,7 +20,10 @@ class Job extends Model
     protected $guarded = [];
 
     public function recruiter(): BelongsTo{
-        return $this->belongsTo(User::class, 'id');
+        return $this->belongsTo(User::class, 'user_id');
+    }
+    public function applications(){
+        return $this->hasMany(JobApplication::class);
     }
 
     public function company(){

@@ -30,7 +30,7 @@ const mainNavItems: NavItem[] = [
     },
     {
         title: 'Applied Jobs',
-        href: '/jobSeeker/appliedJobs',
+        href: '/jobs/jobsApplied',
         icon: FolderOpen,
     },
     

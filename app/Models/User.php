@@ -87,4 +87,9 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(Job::class, 'applied_jobs', 'user_id', 'job_id');
     }
+
+    public function applied()
+{
+    return $this->hasMany(JobApplication::class, 'user_id'); // one-to-many, not many-to-many
+}
 }

@@ -94,4 +94,8 @@ class JobController extends Controller
         //redirect 
         // return redirect('/jobs');
     }
+
+    public function appliedJobs(){
+        
+    }
 }
