@@ -28,12 +28,6 @@ interface Props {
 
 export default function JobsApplied({ applications }: Props) {
 
-    const openResume = (filename: string) => {
-        if (!filename) return;
-        // Construct the direct path to storage/app/public/resumes
-        const url = `/storage/resumes/${filename}`;
-        window.open(url, "_blank"); // Opens the PDF in a new tab
-    };
     return (
         <div>
             <h2 className="flex text-4xl font-bold items-center mx-20 my-3">Applied Jobs</h2>
