@@ -37,7 +37,7 @@ class ApplicationController extends Controller
             ->where('user_id', Auth::id()) // use Auth::id() for currently logged-in user
             ->exists();
 
-            // Auth::user()->appliedJobs()->attach($job->id);
+            Auth::user()->appliedJobs()->attach($job->id);
 
         if ($alreadyApplied) {
             return back()->withErrors(['error' => 'You have already applied for this job.']);
@@ -82,12 +82,12 @@ class ApplicationController extends Controller
         ]);
     }
 
-    // public function getAppliedJobIds(Job $job){
-    //     $user = Auth::user();
-    //     // $user->appliedJobs()->attach($job->id);
-    //     $appliedJobIds = $user->appliedJobs()->pluck('job_id');
-    //     return response()->json($appliedJobIds);
-    // }
+    public function getAppliedJobIds(Job $job){
+        $user = Auth::user();
+        // $user->appliedJobs()->attach($job->id);
+        $appliedJobIds = $user->appliedJobs()->pluck('job_id');
+        return response()->json($appliedJobIds);
+    }
 
     public function jobsApplied(){
         $recruiter = Auth::user();
