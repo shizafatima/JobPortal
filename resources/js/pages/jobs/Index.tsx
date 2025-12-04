@@ -110,21 +110,6 @@ export default function Index({ jobs }: IndexProps) {
                     className={!jobs.links[jobs.links.length - 1].url ? "opacity-50 pointer-events-none" : ""}/>
                 </PaginationContent>
             </Pagination>
-            {/* <div>
-                {jobs.links.map((link, index) => (
-                    <Link
-                        key={index}
-                        href={link.url || '#'}
-                        preserveScroll
-                        className={`
-                px-4 py-2 text-sm border rounded-md
-                ${link.active ? 'bg-blue-600 text-white' : 'bg-white hover:bg-gray-50'}
-                ${!link.url && 'opacity-50 cursor-not-allowed'}
-            `}
-                        dangerouslySetInnerHTML={{ __html: link.label }}
-                    />
-                ))}
-            </div> */}
 
 
 
