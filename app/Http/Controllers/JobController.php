@@ -40,7 +40,7 @@ class JobController extends Controller
 
 
         Job::create($validated);
-        return redirect()->route('jobs.index');
+        return redirect()->route('jobs.myJobs');
     }
 
     public function myJobs()
@@ -92,7 +92,7 @@ class JobController extends Controller
         $job->delete();
 
         //redirect 
-        // return redirect('/jobs');
+        return back()->with('success', 'deleted'); 
     }
 
     public function appliedJobs(){

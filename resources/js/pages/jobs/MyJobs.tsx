@@ -10,7 +10,7 @@ import Edit from './Edit';
 import { Dialog, DialogFooter, DialogHeader, DialogContent, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Card, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Field } from '@/components/ui/field';
-import { Edit2, Trash2 } from 'lucide-react';
+import { Edit2, Plus, Trash2 } from 'lucide-react';
 import { Pagination, PaginationContent, PaginationEllipsis, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious } from '@/components/ui/pagination';
 
 const breadcrumbs: BreadcrumbItem[] = [
@@ -83,7 +83,7 @@ function ConfirmAlert({ id }: ConfirmAlertProps) {
                     <DialogFooter className="mt-4">
 
 
-                        <Button variant="destructive" onClick={handleDelete}>
+                        <Button className='hover:bg-red-400' variant="destructive" onClick={handleDelete}>
                             Confirm
                         </Button>
                     </DialogFooter>
@@ -114,7 +114,7 @@ export default function MyJobs({ jobs }: MyJobsProps) {
                 <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
                     <DialogTrigger asChild>
 
-                        <Button className='bg-[#309689] hover:bg-gray-300 hover:text-black'>Create Job</Button>
+                        <Button className='bg-[#309689] hover:bg-gray-300 hover:text-black'><Plus className='mr-0'/> Create Job</Button>
                     </DialogTrigger>
                     <DialogContent>
                         <DialogHeader>
