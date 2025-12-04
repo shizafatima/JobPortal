@@ -1,5 +1,15 @@
+import { Breadcrumb } from "@/components/ui/breadcrumb";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import AppLayout from "@/layouts/app-layout";
+import { BreadcrumbItem } from "@/types";
 import { Link } from "@inertiajs/react";
+
+const breadcrumbs: BreadcrumbItem[] = [
+    {
+        title: 'Applied Jobs',
+        href: '/jobs/jobsApplied',
+    },
+];
 
 interface Application {
     id: number;
@@ -29,6 +39,7 @@ interface Props {
 export default function JobsApplied({ applications }: Props) {
 
     return (
+        <AppLayout breadcrumbs={breadcrumbs}>
         <div>
             <h2 className="flex text-4xl font-bold items-center mx-20 my-3">Applied Jobs</h2>
 
@@ -49,5 +60,6 @@ export default function JobsApplied({ applications }: Props) {
                 </Card>
             ))}
         </div>
+        </AppLayout>
     )
 }
