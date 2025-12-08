@@ -67,7 +67,23 @@
                                 </div>
 
                                 <div>
-                                    <label class="block text-gray-700 text-sm font-bold mb-2">Company</label>
+                                    <div class="flex justify-between items-center">
+                                        <div>
+                                            <label class="block text-gray-700 text-sm font-bold mb-2">Company</label>
+                                        </div>
+                                        <div>
+                                            <button type="button"
+                                                class="removeBtn text-black text-sm rounded cursor-pointer">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                                    stroke-linecap="round" stroke-linejoin="round"
+                                                    class="lucide lucide-x-icon lucide-x">
+                                                    <path d="M18 6 6 18" />
+                                                    <path d="m6 6 12 12" />
+                                                </svg>
+                                            </button>
+                                        </div>
+                                    </div>
                                     <input type="text" name="experience[0][company]"
                                         class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
                                 </div>
@@ -116,7 +132,24 @@
                                 </div>
 
                                 <div>
-                                    <label class="block text-gray-700 text-sm font-bold mb-2">Institution</label>
+                                    <div class="flex justify-between items-center">
+                                        <div>
+                                            <label class="block text-gray-700 text-sm font-bold mb-2">Institution</label>
+                                        </div>
+                                        <div>
+                                            <button type="button"
+                                                class="removeBtn text-black text-sm rounded cursor-pointer">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                                    stroke-linecap="round" stroke-linejoin="round"
+                                                    class="lucide lucide-x-icon lucide-x">
+                                                    <path d="M18 6 6 18" />
+                                                    <path d="m6 6 12 12" />
+                                                </svg>
+                                            </button>
+                                        </div>
+                                    </div>
+
                                     <input type="text" name="education[0][institution]"
                                         class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
                                 </div>
@@ -133,6 +166,7 @@
                                         class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
                                 </div>
                             </div>
+
                         </div>
                     </div>
                     <button type="button" id="addEducationBtn"
@@ -218,6 +252,63 @@
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
     <script>
+        // -------- Add Education Functionality --------
+        const educationContainer = document.getElementById('educationContainer');
+        const addEducationBtn = document.getElementById('addEducationBtn');
+
+        function updateRemoveButtons() {
+            const items = educationContainer.querySelectorAll('.education-item');
+            const removeBtns = educationContainer.querySelectorAll('.removeBtn');
+
+            removeBtns.forEach(btn => {
+                if (items.length === 1) {
+                    btn.classList.add('pointer-events-none', 'opacity-50', 'cursor-not-allowed');
+                } else {
+                    btn.classList.remove('pointer-events-none', 'opacity-50', 'cursor-not-allowed');
+                }
+            });
+        }
+
+        addEducationBtn.addEventListener('click', function () {
+            const items = educationContainer.querySelectorAll('.education-item');
+            const lastItem = items[items.length - 1];
+            const newItem = lastItem.cloneNode(true); // clone the last item
+
+            // Reset input values and increment indices
+            const index = items.length;
+            const inputs = newItem.querySelectorAll('input');
+
+            inputs.forEach(input => {
+                // Clear the value
+                input.value = '';
+
+                // Update name index, e.g., education[0][degree] -> education[1][degree]
+                input.name = input.name.replace(/\[\d+\]/, `[${index}]`);
+            });
+
+            // Append the new education item to the container
+            educationContainer.appendChild(newItem);
+
+            // Remove education item
+            educationContainer.addEventListener('click', function (e) {
+                const btn = e.target.closest('.removeBtn');
+                if (!btn) return;
+
+                const items = educationContainer.querySelectorAll('.education-item');
+                if (items.length === 1) return; // don't remove last container
+
+                const educationItem = btn.closest('.education-item');
+                if (educationItem) {
+                    educationItem.remove();
+                    updateRemoveButtons(); // update buttons after removal
+                }
+            });
+
+            // Call after page load or after adding a new container
+            updateRemoveButtons();
+
+        });
+
         function formToJson(form) {
             const formData = new FormData(form);
             let json = {};
@@ -350,5 +441,5 @@
 @endsection
 
 @push('scripts')
-@vite(['resources/js/app.js'])
+    @vite(['resources/js/app.js'])
 @endpush
