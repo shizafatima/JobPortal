@@ -81,9 +81,8 @@ class ResumeController extends Controller
         return view('preview', compact('resume'));
     }
 
-    public function downloadPdf($id)
+    public function downloadPdf(Resume $resume)
 {
-    $resume = Resume::findOrFail($id);
     $pdf = PDF::loadView('pdf', compact('resume'));
 
     return $pdf->download('pdf');

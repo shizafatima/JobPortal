@@ -89,7 +89,7 @@ Route::get('/resume', function() {
 Route::post('/api/resume/save', [ResumeController::class, 'saveResume']);
 
 Route::get('/resume/preview/{resume}', [ResumeController::class, 'preview'])->name('resume.preview');
-Route::get('/resume/download/{id}', [ResumeController::class, 'downloadPdf'])->name('resume.download');
+Route::get('/resume/download/{resume}', [ResumeController::class, 'downloadPdf'])->name('resume.download');
 
 
 
