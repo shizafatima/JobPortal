@@ -82,10 +82,23 @@ class ResumeController extends Controller
     }
 
     public function downloadPdf(Resume $resume)
-{
-    $pdf = PDF::loadView('pdf', compact('resume'));
+    {
+        $pdf = PDF::loadView('pdf', compact('resume'));
 
-    return $pdf->download('pdf');
-}
+        return $pdf->download('pdf');
+    }
 
+    public function delete(Resume $resume)
+    {
+        if ($resume->user_id !== Auth::id()) {
+            abort(403, 'Unauthorized');
+        }
+
+        $resume->delete();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Resume deleted successfully'
+        ]);
+    }
 }

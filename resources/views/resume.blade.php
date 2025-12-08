@@ -314,35 +314,41 @@
                     alert('Failed to download resume.');
                 });
         });
-        // document.getElementById('downloadResumeBtn').addEventListener('click', async function () {
-        //     const resumeId = form.dataset.resumeId;
+        // -------- Delete Resume --------
 
-        //     if (!resumeId) {
-        //         alert('Please save the resume first before downloading.');
-        //         return;
-        //     }
+        document.getElementById('deleteResumeBtn').addEventListener('click', async function () {
+            const resumeId = form.dataset.resumeId;
 
-        //     try {
-        //         const response = await axios.get(`/api/resume/download/${resumeId}`, {
-        //             responseType: 'blob' // very important for file download
-        //         });
+            console.log("Resume ID:", resumeId);
 
-        //         const url = window.URL.createObjectURL(new Blob([response.data], { type: 'application/pdf' }));
-        //         const link = document.createElement('a');
-        //         link.href = url;
-        //         link.setAttribute('download', `resume_${resumeId}.pdf`);
-        //         document.body.appendChild(link);
-        //         link.click();
-        //         link.remove();
-        //     } catch (err) {
-        //         console.error('Error downloading resume PDF:', err);
-        //         alert('Error downloading resume PDF');
-        //     }
-        // });
+
+            if (!resumeId) {
+                alert('No saved resume found to delete.');
+                return;
+            }
+
+            if (!confirm('Are you sure you want to delete this resume?')) {
+                return;
+            }
+
+            try {
+                const res = await axios.delete(`/api/resume/${resumeId}`);
+                alert(res.data.message);
+
+                // Clear stored resumeId so user can't preview/download deleted resume
+                delete form.dataset.resumeId;
+
+                // Optional: reset the form after delete
+                form.reset();
+            } catch (error) {
+                console.error('Error deleting resume:', error);
+                alert('Failed to delete resume.');
+            }
+        });
 
     </script>
 @endsection
 
 @push('scripts')
-    @vite(['resources/js/app.js'])
+@vite(['resources/js/app.js'])
 @endpush
