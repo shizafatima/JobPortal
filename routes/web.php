@@ -82,5 +82,17 @@ Route::middleware(['auth', 'verified', 'role:jobSeeker'])->group(function () {
 
 });
 
+Route::get('/resume', function() {
+    return view('resume');
+});
+
+Route::post('/api/resume/save', [ResumeController::class, 'saveResume']);
+
+Route::get('/resume/preview/{resume}', [ResumeController::class, 'preview'])->name('resume.preview');
+Route::get('/resume/download/{id}', [ResumeController::class, 'downloadPdf'])->name('resume.download');
+
+
+
+
 
 require __DIR__ . '/settings.php';
