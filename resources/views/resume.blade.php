@@ -252,6 +252,63 @@
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
     <script>
+        // -------- Add Experience Functionality --------
+        const experienceContainer = document.getElementById('experienceContainer');
+        const addExperienceBtn = document.getElementById('addExperienceBtn');
+
+        function updateRemoveButtons() {
+            const items = experienceContainer.querySelectorAll('.experience-item');
+            const removeBtns = experienceContainer.querySelectorAll('.removeBtn');
+
+            removeBtns.forEach(btn => {
+
+                if (items.length === 1) {
+                    btn.classList.add('pointer-events-none', 'opacity-50', 'cursor-not-allowed');
+                } else {
+                    btn.classList.remove('pointer-events-none', 'opacity-50', 'cursor-not-allowed');
+                }
+
+            });
+        }
+
+        addExperienceBtn.addEventListener('click', function () {
+            const items = experienceContainer.querySelectorAll('.experience-item');
+            const lastItem = items[items.length - 1];
+            const newItem = lastItem.cloneNode(true);
+            // Reset input values and increment indices
+            const index = items.length;
+            const inputs = newItem.querySelectorAll('input, textarea');
+
+            inputs.forEach(input => {
+                //clear the value
+                input.value = '';
+                // Update name index, e.g., experience[0][title] -> experience[1][title]
+                input.name = input.name.replace(/\[\d+\]/, `[${index}]`);
+
+            });
+
+            // Append the new experience item to the container
+            experienceContainer.appendChild(newItem);
+
+            // Remove experience item
+            experienceContainer.addEventListener('click', function (e) {
+                const btn = e.target.closest('.removeBtn');
+                if (!btn) return;
+
+                const items = experienceContainer.querySelectorAll('.experience-item');
+                if (items.length === 1) return; //don't remove last container
+
+                const experienceItem = btn.closest('.experience-item');
+                if (experienceItem) {
+                    experienceItem.remove();
+                    updateRemoveButtons(); //update buttons after removal
+                }
+            });
+
+            updateRemoveButtons(); // Call after page load or after adding a new container
+        });
+
+        
         // -------- Add Education Functionality --------
         const educationContainer = document.getElementById('educationContainer');
         const addEducationBtn = document.getElementById('addEducationBtn');
