@@ -35,7 +35,7 @@ class ResumeController extends Controller
             'email' => 'required|email|max:255',
             'phone' => 'required|string|max:20',
             'linkedin' => 'nullable|url',
-            'address' => 'nullable|string|max:500',
+            'address' => 'required|nullable|string|max:500',
             'summary' => 'nullable|string',
             'experience' => 'nullable|array',
             'education' => 'nullable|array',
