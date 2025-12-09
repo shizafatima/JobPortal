@@ -199,11 +199,28 @@
                                 </div>
 
                                 <div>
-                                    <label class="block text-gray-700 text-sm font-bold mb-2">Issuing Organization</label>
+                                    <div class="flex justify-between items-center">
+                                        <div>
+                                            <label class="block text-gray-700 text-sm font-bold mb-2">Issuing
+                                                Organization</label>
+                                        </div>
+                                        <div>
+                                            <button type="button"
+                                                class="removeBtn text-black text-sm rounded cursor-pointer">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                                    stroke-linecap="round" stroke-linejoin="round"
+                                                    class="lucide lucide-x-icon lucide-x">
+                                                    <path d="M18 6 6 18" />
+                                                    <path d="m6 6 12 12" />
+                                                </svg>
+                                            </button>
+                                        </div>
+                                    </div>
+
                                     <input type="text" name="certifications[0][organization]"
                                         class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
                                 </div>
-
                                 <div>
                                     <label class="block text-gray-700 text-sm font-bold mb-2">Year</label>
                                     <input type="number" name="certifications[0][year]" min="1950" max="2030"
@@ -256,7 +273,7 @@
         const experienceContainer = document.getElementById('experienceContainer');
         const addExperienceBtn = document.getElementById('addExperienceBtn');
 
-        function updateRemoveButtons() {
+        function updateExpRemoveButtons() {
             const items = experienceContainer.querySelectorAll('.experience-item');
             const removeBtns = experienceContainer.querySelectorAll('.removeBtn');
 
@@ -301,19 +318,19 @@
                 const experienceItem = btn.closest('.experience-item');
                 if (experienceItem) {
                     experienceItem.remove();
-                    updateRemoveButtons(); //update buttons after removal
+                    updateExpRemoveButtons(); //update buttons after removal
                 }
             });
 
-            updateRemoveButtons(); // Call after page load or after adding a new container
+            updateExpRemoveButtons(); // Call after page load or after adding a new container
         });
 
-        
+
         // -------- Add Education Functionality --------
         const educationContainer = document.getElementById('educationContainer');
         const addEducationBtn = document.getElementById('addEducationBtn');
 
-        function updateRemoveButtons() {
+        function updateEduRemoveButtons() {
             const items = educationContainer.querySelectorAll('.education-item');
             const removeBtns = educationContainer.querySelectorAll('.removeBtn');
 
@@ -357,14 +374,72 @@
                 const educationItem = btn.closest('.education-item');
                 if (educationItem) {
                     educationItem.remove();
-                    updateRemoveButtons(); // update buttons after removal
+                    updateEduRemoveButtons(); // update buttons after removal
                 }
             });
 
             // Call after page load or after adding a new container
-            updateRemoveButtons();
+            updateEduRemoveButtons();
 
         });
+
+        // -------- Add Certification Functionality --------
+        const certificationContainer = document.getElementById('certificationContainer');
+        const addCertificateBtn = document.getElementById('addCertificationBtn');
+
+        function updateCertRemoveButtons() {
+            const items = certificationContainer.querySelectorAll('.certification-item');
+            const removeBtns = certificationContainer.querySelectorAll('.removeBtn');
+
+            removeBtns.forEach(btn => {
+
+                if (items.length === 1) {
+                    btn.classList.add('pointer-events-none', 'opacity-50', 'cursor-not-allowed');
+                } else {
+                    btn.classList.remove('pointer-events-none', 'opacity-50', 'cursor-not-allowed');
+                }
+
+            });
+        }
+
+        addCertificateBtn.addEventListener('click', function () {
+            const items = certificationContainer.querySelectorAll('.certification-item');
+            const lastItem = items[items.length - 1];
+            const newItem = lastItem.cloneNode(true);
+            // Reset input values and increment indices
+            const index = items.length;
+            const inputs = newItem.querySelectorAll('input');
+
+            inputs.forEach(input => {
+                //clear the value
+                input.value = '';
+                // Update name index, e.g., experience[0][title] -> experience[1][title]
+                input.name = input.name.replace(/\[\d+\]/, `[${index}]`);
+
+            });
+
+            // Append the new experience item to the container
+            certificationContainer.appendChild(newItem);
+
+            // Remove experience item
+            certificationContainer.addEventListener('click', function (e) {
+                const btn = e.target.closest('.removeBtn');
+                if (!btn) return;
+
+                const items = certificationContainer.querySelectorAll('.certification-item');
+                if (items.length === 1) return; //don't remove last container
+
+                const certificationItem = btn.closest('.certification-item');
+                if (certificationItem) {
+                    certificationItem.remove();
+                    updateCertRemoveButtons(); //update buttons after removal
+                }
+            });
+
+            updateCertRemoveButtons(); // Call after page load or after adding a new container
+        });
+
+
 
         function formToJson(form) {
             const formData = new FormData(form);
