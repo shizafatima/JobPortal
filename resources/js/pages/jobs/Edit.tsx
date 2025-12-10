@@ -2,10 +2,7 @@ import { Button } from '@/components/ui/button';
 import { toast } from "sonner";
 import { Field, FieldDescription, FieldGroup, FieldLabel, FieldSet } from '@/components/ui/field';
 import { Input } from '@/components/ui/input';
-import { Link, useForm } from '@inertiajs/react';
-import { FormEvent, useState } from 'react';
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
-import { Edit2 } from 'lucide-react';
+import { useForm } from '@inertiajs/react';
 
 interface JobData {
     id: number;
