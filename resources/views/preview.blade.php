@@ -8,13 +8,6 @@
         <div class="max-w-4xl mx-auto bg-white shadow-md rounded p-6">
             <h1 class="text-2xl font-bold mb-6">Resume Preview</h1>
 
-            {{-- @php
-            $data = session('resume_preview', []);
-            @endphp --}}
-
-            {{-- @php
-            $lines = preg_split('/\r\n|\r|\n/', $exp['description']);
-            @endphp --}}
             @php
                 $hasExperience = false;
                 if (!empty($resume->experience)) {
@@ -73,8 +66,8 @@
             <!-- Professional Summary -->
             @if(!empty($resume->summary))
                 <div class="mb-2">
-                    <h2 class="text-sm font-bold mb-2 border-b pb-1">Professional Summary</h2>
-                    <ul class="list-disc list-inside">
+                    <h2 class="text-lg font-bold mb-2 border-b pb-1">Professional Summary</h2>
+                    <ul class="text-sm list-disc list-inside">
                         <li class="mb-1">
                             {{ $resume->summary }}
                         </li>
@@ -119,16 +112,17 @@
                 <div class="mb-2">
                     <h2 class="text-lg font-bold mb-2 border-b pb-1">Education</h2>
                     @foreach($resume->education as $edu)
-                        <div class="mb-4">
-                            <ul>
+                        <div class="mb-4 text-sm">
+                            <ul class="list-disc list-inside">
                                 <li><strong>{{ $edu['degree'] ?? '' }}</strong> at
-                                    {{ $edu['institution'] ?? '' | $edu['year' ?? '']}}</li>
-                                {{-- <p>{{ $edu['year'] ?? '' }} | GPA: {{ $edu['gpa'] ?? 'N/A' }}</p> --}}
-                                <span>
-                                    @if (!empty($resume->gpa))
-                                        | GPA: {{ ($resume->gpa ?? '') }}
-                                    @endif
-                                </span>
+                                    {{ $edu['institution'] ?? ''}} ({{  $edu['year'] ?? ''}})
+                                    <span>
+                                        @if (!empty($edu['gpa']))
+                                            | <strong> GPA:</strong> {{ ($edu['gpa'] ?? '') }}
+                                        @endif
+                                    </span>
+                                </li>
+
                             </ul>
                         </div>
                     @endforeach
@@ -141,8 +135,11 @@
                     <h2 class="text-lg font-bold mb-2 border-b pb-1">Certifications</h2>
                     @foreach($resume->certifications as $cert)
                         <div class="mb-4">
-                            <p><strong>{{ $cert['name'] ?? '' }}</strong> by {{ $cert['organization'] ?? '' }}</p>
-                            <p>{{ !empty($cert['year'])  }}</p>
+                            <ul class="list-disc list-inside text-sm">
+                                <li><strong>{{ $cert['name'] ?? '' }}</strong> by {{ $cert['organization'] ?? ''}}
+                                    ({{ $cert['year'] ?? '' }})</li>
+                            </ul>
+
                         </div>
                     @endforeach
                 </div>

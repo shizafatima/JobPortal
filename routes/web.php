@@ -93,6 +93,9 @@ Route::get('/resume/download/{resume}', [ResumeController::class, 'downloadPdf']
 Route::delete('/api/resume/{resume}', [ResumeController::class, 'delete'])->name('resume.delete');
 
 
+Route::get('/api/resume/get', [ResumeController::class, 'getResume']);
+
+
 
 
 

@@ -15,25 +15,25 @@
 
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div>
-                            <label class="block text-gray-700 text-sm font-bold mb-2">Full Name *</label>
+                            <label class="block text-gray-700 text-sm font-bold mb-2">Full Name <span class="text-red-600">*</span></label>
                             <input type="text" name="full_name" required
                                 class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
                         </div>
 
                         <div>
-                            <label class="block text-gray-700 text-sm font-bold mb-2">Email *</label>
+                            <label class="block text-gray-700 text-sm font-bold mb-2">Email <span class="text-red-600">*</span></label>
                             <input type="email" name="email" required
                                 class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
                         </div>
 
                         <div>
-                            <label class="block text-gray-700 text-sm font-bold mb-2">Phone *</label>
+                            <label class="block text-gray-700 text-sm font-bold mb-2">Phone <span class="text-red-600">*</span></label>
                             <input type="tel" name="phone" required
                                 class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
                         </div>
 
-                        <div >
-                            <label class="block text-gray-700 text-sm font-bold mb-2">Address *</label>
+                        <div>
+                            <label class="block text-gray-700 text-sm font-bold mb-2">Address <span class="text-red-600">*</span></label>
                             <input type="text" name="address" required
                                 class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
                         </div>
@@ -44,14 +44,14 @@
                                 class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
                         </div>
 
-                        
+
                     </div>
                 </div>
 
                 <!-- Professional Summary -->
                 <div class="mb-6">
                     <h2 class="text-2xl font-semibold mb-4 border-b pb-2">Professional Summary</h2>
-                    <textarea name="summary" rows="4"
+                    <textarea name="summary" rows="5"
                         class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                         placeholder="Brief overview of your professional background and career objectives"></textarea>
                 </div>
@@ -107,8 +107,8 @@
                                 </div>
 
                                 <div class="md:col-span-2">
-                                    <label class="block text-gray-700 text-sm font-bold mb-2">Responsibilities</label>
-                                    <textarea name="experience[0][description]" rows="3"
+                                    <label class="block text-gray-700 text-sm font-bold mb-2">Description</label>
+                                    <textarea name="experience[0][description]" rows="4"
                                         class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                                         placeholder="Describe your key responsibilities and achievements"></textarea>
                                 </div>
@@ -570,6 +570,109 @@
                 alert('Failed to delete resume.');
             }
         });
+
+        // -------------------------------------------
+        // -------- Load Existing Resume Data --------
+        // -------------------------------------------
+
+        axios.get('/api/resume/get')
+            .then(res => {
+                const resume = res.data.resume;
+                if (!resume) return;
+
+                // Save resume ID for preview/download/delete
+                form.dataset.resumeId = resume.id;
+
+                /* --------------------
+                --- Fill basic info ---
+                -------------------- */
+
+                document.querySelector('input[name="full_name"]').value = resume.full_name || '';
+                document.querySelector('input[name="email"]').value = resume.email || '';
+                document.querySelector('input[name="phone"]').value = resume.phone || '';
+                document.querySelector('input[name="address"]').value = resume.address || '';
+                document.querySelector('input[name="linkedin"]').value = resume.linkedin || '';
+                document.querySelector('textarea[name="summary"]').value = resume.summary || '';
+                document.querySelector('textarea[name="skills"]').value = resume.skills ? resume.skills.join(', ') : '';
+
+                /* --------------------
+                --- Fill Experience ---
+                -------------------- */
+
+                if (resume.experience && resume.experience.length > 0) {
+                    // First item
+                    const firstExp = experienceContainer.querySelector('.experience-item');
+                    firstExp.querySelector('input[name="experience[0][title]"]').value = resume.experience[0].title || '';
+                    firstExp.querySelector('input[name="experience[0][company]"]').value = resume.experience[0].company || '';
+                    firstExp.querySelector('input[name="experience[0][start_date]"]').value = resume.experience[0].start_date || '';
+                    firstExp.querySelector('input[name="experience[0][end_date]"]').value = resume.experience[0].end_date || '';
+                    firstExp.querySelector('textarea[name="experience[0][description]"]').value = resume.experience[0].description || '';
+                    if (resume.experience[0].current) {
+                        firstExp.querySelector('input[name="experience[0][current]"]').checked = true;
+                    }
+
+                    // Other items
+                    for (let i = 1; i < resume.experience.length; i++) {
+                        addExperienceBtn.click(); // clone
+                        const item = experienceContainer.querySelectorAll('.experience-item')[i];
+                        item.querySelector(`input[name="experience[${i}][title]"]`).value = resume.experience[i].title || '';
+                        item.querySelector(`input[name="experience[${i}][company]"]`).value = resume.experience[i].company || '';
+                        item.querySelector(`input[name="experience[${i}][start_date]"]`).value = resume.experience[i].start_date || '';
+                        item.querySelector(`input[name="experience[${i}][end_date]"]`).value = resume.experience[i].end_date || '';
+                        item.querySelector(`textarea[name="experience[${i}][description]"]`).value = resume.experience[i].description || '';
+                        if (resume.experience[i].current) {
+                            item.querySelector(`input[name="experience[${i}][current]"]`).checked = true;
+                        }
+                    }
+                }
+
+                /* --------------------
+                --- Fill Education ---
+                -------------------- */
+
+                if (resume.education && resume.education.length > 0) {
+                    // First item
+                    const firstEdu = educationContainer.querySelector('.education-item');
+                    firstEdu.querySelector('input[name="education[0][degree]"]').value = resume.education[0].degree || '';
+                    firstEdu.querySelector('input[name="education[0][institution]"]').value = resume.education[0].institution || '';
+                    firstEdu.querySelector('input[name="education[0][year]"]').value = resume.education[0].year || '';
+                    firstEdu.querySelector('input[name="education[0][gpa]"]').value = resume.education[0].gpa || '';
+
+
+                    // Other items
+                    for (let i = 1; i < resume.education.length; i++) {
+                        addEducationBtn.click(); // clone
+                        const item = educationContainer.querySelectorAll('.education-item')[i];
+                        item.querySelector(`input[name="education[${i}][degree]"]`).value = resume.education[i].degree || '';
+                        item.querySelector(`input[name="education[${i}][institution]"]`).value = resume.education[i].institution || '';
+                        item.querySelector(`input[name="education[${i}][year]"]`).value = resume.education[i].year || '';
+                        item.querySelector(`input[name="education[${i}][gpa]"]`).value = resume.education[i].gpa || '';
+
+                    }
+                }
+
+                /* --------------------
+                Fill Certifications
+                -------------------- */
+                if (resume.certifications && resume.certifications.length > 0) {
+                    // First item
+                    const firstCert = certificationContainer.querySelector('.certification-item');
+                    firstCert.querySelector('input[name="certifications[0][name]"]').value = resume.certifications[0].name || '';
+                    firstCert.querySelector('input[name="certifications[0][organization]"]').value = resume.certifications[0].organization || '';
+                    firstCert.querySelector('input[name="certifications[0][year]"]').value = resume.certifications[0].year || '';
+
+                    // Other items
+                    for (let i = 1; i < resume.certifications.length; i++) {
+                        addCertificationBtn.click(); // clone
+                        const item = certificationContainer.querySelectorAll('.certification-item')[i];
+                        item.querySelector(`input[name="certifications[${i}][name]"]`).value = resume.certifications[i].name || '';
+                        item.querySelector(`input[name="certifications[${i}][organization]"]`).value = resume.certifications[i].organization || '';
+                        item.querySelector(`input[name="certifications[${i}][year]"]`).value = resume.certifications[i].year || '';
+                    }
+                }
+            })
+            .catch(err => console.error(err));
+
 
     </script>
 @endsection

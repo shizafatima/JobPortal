@@ -101,4 +101,10 @@ class ResumeController extends Controller
             'message' => 'Resume deleted successfully'
         ]);
     }
+
+    public function getResume(Request $request)
+    {
+        $resume = Resume::where('user_id', Auth::id())->first();
+        return response()->json(['resume' => $resume]);
+    }
 }
