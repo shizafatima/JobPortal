@@ -15,32 +15,41 @@
 
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div>
-                            <label class="block text-gray-700 text-sm font-bold mb-2">Full Name <span class="text-red-600">*</span></label>
+                            <label class="block text-gray-700 text-sm font-bold mb-2">Full Name <span
+                                    class="text-red-600">*</span></label>
                             <input type="text" name="full_name" required
                                 class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
                         </div>
 
                         <div>
-                            <label class="block text-gray-700 text-sm font-bold mb-2">Email <span class="text-red-600">*</span></label>
+                            <label class="block text-gray-700 text-sm font-bold mb-2">Email <span
+                                    class="text-red-600">*</span></label>
                             <input type="email" name="email" required
                                 class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
                         </div>
 
                         <div>
-                            <label class="block text-gray-700 text-sm font-bold mb-2">Phone <span class="text-red-600">*</span></label>
+                            <label class="block text-gray-700 text-sm font-bold mb-2">Phone No <span
+                                    class="text-red-600">*</span></label>
                             <input type="tel" name="phone" required
                                 class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
                         </div>
 
                         <div>
-                            <label class="block text-gray-700 text-sm font-bold mb-2">Address <span class="text-red-600">*</span></label>
+                            <label class="block text-gray-700 text-sm font-bold mb-2">Address <span
+                                    class="text-red-600">*</span></label>
                             <input type="text" name="address" required
                                 class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
                         </div>
 
-                        <div class="md:col-span-2">
+                        <div class="">
                             <label class="block text-gray-700 text-sm font-bold mb-2">LinkedIn</label>
                             <input type="url" name="linkedin"
+                                class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                        </div>
+                        <div>
+                            <label class="block text-gray-700 text-sm font-bold mb-2">GitHub</label>
+                            <input type="text" name="github"
                                 class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
                         </div>
 
@@ -116,7 +125,7 @@
                         </div>
                     </div>
                     <button type="button" id="addExperienceBtn"
-                        class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+                        class="bg-[#309689] hover:bg-[#3db6a6] text-white font-bold py-2 px-3 rounded focus:outline-none focus:shadow-outline">
                         + Add Experience
                     </button>
                 </div>
@@ -172,7 +181,7 @@
                         </div>
                     </div>
                     <button type="button" id="addEducationBtn"
-                        class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+                        class="bg-[#309689] hover:bg-[#3db6a6] text-white font-bold py-2 px-3 rounded focus:outline-none focus:shadow-outline">
                         + Add Education
                     </button>
                 </div>
@@ -232,27 +241,88 @@
                         </div>
                     </div>
                     <button type="button" id="addCertificationBtn"
-                        class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+                        class="bg-[#309689] hover:bg-[#3db6a6] text-white font-bold py-2 px-3 rounded focus:outline-none focus:shadow-outline">
                         + Add Certification
                     </button>
+                </div>
+
+                <!-- Projects -->
+                <div class="mb-6">
+                    <h2 class="text-2xl font-semibold mb-4 border-b pb-2">Projects (Optional)</h2>
+                    <div id="projectContainer">
+                        <div class="project-item border p-4 mb-4 rounded">
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div>
+                                    <label class="block text-gray-700 text-sm font-bold mb-2">Project Name</label>
+                                    <input type="text" name="projects[0][name]"
+                                        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                                </div>
+
+                                <div>
+                                    <div class="flex justify-between items-center">
+                                        <div>
+                                            <label class="block text-gray-700 text-sm font-bold mb-2">Project Link (Github
+                                                Repository/deployement)</label>
+                                        </div>
+                                        <div>
+                                            <button type="button"
+                                                class="removeBtn text-black text-sm rounded cursor-pointer">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                                    stroke-linecap="round" stroke-linejoin="round"
+                                                    class="lucide lucide-x-icon lucide-x">
+                                                    <path d="M18 6 6 18" />
+                                                    <path d="m6 6 12 12" />
+                                                </svg>
+                                            </button>
+                                        </div>
+                                    </div>
+
+                                    <input type="url" name="projects[0][link]"
+                                        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                                </div>
+                                <div class="md:col-span-2">
+                                    <label class="block text-gray-700 text-sm font-bold mb-2">Description</label>
+                                    <textarea name="projects[0][description]" rows="4"
+                                        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                        placeholder="Describe key features of your project"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <button type="button" id="addProjectBtn"
+                        class="bg-[#309689] hover:bg-[#3db6a6] text-white font-bold py-2 px-3 rounded focus:outline-none focus:shadow-outline">
+                        + Add Project
+                    </button>
+                </div>
+
+                <!-- Languages -->
+                <div class="mb-6">
+                    <h2 class="text-2xl font-semibold mb-4 border-b pb-2">Languages</h2>
+                    <div>
+                        <label class="block text-gray-700 text-sm font-bold mb-2">Languages (comma separated)</label>
+                        <textarea name="languages" rows="3"
+                            class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                            placeholder="e.g., English(fluent), Urdu(native)"></textarea>
+                    </div>
                 </div>
 
                 <!-- Submit Buttons -->
                 <div class="flex items-center justify-between mt-8">
                     <div>
                         <button type="button" id="saveResumeBtn"
-                            class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-6 rounded focus:outline-none focus:shadow-outline">
+                            class="bg-gradient-to-r from-[#6B73FF] to-[#000DFF] hover:from-[#7C84FF] hover:to-[#1A1AFF] text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
                             Save
                         </button>
 
                         <button type="button" id="previewResumeBtn"
-                            class="bg-purple-500 hover:bg-purple-700 text-white font-bold py-2 px-6 rounded focus:outline-none focus:shadow-outline">
+                            class="bg-gradient-to-r from-[#5e4f8a] to-[#7c66b0] hover:from-[#7c66b0] hover:to-[#917fc5] text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
                             Preview
                         </button>
 
                         <button type="button" id="downloadResumeBtn"
-                            class="bg-indigo-500 hover:bg-indigo-700 text-white font-bold py-2 px-6 rounded focus:outline-none focus:shadow-outline">
-                            Download
+                            class="bg-gradient-to-r from-[#1f5c7b] to-[#3a84a9] hover:from-[#3a84a9] hover:to-[#5aa8c2] text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+                            Download PDF
                         </button>
 
                     </div>
