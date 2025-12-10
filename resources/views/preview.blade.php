@@ -50,7 +50,7 @@
                 <div>
                     <h2 class="text-3xl font-bold ">{{ $resume->full_name ?? ''  }}</h2>
                     <p>
-                        <strong>Name:</strong> {{ $resume->email ?? '' }} |
+                        <strong>Email:</strong> {{ $resume->email ?? '' }} |
                         <strong>Phone no:</strong> {{ $resume->phone ?? '' }} |
                         <strong>Address:</strong> {{ $resume->address ?? '' }}
 
@@ -67,7 +67,7 @@
             @if(!empty($resume->summary))
                 <div class="mb-2">
                     <h2 class="text-lg font-bold mb-2 border-b pb-1">Professional Summary</h2>
-                    <ul class="text-sm list-disc list-inside">
+                    <ul class="text-sm list-disc list-inside ml-4">
                         <li class="mb-1">
                             {{ $resume->summary }}
                         </li>
@@ -83,8 +83,8 @@
                     @foreach($resume->experience as $exp)
                         <div class="mb-4 text-sm">
                             <div class="mb-2">
-                                <ul class="list-disc list-inside flex row">
-                                    <li class="mb-1"><strong>{{ $exp['title'] }}</strong> at {{ $exp['company'] }}</li>
+                                <ul class="list-disc list-inside flex row ml-4">
+                                    <li class="mb-1"><strong>{{ $exp['title'] }}</strong>, {{ $exp['company'] }}</li>
                                     @php
                                         $start = !empty($exp['start_date']) ? Carbon::parse($exp['start_date'])->format('F Y') : '';
                                         $end = (!empty($exp['current']) && $exp['current']) ? 'Present' : (!empty($exp['end_date']) ? Carbon::parse($exp['end_date'])->format('F Y') : '');
@@ -94,7 +94,7 @@
                                 @php
                                     $lines = preg_split('/\r\n|\r|\n/', $exp['description']);
                                 @endphp
-                                <ul class="list-[circle] ml-12">
+                                <ul class="list-[circle] ml-14">
                                     @foreach ($lines as $line)
                                         @if(trim($line) !== '')
                                             <li class="mb-1">{{ $line }}</li>
@@ -113,8 +113,8 @@
                     <h2 class="text-lg font-bold mb-2 border-b pb-1">Education</h2>
                     @foreach($resume->education as $edu)
                         <div class="mb-4 text-sm">
-                            <ul class="list-disc list-inside">
-                                <li><strong>{{ $edu['degree'] ?? '' }}</strong> at
+                            <ul class="list-disc list-inside ml-4">
+                                <li><strong>{{ $edu['degree'] ?? '' }}</strong>,
                                     {{ $edu['institution'] ?? ''}} ({{  $edu['year'] ?? ''}})
                                     <span>
                                         @if (!empty($edu['gpa']))
@@ -135,8 +135,8 @@
                     <h2 class="text-lg font-bold mb-2 border-b pb-1">Certifications</h2>
                     @foreach($resume->certifications as $cert)
                         <div class="mb-4">
-                            <ul class="list-disc list-inside text-sm">
-                                <li><strong>{{ $cert['name'] ?? '' }}</strong> by {{ $cert['organization'] ?? ''}}
+                            <ul class="list-disc list-inside text-sm ml-4">
+                                <li><strong>{{ $cert['name'] ?? '' }}</strong>, {{ $cert['organization'] ?? ''}}
                                     ({{ $cert['year'] ?? '' }})</li>
                             </ul>
 
@@ -149,7 +149,7 @@
             @if(!empty($hasSkills))
                 <div class="mb-2">
                     <h2 class="text-lg font-bold mb-2 border-b pb-1">Skills</h2>
-                    <ul class="list-disc list-inside text-sm">
+                    <ul class="list-disc list-inside text-sm ml-4">
                         @foreach($resume->skills as $skill)
                             <li>{{ $skill }}</li>
                         @endforeach
@@ -159,7 +159,7 @@
 
             <div class="flex items-center justify-end mt-8">
                 <button type="button" id="downloadResumeBtn"
-                    class="bg-indigo-500 hover:bg-indigo-700 text-white font-bold py-2 px-6 rounded focus:outline-none focus:shadow-outline">
+                    class="bg-[#309689] hover:bg-[#3db6a6] text-white font-bold py-2 px-6 rounded focus:outline-none focus:shadow-outline">
                     Download PDF
                 </button>
             </div>
