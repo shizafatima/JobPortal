@@ -24,6 +24,9 @@ return new class extends Migration
             $table->json('education')->nullable();
             $table->json('skills')->nullable();
             $table->json('certifications')->nullable();
+            // also add below columns to table from another migration
+            // $table->json('projects')->nullable()->after('certifications');
+            // $table->json('languages')->nullable()->after('projects');
             $table->timestamps();
         });
     }

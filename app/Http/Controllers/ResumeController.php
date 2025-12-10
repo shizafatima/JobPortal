@@ -41,6 +41,8 @@ class ResumeController extends Controller
             'education' => 'nullable|array',
             'skills' => 'nullable|string',
             'certifications' => 'nullable|array',
+            'projects' => 'nullable|array',
+            'languages' => 'nullable|string',
         ]);
 
         if ($validator->fails()) {

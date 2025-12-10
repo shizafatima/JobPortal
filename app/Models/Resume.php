@@ -13,7 +13,7 @@ class Resume extends Model
 
     protected $fillable = [
         'user_id', 'full_name', 'email', 'phone', 'linkedin', 'address',
-        'summary', 'experience', 'education', 'skills', 'certifications'
+        'summary', 'experience', 'education', 'skills', 'certifications', 'projects', 'languages'
     ];
 
     protected $casts = [
@@ -21,6 +21,8 @@ class Resume extends Model
         'education' => 'array',
         'skills' => 'array',
         'certifications' => 'array',
+        'projects' => 'array',
+        'languages' => 'array',
     ];
 
     public function user()
