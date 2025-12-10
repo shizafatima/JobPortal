@@ -485,15 +485,15 @@
             inputs.forEach(input => {
                 //clear the value
                 input.value = '';
-                // Update name index, e.g., experience[0][title] -> experience[1][title]
+                // Update name index, e.g., certification[0][title] -> certification[1][title]
                 input.name = input.name.replace(/\[\d+\]/, `[${index}]`);
 
             });
 
-            // Append the new experience item to the container
+            // Append the new certification item to the container
             certificationContainer.appendChild(newItem);
 
-            // Remove experience item
+            // Remove certification item
             certificationContainer.addEventListener('click', function (e) {
                 const btn = e.target.closest('.removeBtn');
                 if (!btn) return;
@@ -511,6 +511,62 @@
             updateCertRemoveButtons(); // Call after page load or after adding a new container
         });
 
+
+        // -------- Add Project Functionality --------
+        const projectContainer = document.getElementById('projectContainer');
+        const addProjectBtn = document.getElementById('addProjectBtn');
+
+        function updateProjRemoveButtons() {
+            const items = projectContainer.querySelectorAll('.project-item');
+            const removeBtns = projectContainer.querySelectorAll('.removeBtn');
+
+            removeBtns.forEach(btn => {
+
+                if (items.length === 1) {
+                    btn.classList.add('pointer-events-none', 'opacity-50', 'cursor-not-allowed');
+                } else {
+                    btn.classList.remove('pointer-events-none', 'opacity-50', 'cursor-not-allowed');
+                }
+
+            });
+        }
+
+        addProjectBtn.addEventListener('click', function () {
+            const items = projectContainer.querySelectorAll('.project-item');
+            const lastItem = items[items.length - 1];
+            const newItem = lastItem.cloneNode(true);
+            // Reset input values and increment indices
+            const index = items.length;
+            const inputs = newItem.querySelectorAll('input');
+
+            inputs.forEach(input => {
+                //clear the value
+                input.value = '';
+                // Update name index, e.g., project[0][name] -> project[1][name]
+                input.name = input.name.replace(/\[\d+\]/, `[${index}]`);
+
+            });
+
+            // Append the new project item to the container
+            projectContainer.appendChild(newItem);
+
+            // Remove project item
+            projectContainer.addEventListener('click', function (e) {
+                const btn = e.target.closest('.removeBtn');
+                if (!btn) return;
+
+                const items = projectContainer.querySelectorAll('.project-item');
+                if (items.length === 1) return; //don't remove last container
+
+                const projectItem = btn.closest('.project-item');
+                if (projectItem) {
+                    projectItem.remove();
+                    updateProjRemoveButtons(); //update buttons after removal
+                }
+            });
+
+            updateProjRemoveButtons(); // Call after page load or after adding a new container
+        });
 
 
         function formToJson(form) {
@@ -664,6 +720,7 @@
                 document.querySelector('input[name="linkedin"]').value = resume.linkedin || '';
                 document.querySelector('textarea[name="summary"]').value = resume.summary || '';
                 document.querySelector('textarea[name="skills"]').value = resume.skills ? resume.skills.join(', ') : '';
+                document.querySelector('textarea[name="languages"]').value = resume.languages ? resume.languages.join(', ') : '';
 
                 /* --------------------
                 --- Fill Experience ---
@@ -738,6 +795,26 @@
                         item.querySelector(`input[name="certifications[${i}][name]"]`).value = resume.certifications[i].name || '';
                         item.querySelector(`input[name="certifications[${i}][organization]"]`).value = resume.certifications[i].organization || '';
                         item.querySelector(`input[name="certifications[${i}][year]"]`).value = resume.certifications[i].year || '';
+                    }
+                }
+
+                /* --------------------
+                Fill Projects
+                -------------------- */
+                if (resume.projects && resume.projects.length > 0) {
+                    // First item
+                    const firstProj = projectContainer.querySelector('.project-item');
+                    firstProj.querySelector('input[name="projects[0][name]"]').value = resume.projects[0].name || '';
+                    firstProj.querySelector('input[name="projects[0][organization]"]').value = resume.projects[0].link || '';
+                    firstProj.querySelector('input[name="projects[0][year]"]').value = resume.projects[0].description || '';
+
+                    // Other items
+                    for (let i = 1; i < resume.projects.length; i++) {
+                        addProjectBtn.click(); // clone
+                        const item = projectContainer.querySelectorAll('.project-item')[i];
+                        item.querySelector(`input[name="projects[${i}][name]"]`).value = resume.projects[i].name || '';
+                        item.querySelector(`input[name="projects[${i}][link]"]`).value = resume.projects[i].link || '';
+                        item.querySelector(`input[name="projects[${i}][description]"]`).value = resume.projects[i].description || '';
                     }
                 }
             })
