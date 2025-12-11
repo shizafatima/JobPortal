@@ -116,7 +116,9 @@
                                 </div>
 
                                 <div class="md:col-span-2">
-                                    <label class="block text-gray-700 text-sm font-bold mb-2">Description <span class="text-gray-500">(Use action verbs + measurable results for good ATS score)</span></label>
+                                    <label class="block text-gray-700 text-sm font-bold mb-2">Description <span
+                                            class="text-gray-500">(Use action verbs + measurable results for good ATS
+                                            score)</span></label>
                                     <textarea name="experience[0][description]" rows="4"
                                         class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                                         placeholder="Describe your key responsibilities and achievements."></textarea>
@@ -138,7 +140,8 @@
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                                 <div>
                                     <label class="block text-gray-700 text-sm font-bold mb-2">Degree</label>
-                                    <input type="text" name="education[0][degree]" placeholder="e.g, Bachelors of Science(BSc)"
+                                    <input type="text" name="education[0][degree]"
+                                        placeholder="e.g, Bachelors of Science(BSc)"
                                         class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
                                 </div>
 
@@ -161,13 +164,15 @@
                                         </div>
                                     </div>
 
-                                    <input type="text" name="education[0][institution]" placeholder="e.g, Karachi University"
+                                    <input type="text" name="education[0][institution]"
+                                        placeholder="e.g, Karachi University"
                                         class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
                                 </div>
 
                                 <div>
                                     <label class="block text-gray-700 text-sm font-bold mb-2">Year</label>
-                                    <input type="number" name="education[0][year]" min="1950" max="2030" placeholder="e.g, 2025"
+                                    <input type="number" name="education[0][year]" min="1950" max="2030"
+                                        placeholder="e.g, 2025"
                                         class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
                                 </div>
 
@@ -190,7 +195,8 @@
                 <div class="mb-6">
                     <h2 class="text-2xl font-semibold mb-4 border-b pb-2">Skills</h2>
                     <div>
-                        <label class="block text-gray-700 text-sm font-bold mb-2">Skills <span class="text-gray-500">(comma separated)</span></label>
+                        <label class="block text-gray-700 text-sm font-bold mb-2">Skills <span class="text-gray-500">(comma
+                                separated)</span></label>
                         <textarea name="skills" rows="3"
                             class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                             placeholder="e.g., JavaScript, Python, Project Management, Communication"></textarea>
@@ -199,13 +205,15 @@
 
                 <!-- Certifications -->
                 <div class="mb-6">
-                    <h2 class="text-2xl font-semibold mb-4 border-b pb-2">Certifications <span class="text-gray-500">(Optional)</span></h2>
+                    <h2 class="text-2xl font-semibold mb-4 border-b pb-2">Certifications <span
+                            class="text-gray-500">(Optional)</span></h2>
                     <div id="certificationContainer">
                         <div class="certification-item border p-4 mb-4 rounded">
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                                 <div>
                                     <label class="block text-gray-700 text-sm font-bold mb-2">Certification Name</label>
-                                    <input type="text" name="certifications[0][name]" placeholder="e.g, WebWizard Web Development"
+                                    <input type="text" name="certifications[0][name]"
+                                        placeholder="e.g, WebWizard Web Development"
                                         class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
                                 </div>
 
@@ -234,7 +242,8 @@
                                 </div>
                                 <div>
                                     <label class="block text-gray-700 text-sm font-bold mb-2">Year</label>
-                                    <input type="number" name="certifications[0][year]" min="1950" max="2030" placeholder="e.g, 2025"
+                                    <input type="number" name="certifications[0][year]" min="1950" max="2030"
+                                        placeholder="e.g, 2025"
                                         class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
                                 </div>
                             </div>
@@ -248,7 +257,8 @@
 
                 <!-- Projects -->
                 <div class="mb-6">
-                    <h2 class="text-2xl font-semibold mb-4 border-b pb-2">Projects <span class="text-gray-500">(Optional)</span></h2>
+                    <h2 class="text-2xl font-semibold mb-4 border-b pb-2">Projects <span
+                            class="text-gray-500">(Optional)</span></h2>
                     <div id="projectContainer">
                         <div class="project-item border p-4 mb-4 rounded">
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -261,8 +271,9 @@
                                 <div>
                                     <div class="flex justify-between items-center">
                                         <div>
-                                            <label class="block text-gray-700 text-sm font-bold mb-2">Project Link <span class="text-gray-500">(Github
-                                                Repository/deployement)</span></label>
+                                            <label class="block text-gray-700 text-sm font-bold mb-2">Project Link <span
+                                                    class="text-gray-500">(Github
+                                                    Repository/deployement)</span></label>
                                         </div>
                                         <div>
                                             <button type="button"
@@ -278,7 +289,8 @@
                                         </div>
                                     </div>
 
-                                    <input type="url" name="projects[0][link]" placeholder="e.g, https://your-domain.com or https://github.com"
+                                    <input type="url" name="projects[0][link]"
+                                        placeholder="e.g, https://your-domain.com or https://github.com"
                                         class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
                                 </div>
                                 <div class="md:col-span-2">
@@ -300,7 +312,8 @@
                 <div class="mb-6">
                     <h2 class="text-2xl font-semibold mb-4 border-b pb-2">Languages</h2>
                     <div>
-                        <label class="block text-gray-700 text-sm font-bold mb-2">Languages <span class="text-gray-500">(comma separated)</span></label>
+                        <label class="block text-gray-700 text-sm font-bold mb-2">Languages <span
+                                class="text-gray-500">(comma separated)</span></label>
                         <textarea name="languages" rows="3"
                             class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                             placeholder="e.g., English(fluent), Urdu(native)"></textarea>
@@ -537,14 +550,11 @@
             const newItem = lastItem.cloneNode(true);
             // Reset input values and increment indices
             const index = items.length;
-            const inputs = newItem.querySelectorAll('input');
+            const inputs = newItem.querySelectorAll('input, textarea');
 
             inputs.forEach(input => {
-                //clear the value
                 input.value = '';
-                // Update name index, e.g., project[0][name] -> project[1][name]
                 input.name = input.name.replace(/\[\d+\]/, `[${index}]`);
-
             });
 
             // Append the new project item to the container
@@ -806,15 +816,20 @@
                     const firstProj = projectContainer.querySelector('.project-item');
                     firstProj.querySelector('input[name="projects[0][name]"]').value = resume.projects[0].name || '';
                     firstProj.querySelector('input[name="projects[0][link]"]').value = resume.projects[0].link || '';
-                    firstProj.querySelector('input[name="projects[0][description]"]').value = resume.projects[0].description || '';
+                    firstProj.querySelector('textarea[name="projects[0][description]"]').value = resume.projects[0].description || '';
 
                     // Other items
                     for (let i = 1; i < resume.projects.length; i++) {
                         addProjectBtn.click(); // clone
                         const item = projectContainer.querySelectorAll('.project-item')[i];
-                        item.querySelector(`input[name="projects[${i}][name]"]`).value = resume.projects[i].name || '';
-                        item.querySelector(`input[name="projects[${i}][link]"]`).value = resume.projects[i].link || '';
-                        item.querySelector(`input[name="projects[${i}][description]"]`).value = resume.projects[i].description || '';
+                        item.querySelector(`input[name="projects[${i}][name]"]`).value =
+                            resume.projects[i].name || "";
+
+                        item.querySelector(`input[name="projects[${i}][link]"]`).value =
+                            resume.projects[i].link || "";
+
+                        item.querySelector(`textarea[name="projects[${i}][description]"]`).value =
+                            resume.projects[i].description || "";
                     }
                 }
             })
