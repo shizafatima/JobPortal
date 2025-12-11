@@ -12,11 +12,12 @@ class Resume extends Model
     use HasFactory;
 
     protected $fillable = [
-        'user_id', 'full_name', 'email', 'phone', 'linkedin', 'address',
+        'user_id', 'full_name', 'email', 'phone', 'links', 'address',
         'summary', 'experience', 'education', 'skills', 'certifications', 'projects', 'languages'
     ];
 
     protected $casts = [
+        'links' => 'array',
         'experience' => 'array',
         'education' => 'array',
         'skills' => 'array',

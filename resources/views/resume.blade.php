@@ -42,19 +42,46 @@
                                 class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
                         </div>
 
-                        <div class="">
-                            <label class="block text-gray-700 text-sm font-bold mb-2">LinkedIn</label>
-                            <input type="url" name="linkedin" placeholder="e.g, https://linkedin.com"
-                                class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
-                        </div>
-                        <div>
-                            <label class="block text-gray-700 text-sm font-bold mb-2">GitHub</label>
-                            <input type="url" name="github" placeholder="e.g, https://github.com"
-                                class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
-                        </div>
-
 
                     </div>
+
+
+                    <!-- Links -->
+                    <div id="linkContainer"> 
+                        <div class="border p-4 mb-4 rounded md:col-span-2 mt-4">
+                            <div class="link-item ">
+                                <div class=" flex justify-between items-center">
+                                    <div>
+                                        <label class="block text-gray-700 text-sm font-bold mb-2">Name</label>
+                                    </div>
+                                    <div>
+                                        <button type="button" class="removeBtn text-black text-sm rounded cursor-pointer">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                                viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                                stroke-linecap="round" stroke-linejoin="round"
+                                                class="lucide lucide-x-icon lucide-x">
+                                                <path d="M18 6 6 18" />
+                                                <path d="m6 6 12 12" />
+                                            </svg>
+                                        </button>
+                                    </div>
+                                </div>
+                                <input type="text" name="links[0][name]" placeholder="e.g, Linkedin"
+                                    class="shadow appearance-none border rounded w-full mb-2 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                            </div>
+
+                            <div>
+                                <label class="block text-gray-700 text-sm font-bold mb-2">Link</label>
+                                <input type="url" name="links[0][link]" placeholder="e.g, https://linkedin.com"
+                                    class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                            </div>
+                        </div>
+                    </div>
+
+                    <button type="button" id="addLinkBtn"
+                        class="bg-[#309689] hover:bg-[#3db6a6] text-white px-2 py-2 mt-2 font-bold rounded focus:outline-none focus:shadow-outline">
+                        + Add Link
+                    </button>
                 </div>
 
                 <!-- Professional Summary -->
@@ -686,7 +713,7 @@
                     alert('Failed to download resume.');
                 });
         });
-        
+
         /* -----------------------------------------
         ------------ Delete Resume ----------------
         ------------------------------------------*/
