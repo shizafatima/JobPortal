@@ -17,39 +17,39 @@
                         <div>
                             <label class="block text-gray-700 text-sm font-bold mb-2">Full Name <span
                                     class="text-red-600">*</span></label>
-                            <input type="text" name="full_name" required
+                            <input type="text" name="full_name" required placeholder="e.g, Ali Hussain"
                                 class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
                         </div>
 
                         <div>
                             <label class="block text-gray-700 text-sm font-bold mb-2">Email <span
                                     class="text-red-600">*</span></label>
-                            <input type="email" name="email" required
+                            <input type="email" name="email" required placeholder="e.g, e@example.com"
                                 class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
                         </div>
 
                         <div>
                             <label class="block text-gray-700 text-sm font-bold mb-2">Phone No <span
                                     class="text-red-600">*</span></label>
-                            <input type="tel" name="phone" required
+                            <input type="tel" name="phone" required placeholder="e.g, 03xxxxxxxxx"
                                 class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
                         </div>
 
                         <div>
                             <label class="block text-gray-700 text-sm font-bold mb-2">Address <span
                                     class="text-red-600">*</span></label>
-                            <input type="text" name="address" required
+                            <input type="text" name="address" required placeholder="e.g, Karachi, Pakistan"
                                 class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
                         </div>
 
                         <div class="">
                             <label class="block text-gray-700 text-sm font-bold mb-2">LinkedIn</label>
-                            <input type="url" name="linkedin"
+                            <input type="url" name="linkedin" placeholder="e.g, https://linkedin.com"
                                 class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
                         </div>
                         <div>
                             <label class="block text-gray-700 text-sm font-bold mb-2">GitHub</label>
-                            <input type="text" name="github"
+                            <input type="url" name="github" placeholder="e.g, https://github.com"
                                 class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
                         </div>
 
@@ -73,7 +73,7 @@
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                                 <div>
                                     <label class="block text-gray-700 text-sm font-bold mb-2">Job Title</label>
-                                    <input type="text" name="experience[0][title]"
+                                    <input type="text" name="experience[0][title]" placeholder="e.g, Web Developer - Intern"
                                         class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
                                 </div>
 
@@ -95,7 +95,7 @@
                                             </button>
                                         </div>
                                     </div>
-                                    <input type="text" name="experience[0][company]"
+                                    <input type="text" name="experience[0][company]" placeholder="e.g, Bano Qabil"
                                         class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
                                 </div>
 
@@ -116,10 +116,10 @@
                                 </div>
 
                                 <div class="md:col-span-2">
-                                    <label class="block text-gray-700 text-sm font-bold mb-2">Description</label>
+                                    <label class="block text-gray-700 text-sm font-bold mb-2">Description <span class="text-gray-500">(Use action verbs + measurable results for good ATS score)</span></label>
                                     <textarea name="experience[0][description]" rows="4"
                                         class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                                        placeholder="Describe your key responsibilities and achievements"></textarea>
+                                        placeholder="Describe your key responsibilities and achievements."></textarea>
                                 </div>
                             </div>
                         </div>
@@ -138,7 +138,7 @@
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                                 <div>
                                     <label class="block text-gray-700 text-sm font-bold mb-2">Degree</label>
-                                    <input type="text" name="education[0][degree]"
+                                    <input type="text" name="education[0][degree]" placeholder="e.g, Bachelors of Science(BSc)"
                                         class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
                                 </div>
 
@@ -161,19 +161,19 @@
                                         </div>
                                     </div>
 
-                                    <input type="text" name="education[0][institution]"
+                                    <input type="text" name="education[0][institution]" placeholder="e.g, Karachi University"
                                         class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
                                 </div>
 
                                 <div>
                                     <label class="block text-gray-700 text-sm font-bold mb-2">Year</label>
-                                    <input type="number" name="education[0][year]" min="1950" max="2030"
+                                    <input type="number" name="education[0][year]" min="1950" max="2030" placeholder="e.g, 2025"
                                         class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
                                 </div>
 
                                 <div>
                                     <label class="block text-gray-700 text-sm font-bold mb-2">GPA (Optional)</label>
-                                    <input type="text" name="education[0][gpa]"
+                                    <input type="text" name="education[0][gpa]" placeholder="e.g, 3.4"
                                         class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
                                 </div>
                             </div>
@@ -190,7 +190,7 @@
                 <div class="mb-6">
                     <h2 class="text-2xl font-semibold mb-4 border-b pb-2">Skills</h2>
                     <div>
-                        <label class="block text-gray-700 text-sm font-bold mb-2">Skills (comma separated)</label>
+                        <label class="block text-gray-700 text-sm font-bold mb-2">Skills <span class="text-gray-500">(comma separated)</span></label>
                         <textarea name="skills" rows="3"
                             class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                             placeholder="e.g., JavaScript, Python, Project Management, Communication"></textarea>
@@ -199,13 +199,13 @@
 
                 <!-- Certifications -->
                 <div class="mb-6">
-                    <h2 class="text-2xl font-semibold mb-4 border-b pb-2">Certifications (Optional)</h2>
+                    <h2 class="text-2xl font-semibold mb-4 border-b pb-2">Certifications <span class="text-gray-500">(Optional)</span></h2>
                     <div id="certificationContainer">
                         <div class="certification-item border p-4 mb-4 rounded">
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                                 <div>
                                     <label class="block text-gray-700 text-sm font-bold mb-2">Certification Name</label>
-                                    <input type="text" name="certifications[0][name]"
+                                    <input type="text" name="certifications[0][name]" placeholder="e.g, WebWizard Web Development"
                                         class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
                                 </div>
 
@@ -229,12 +229,12 @@
                                         </div>
                                     </div>
 
-                                    <input type="text" name="certifications[0][organization]"
+                                    <input type="text" name="certifications[0][organization]" placeholder="e.g, Bano Qabil"
                                         class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
                                 </div>
                                 <div>
                                     <label class="block text-gray-700 text-sm font-bold mb-2">Year</label>
-                                    <input type="number" name="certifications[0][year]" min="1950" max="2030"
+                                    <input type="number" name="certifications[0][year]" min="1950" max="2030" placeholder="e.g, 2025"
                                         class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
                                 </div>
                             </div>
@@ -248,21 +248,21 @@
 
                 <!-- Projects -->
                 <div class="mb-6">
-                    <h2 class="text-2xl font-semibold mb-4 border-b pb-2">Projects (Optional)</h2>
+                    <h2 class="text-2xl font-semibold mb-4 border-b pb-2">Projects <span class="text-gray-500">(Optional)</span></h2>
                     <div id="projectContainer">
                         <div class="project-item border p-4 mb-4 rounded">
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                                 <div>
                                     <label class="block text-gray-700 text-sm font-bold mb-2">Project Name</label>
-                                    <input type="text" name="projects[0][name]"
+                                    <input type="text" name="projects[0][name]" placeholder="e.g, Job Portal"
                                         class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
                                 </div>
 
                                 <div>
                                     <div class="flex justify-between items-center">
                                         <div>
-                                            <label class="block text-gray-700 text-sm font-bold mb-2">Project Link (Github
-                                                Repository/deployement)</label>
+                                            <label class="block text-gray-700 text-sm font-bold mb-2">Project Link <span class="text-gray-500">(Github
+                                                Repository/deployement)</span></label>
                                         </div>
                                         <div>
                                             <button type="button"
@@ -278,7 +278,7 @@
                                         </div>
                                     </div>
 
-                                    <input type="url" name="projects[0][link]"
+                                    <input type="url" name="projects[0][link]" placeholder="e.g, https://your-domain.com or https://github.com"
                                         class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
                                 </div>
                                 <div class="md:col-span-2">
@@ -300,7 +300,7 @@
                 <div class="mb-6">
                     <h2 class="text-2xl font-semibold mb-4 border-b pb-2">Languages</h2>
                     <div>
-                        <label class="block text-gray-700 text-sm font-bold mb-2">Languages (comma separated)</label>
+                        <label class="block text-gray-700 text-sm font-bold mb-2">Languages <span class="text-gray-500">(comma separated)</span></label>
                         <textarea name="languages" rows="3"
                             class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                             placeholder="e.g., English(fluent), Urdu(native)"></textarea>
