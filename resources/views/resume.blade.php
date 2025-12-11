@@ -743,7 +743,7 @@
                 document.querySelector('input[name="linkedin"]').value = resume.linkedin || '';
                 document.querySelector('textarea[name="summary"]').value = resume.summary || '';
                 document.querySelector('textarea[name="skills"]').value = resume.skills ? resume.skills.join(', ') : '';
-                // document.querySelector('textarea[name="languages"]').value = resume.languages ? resume.languages.join(', ') : '';
+                document.querySelector('textarea[name="languages"]').value = resume.languages ? resume.languages.join(', ') : '';
 
                 /* --------------------
                 --- Fill Experience ---

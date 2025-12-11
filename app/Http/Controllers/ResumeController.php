@@ -59,6 +59,10 @@ class ResumeController extends Controller
         if (isset($data['skills'])) {
             $data['skills'] = array_map('trim', explode(',', $data['skills']));
         }
+        // Convert languages string to array
+        if (isset($data['languages'])) {
+            $data['languages'] = array_map('trim', explode(',', $data['languages']));
+        }
 
         $resume = Resume::updateOrCreate(
             ['user_id' => Auth::id()],
