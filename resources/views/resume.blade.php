@@ -69,19 +69,7 @@
                 <div class="mb-6">
                     <h2 class="text-2xl font-semibold mb-4 border-b pb-2">Work Experience</h2>
                     <div id="experienceContainer">
-                        <!-- Always show fresher checkbox so users can select their status -->
-                        <div class="mb-4">
-                            <label class="inline-flex items-center">
-                                <input type="checkbox" id="fresherCheckbox" class="form-checkbox h-5 w-5">
-                                <span class="ml-2 text-sm font-semibold">Fresh</span>
-                            </label>
-                        </div>
-
-                        <!-- Hidden input to track fresher status -->
-                        <input type="hidden" name="is_fresher" id="isFresherInput" value="0">
-
-
-                        <div class="experience-item border p-4 mb-4 rounded" id="experienceFields">
+                        <div class="experience-item border p-4 mb-4 rounded">
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                                 <div>
                                     <label class="block text-gray-700 text-sm font-bold mb-2">Job Title</label>
@@ -128,9 +116,7 @@
                                 </div>
 
                                 <div class="md:col-span-2">
-                                    <label class="block text-gray-700 text-sm font-bold mb-2">Description <span
-                                            class="text-gray-500">(Use action verbs + measurable results for good ATS
-                                            score)</span></label>
+                                    <label class="block text-gray-700 text-sm font-bold mb-2">Description <span class="text-gray-500">(Use action verbs + measurable results for good ATS score)</span></label>
                                     <textarea name="experience[0][description]" rows="4"
                                         class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                                         placeholder="Describe your key responsibilities and achievements."></textarea>
@@ -152,8 +138,7 @@
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                                 <div>
                                     <label class="block text-gray-700 text-sm font-bold mb-2">Degree</label>
-                                    <input type="text" name="education[0][degree]"
-                                        placeholder="e.g, Bachelors of Science(BSc)"
+                                    <input type="text" name="education[0][degree]" placeholder="e.g, Bachelors of Science(BSc)"
                                         class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
                                 </div>
 
@@ -176,15 +161,13 @@
                                         </div>
                                     </div>
 
-                                    <input type="text" name="education[0][institution]"
-                                        placeholder="e.g, Karachi University"
+                                    <input type="text" name="education[0][institution]" placeholder="e.g, Karachi University"
                                         class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
                                 </div>
 
                                 <div>
                                     <label class="block text-gray-700 text-sm font-bold mb-2">Year</label>
-                                    <input type="number" name="education[0][year]" min="1950" max="2030"
-                                        placeholder="e.g, 2025"
+                                    <input type="number" name="education[0][year]" min="1950" max="2030" placeholder="e.g, 2025"
                                         class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
                                 </div>
 
@@ -207,8 +190,7 @@
                 <div class="mb-6">
                     <h2 class="text-2xl font-semibold mb-4 border-b pb-2">Skills</h2>
                     <div>
-                        <label class="block text-gray-700 text-sm font-bold mb-2">Skills <span class="text-gray-500">(comma
-                                separated)</span></label>
+                        <label class="block text-gray-700 text-sm font-bold mb-2">Skills <span class="text-gray-500">(comma separated)</span></label>
                         <textarea name="skills" rows="3"
                             class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                             placeholder="e.g., JavaScript, Python, Project Management, Communication"></textarea>
@@ -217,15 +199,13 @@
 
                 <!-- Certifications -->
                 <div class="mb-6">
-                    <h2 class="text-2xl font-semibold mb-4 border-b pb-2">Certifications <span
-                            class="text-gray-500">(Optional)</span></h2>
+                    <h2 class="text-2xl font-semibold mb-4 border-b pb-2">Certifications <span class="text-gray-500">(Optional)</span></h2>
                     <div id="certificationContainer">
                         <div class="certification-item border p-4 mb-4 rounded">
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                                 <div>
                                     <label class="block text-gray-700 text-sm font-bold mb-2">Certification Name</label>
-                                    <input type="text" name="certifications[0][name]"
-                                        placeholder="e.g, WebWizard Web Development"
+                                    <input type="text" name="certifications[0][name]" placeholder="e.g, WebWizard Web Development"
                                         class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
                                 </div>
 
@@ -254,8 +234,7 @@
                                 </div>
                                 <div>
                                     <label class="block text-gray-700 text-sm font-bold mb-2">Year</label>
-                                    <input type="number" name="certifications[0][year]" min="1950" max="2030"
-                                        placeholder="e.g, 2025"
+                                    <input type="number" name="certifications[0][year]" min="1950" max="2030" placeholder="e.g, 2025"
                                         class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
                                 </div>
                             </div>
@@ -269,8 +248,7 @@
 
                 <!-- Projects -->
                 <div class="mb-6">
-                    <h2 class="text-2xl font-semibold mb-4 border-b pb-2">Projects <span
-                            class="text-gray-500">(Optional)</span></h2>
+                    <h2 class="text-2xl font-semibold mb-4 border-b pb-2">Projects <span class="text-gray-500">(Optional)</span></h2>
                     <div id="projectContainer">
                         <div class="project-item border p-4 mb-4 rounded">
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -283,9 +261,8 @@
                                 <div>
                                     <div class="flex justify-between items-center">
                                         <div>
-                                            <label class="block text-gray-700 text-sm font-bold mb-2">Project Link <span
-                                                    class="text-gray-500">(Github
-                                                    Repository/deployement)</span></label>
+                                            <label class="block text-gray-700 text-sm font-bold mb-2">Project Link <span class="text-gray-500">(Github
+                                                Repository/deployement)</span></label>
                                         </div>
                                         <div>
                                             <button type="button"
@@ -301,8 +278,7 @@
                                         </div>
                                     </div>
 
-                                    <input type="url" name="projects[0][link]"
-                                        placeholder="e.g, https://your-domain.com or https://github.com"
+                                    <input type="url" name="projects[0][link]" placeholder="e.g, https://your-domain.com or https://github.com"
                                         class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
                                 </div>
                                 <div class="md:col-span-2">
@@ -324,8 +300,7 @@
                 <div class="mb-6">
                     <h2 class="text-2xl font-semibold mb-4 border-b pb-2">Languages</h2>
                     <div>
-                        <label class="block text-gray-700 text-sm font-bold mb-2">Languages <span
-                                class="text-gray-500">(comma separated)</span></label>
+                        <label class="block text-gray-700 text-sm font-bold mb-2">Languages <span class="text-gray-500">(comma separated)</span></label>
                         <textarea name="languages" rows="3"
                             class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                             placeholder="e.g., English(fluent), Urdu(native)"></textarea>
@@ -369,39 +344,6 @@
         // -------- Add Experience Functionality --------
         const experienceContainer = document.getElementById('experienceContainer');
         const addExperienceBtn = document.getElementById('addExperienceBtn');
-        const fresherCheckbox = document.getElementById('fresherCheckbox');
-        const experienceFields = document.getElementById('experienceFields');
-        const isFresherInput = document.getElementById('isFresherInput');
-    
-
-        // Handle fresher checkbox toggle
-        if (fresherCheckbox) {
-            fresherCheckbox.addEventListener('change', function () {
-                if (this.checked) {
-                    // Set fresher status to true
-                    isFresherInput.value = '1';
-
-                    // Hide experience fields and add button
-                    experienceFields.style.display = 'none';
-                    addExperienceBtn.style.display = 'none';
-
-                    // Clear all experience input values
-                    experienceFields.querySelectorAll('input, textarea').forEach(input => {
-                        input.value = '';
-                        if (input.type === 'checkbox') {
-                            input.checked = false;
-                        }
-                    });
-                } else {
-                    // Set fresher status to false
-                    isFresherInput.value = '0';
-
-                    // Show experience fields and add button
-                    experienceFields.style.display = 'block';
-                    addExperienceBtn.style.display = 'inline-block';
-                }
-            });
-        }
 
         function updateExpRemoveButtons() {
             const items = experienceContainer.querySelectorAll('.experience-item');
@@ -778,7 +720,7 @@
                 document.querySelector('input[name="linkedin"]').value = resume.linkedin || '';
                 document.querySelector('textarea[name="summary"]').value = resume.summary || '';
                 document.querySelector('textarea[name="skills"]').value = resume.skills ? resume.skills.join(', ') : '';
-                document.querySelector('textarea[name="languages"]').value = resume.languages ? resume.languages.join(', ') : '';
+                // document.querySelector('textarea[name="languages"]').value = resume.languages ? resume.languages.join(', ') : '';
 
                 /* --------------------
                 --- Fill Experience ---
