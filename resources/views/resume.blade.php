@@ -354,7 +354,9 @@
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
     <script>
-        // -------- Add Experience Functionality --------
+        /* -----------------------------------------
+        -------- Add Experience Functionality ------
+        ------------------------------------------*/
         const experienceContainer = document.getElementById('experienceContainer');
         const addExperienceBtn = document.getElementById('addExperienceBtn');
 
@@ -410,8 +412,9 @@
             updateExpRemoveButtons(); // Call after page load or after adding a new container
         });
 
-
-        // -------- Add Education Functionality --------
+        /* -----------------------------------------
+        -------- Add Education Functionality ------
+        ------------------------------------------*/
         const educationContainer = document.getElementById('educationContainer');
         const addEducationBtn = document.getElementById('addEducationBtn');
 
@@ -468,7 +471,9 @@
 
         });
 
-        // -------- Add Certification Functionality --------
+        /* -----------------------------------------
+        -------- Add Certification Functionality ------
+        ------------------------------------------*/
         const certificationContainer = document.getElementById('certificationContainer');
         const addCertificateBtn = document.getElementById('addCertificationBtn');
 
@@ -525,7 +530,9 @@
         });
 
 
-        // -------- Add Project Functionality --------
+        /* -----------------------------------------
+        -------- Add Project Functionality ------
+        ------------------------------------------*/
         const projectContainer = document.getElementById('projectContainer');
         const addProjectBtn = document.getElementById('addProjectBtn');
 
@@ -633,7 +640,9 @@
             }
         });
 
-        // -------- Preview Resume --------
+        /* -----------------------------------------
+        ------------ Preview Resume ----------------
+        ------------------------------------------*/
         document.getElementById('previewResumeBtn').addEventListener('click', function () {
             // Get saved resume ID from form dataset
             const resumeId = form.dataset.resumeId;
@@ -648,7 +657,9 @@
         });
 
 
-        // -------- Download Resume --------
+        /* -----------------------------------------
+        ------------ Download Resume ----------------
+        ------------------------------------------*/
         document.getElementById('downloadResumeBtn').addEventListener('click', function () {
             const resumeId = form.dataset.resumeId;
 
@@ -675,8 +686,10 @@
                     alert('Failed to download resume.');
                 });
         });
-        // -------- Delete Resume --------
-
+        
+        /* -----------------------------------------
+        ------------ Delete Resume ----------------
+        ------------------------------------------*/
         document.getElementById('deleteResumeBtn').addEventListener('click', async function () {
             const resumeId = form.dataset.resumeId;
 
