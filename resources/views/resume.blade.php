@@ -48,8 +48,7 @@
 
                     <!-- Links -->
                     <div id="linkContainer"> 
-                        <div class="border p-4 mb-4 rounded md:col-span-2 mt-4">
-                            <div class="link-item ">
+                        <div class="link-item border p-4 mb-4 rounded md:col-span-2 mt-4">
                                 <div class=" flex justify-between items-center">
                                     <div>
                                         <label class="block text-gray-700 text-sm font-bold mb-2">Name</label>
@@ -68,7 +67,6 @@
                                 </div>
                                 <input type="text" name="links[0][name]" placeholder="e.g, Linkedin"
                                     class="shadow appearance-none border rounded w-full mb-2 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
-                            </div>
 
                             <div>
                                 <label class="block text-gray-700 text-sm font-bold mb-2">Link</label>
@@ -381,6 +379,64 @@
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
     <script>
+        /* -----------------------------------------
+        -------- Add Link Functionality ------
+        ------------------------------------------*/
+        const linkContainer = document.getElementById('linkContainer');
+        const addLinkBtn = document.getElementById('addLinkBtn');
+
+        function updateLinkRemoveButtons() {
+            const items = linkContainer.querySelectorAll('.link-item');
+            const removeBtns = linkContainer.querySelectorAll('.removeBtn');
+
+            removeBtns.forEach(btn => {
+
+                if (items.length === 1) {
+                    btn.classList.add('pointer-events-none', 'opacity-50', 'cursor-not-allowed');
+                } else {
+                    btn.classList.remove('pointer-events-none', 'opacity-50', 'cursor-not-allowed');
+                }
+
+            });
+        }
+
+        addLinkBtn.addEventListener('click', function () {
+            const items = linkContainer.querySelectorAll('.link-item');
+            const lastItem = items[items.length - 1];
+            const newItem = lastItem.cloneNode(true);
+            // Reset input values and increment indices
+            const index = items.length;
+            const inputs = newItem.querySelectorAll('input');
+
+            inputs.forEach(input => {
+                //clear the value
+                input.value = '';
+                // Update name index, e.g., experience[0][title] -> experience[1][title]
+                input.name = input.name.replace(/\[\d+\]/, `[${index}]`);
+
+            });
+
+            // Append the new experience item to the container
+            linkContainer.appendChild(newItem);
+
+            // Remove experience item
+            linkContainer.addEventListener('click', function (e) {
+                const btn = e.target.closest('.removeBtn');
+                if (!btn) return;
+
+                const items = linkContainer.querySelectorAll('.link-item');
+                if (items.length === 1) return; //don't remove last container
+
+                const linkItem = btn.closest('.link-item');
+                if (linkItem) {
+                    linkItem.remove();
+                    updateLinkRemoveButtons(); //update buttons after removal
+                }
+            });
+
+            updateLinkRemoveButtons(); // Call after page load or after adding a new container
+        });
+
         /* -----------------------------------------
         -------- Add Experience Functionality ------
         ------------------------------------------*/
