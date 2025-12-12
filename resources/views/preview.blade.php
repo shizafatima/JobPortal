@@ -43,6 +43,11 @@
                         }
                     }
                 }
+
+                $hasLanguages = false;
+                if (!empty($resume->languages) && is_array($resume->languages) && count($resume->languages) > 0) {
+                    $hasLanguages = true;
+                }
             @endphp
 
             <!-- Personal Information -->
@@ -152,6 +157,18 @@
                     <ul class="list-disc list-inside text-sm ml-4">
                         @foreach($resume->skills as $skill)
                             <li>{{ $skill }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
+
+            <!-- Languages-->
+            @if(!empty($hasLanguages))
+                <div class="mb-2">
+                    <h2 class="text-lg font-bold mb-2 border-b pb-1">Languages</h2>
+                    <ul class="list-disc list-inside text-sm ml-4">
+                        @foreach($resume->languages as $language)
+                            <li>{{ $language }}</li>
                         @endforeach
                     </ul>
                 </div>
