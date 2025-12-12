@@ -816,20 +816,38 @@
                 form.dataset.resumeId = resume.id;
 
                 /* --------------------
-                --- Fill basic info ---
+                ----Fill basic info----
                 -------------------- */
 
                 document.querySelector('input[name="full_name"]').value = resume.full_name || '';
                 document.querySelector('input[name="email"]').value = resume.email || '';
                 document.querySelector('input[name="phone"]').value = resume.phone || '';
                 document.querySelector('input[name="address"]').value = resume.address || '';
-                document.querySelector('input[name="linkedin"]').value = resume.linkedin || '';
                 document.querySelector('textarea[name="summary"]').value = resume.summary || '';
                 document.querySelector('textarea[name="skills"]').value = resume.skills ? resume.skills.join(', ') : '';
                 document.querySelector('textarea[name="languages"]').value = resume.languages ? resume.languages.join(', ') : '';
 
+
                 /* --------------------
-                --- Fill Experience ---
+                ------Fill Links-------
+                -------------------- */
+                if (resume.links && resume.links.length > 0) {
+                    // First item
+                    const firstLink =linkContainer.querySelector('.link-item');
+                    firstLink.querySelector('input[name="links[0][name]"]').value = resume.links[0].name || '';
+                    firstLink.querySelector('input[name="links[0][link]"]').value = resume.links[0].link || '';
+    
+                    // Other items
+                    for (let i = 1; i < resume.links.length; i++) {
+                        addLinkBtn.click(); // clone
+                        const item = linkContainer.querySelectorAll('.link-item')[i];
+                        item.querySelector(`input[name="links[${i}][name]"]`).value = resume.links[i].name || '';
+                        item.querySelector(`input[name="links[${i}][link]"]`).value = resume.links[i].link || '';
+                    }
+                }
+
+                /* --------------------
+                ----Fill Experience----
                 -------------------- */
 
                 if (resume.experience && resume.experience.length > 0) {
@@ -860,7 +878,7 @@
                 }
 
                 /* --------------------
-                --- Fill Education ---
+                -----Fill Education----
                 -------------------- */
 
                 if (resume.education && resume.education.length > 0) {
@@ -885,7 +903,7 @@
                 }
 
                 /* --------------------
-                Fill Certifications
+                --Fill Certifications--
                 -------------------- */
                 if (resume.certifications && resume.certifications.length > 0) {
                     // First item
@@ -905,7 +923,7 @@
                 }
 
                 /* --------------------
-                Fill Projects
+                -----Fill Projects-----
                 -------------------- */
                 if (resume.projects && resume.projects.length > 0) {
                     // First item
