@@ -19,6 +19,16 @@
                     }
                 }
 
+                $hasProjects = false;
+                if (!empty($resume->projects)) {
+                    foreach ($resume->projects as $project) {
+                        if (!empty($project['name']) || !empty($project['link']) || !empty($project['description'])) {
+                            $hasProjects = true;
+                            break;
+                        }
+                    }
+                }
+
                 $hasEducation = false;
                 if (!empty($resume->education)) {
                     foreach ($resume->education as $edu) {
@@ -107,6 +117,41 @@
                                     @endforeach
                                 </ul>
                             </div>
+                        </div>
+                    @endforeach
+                </div>
+            @endif
+
+            <!-- Projects -->
+            @if(!empty($hasProjects))
+                <div class="mb-2">
+                    <h2 class="text-lg font-bold mb-2 border-b pb-1">Projects</h2>
+                    @foreach($resume->projects as $project)
+                        <div class="mb-4">
+                            @php
+                                $link = $project['link'] ?? '';
+                                if ($link && !str_starts_with($link, 'http')) {
+                                    $link = 'https://' . $link;
+                                }
+                            @endphp
+
+                            <ul class="list-disc list-inside text-sm ml-4">
+                                <li><strong>{{ $project['name'] ?? '' }}</strong> | <a href="{{ $link }}" target="_blank"
+                                        class="text-blue-600 underline">
+                                        {{ $project['link'] ?? '' }}
+                                    </a></li>
+                            </ul>
+                            @php
+                                $lines = preg_split('/\r\n|\r|\n/', $project['description']);
+                            @endphp
+
+                            <ul class="list-[circle] ml-14">
+                                @foreach ($lines as $line)
+                                    @if(trim($line) !== '')
+                                        <li class="mb-1">{{ $line }}</li>
+                                    @endif
+                                @endforeach
+                            </ul>
                         </div>
                     @endforeach
                 </div>
