@@ -6,7 +6,7 @@
 @section('content')
     <div class="container mx-auto px-4 py-8 font-[arial]">
         <div class="max-w-4xl mx-auto bg-white shadow-md rounded p-6">
-            <h1 class="text-2xl font-bold mb-6">Resume Preview</h1>
+            <h1 class="text-2xl font-bold mb-4 underline">Preview</h1>
 
             @php
 
@@ -72,16 +72,16 @@
             @endphp
 
             <!-- Personal Information -->
-            <div class="mb-2 border-b pb-1">
+            <div class="mb-2 border-b pb-2">
                 <div>
-                    <h2 class="text-3xl font-bold ">{{ $resume->full_name ?? ''  }}</h2>
-                    <p>
+                    <h2 class="text-2xl font-bold ">{{ $resume->full_name ?? ''  }}</h2>
+                    <p class="text-sm">
                         <strong>Email:</strong> {{ $resume->email ?? '' }} |
                         <strong>Phone no:</strong> {{ $resume->phone ?? '' }} |
                         <strong>Address:</strong> {{ $resume->address ?? '' }}
                     </p>
                     @if (!empty($hasLinks))
-                        <p class="mt-2 text-xs">
+                        <p class="mt-1 text-xs">
                             @foreach ($resume->links as $link)
                                 @php
                                 $cleanLink = $link['link'] ?? '';
@@ -101,7 +101,7 @@
             <!-- Professional Summary -->
             @if(!empty($resume->summary))
                 <div class="mb-2">
-                    <h2 class="text-lg font-bold mb-2 border-b pb-1">Professional Summary</h2>
+                    <h2 class="text-lg font-bold mb-2 border-b border-black pb-1">Professional Summary</h2>
                     <ul class="text-sm list-disc list-inside ml-4">
                         <li class="mb-1">
                             {{ $resume->summary }}
@@ -114,7 +114,7 @@
             <!-- Work Experience -->
             @if(!empty($hasExperience))
                 <div class="mb-2">
-                    <h2 class="text-lg font-bold mb-2 border-b pb-1">Work Experience</h2>
+                    <h2 class="text-lg font-bold mb-2 border-b border-black pb-1">Work Experience</h2>
                     @foreach($resume->experience as $exp)
                         <div class="mb-4 text-sm">
                             <div class="mb-2">
@@ -145,9 +145,9 @@
             <!-- Projects -->
             @if(!empty($hasProjects))
                 <div class="mb-2">
-                    <h2 class="text-lg font-bold mb-2 border-b pb-1">Projects</h2>
+                    <h2 class="text-lg font-bold mb-2 border-b border-black pb-1">Projects</h2>
                     @foreach($resume->projects as $project)
-                        <div class="mb-4">
+                        <div class="mb-4 text-sm">
                             @php
                                 $link = $project['link'] ?? '';
                                 if ($link && !str_starts_with($link, 'http')) {
@@ -155,7 +155,7 @@
                                 }
                             @endphp
 
-                            <ul class="list-disc list-inside text-sm ml-4">
+                            <ul class="list-disc list-inside ml-4">
                                 <li><strong>{{ $project['name'] ?? '' }}</strong> | <a href="{{ $link }}" target="_blank"
                                         class="text-blue-600 underline">
                                         {{ $project['link'] ?? '' }}
@@ -180,7 +180,7 @@
             <!-- Education -->
             @if(!empty($hasEducation))
                 <div class="mb-2">
-                    <h2 class="text-lg font-bold mb-2 border-b pb-1">Education</h2>
+                    <h2 class="text-lg font-bold mb-2 border-b border-black pb-1">Education</h2>
                     @foreach($resume->education as $edu)
                         <div class="mb-4 text-sm">
                             <ul class="list-disc list-inside ml-4">
@@ -202,10 +202,10 @@
             <!-- Certifications -->
             @if(!empty($hasCertificates))
                 <div class="mb-2">
-                    <h2 class="text-lg font-bold mb-2 border-b pb-1">Certifications</h2>
+                    <h2 class="text-lg font-bold mb-2 border-b border-black pb-1">Certifications</h2>
                     @foreach($resume->certifications as $cert)
-                        <div class="mb-4">
-                            <ul class="list-disc list-inside text-sm ml-4">
+                        <div class="mb-4 text-sm ">
+                            <ul class="list-disc list-inside ml-4">
                                 <li><strong>{{ $cert['name'] ?? '' }}</strong>, {{ $cert['organization'] ?? ''}}
                                     ({{ $cert['year'] ?? '' }})</li>
                             </ul>
@@ -218,7 +218,7 @@
             <!-- Skills -->
             @if(!empty($hasSkills))
                 <div class="mb-2">
-                    <h2 class="text-lg font-bold mb-2 border-b pb-1">Skills</h2>
+                    <h2 class="text-lg font-bold mb-2 border-b border-black pb-1">Skills</h2>
                     <ul class="list-disc list-inside text-sm ml-4">
                         @foreach($resume->skills as $skill)
                             <li>{{ $skill }}</li>
@@ -230,7 +230,7 @@
             <!-- Languages-->
             @if(!empty($hasLanguages))
                 <div class="mb-2">
-                    <h2 class="text-lg font-bold mb-2 border-b pb-1">Languages</h2>
+                    <h2 class="text-lg font-bold mb-2 border-b border-black pb-1">Languages</h2>
                     <ul class="list-disc list-inside text-sm ml-4">
                         @foreach($resume->languages as $language)
                             <li>{{ $language }}</li>
