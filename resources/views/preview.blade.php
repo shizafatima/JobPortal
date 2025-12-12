@@ -9,6 +9,17 @@
             <h1 class="text-2xl font-bold mb-6">Resume Preview</h1>
 
             @php
+
+                $hasLinks = false;
+                if (!empty($resume->links)) {
+                    foreach ($resume->links as $link) {
+                        if (!empty($link['name']) || !empty($link['link'])) {
+                            $hasLinks = true;
+                            break;
+                        }
+                    }
+                }
+
                 $hasExperience = false;
                 if (!empty($resume->experience)) {
                     foreach ($resume->experience as $exp) {
@@ -68,13 +79,22 @@
                         <strong>Email:</strong> {{ $resume->email ?? '' }} |
                         <strong>Phone no:</strong> {{ $resume->phone ?? '' }} |
                         <strong>Address:</strong> {{ $resume->address ?? '' }}
-
-                        <span>
-                            @if (!empty($resume->linkedin))
-                                {{ ('|') . (' ') . ($resume->linkedin ?? '') }}
-                            @endif
-                        </span>
                     </p>
+                    @if (!empty($hasLinks))
+                        <p class="mt-2 text-xs">
+                            @foreach ($resume->links as $link)
+                                @php
+                                $cleanLink = $link['link'] ?? '';
+                                if ($cleanLink && !str_starts_with($cleanLink, 'http')) {
+                                    $cleanLink = 'https://' . $cleanLink;
+                                }
+                            @endphp
+                                <span><strong>{{ $link['name'] ?? '' }}</strong>: </span><a href="{{ $cleanLink }}" target="_blank" class="underline text-blue-600 mr-2">
+                                    {{ $cleanLink}} 
+                                </a>
+                            @endforeach
+                        </p>
+                    @endif
                 </div>
             </div>
 
