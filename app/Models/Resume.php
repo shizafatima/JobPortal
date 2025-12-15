@@ -12,8 +12,7 @@ class Resume extends Model
     use HasFactory;
 
     protected $fillable = [
-        'user_id', 'full_name', 'email', 'phone', 'links', 'address',
-        'summary', 'experience', 'education', 'skills', 'certifications', 'projects', 'languages'
+        'user_id', 'full_name', 'email', 'phone', 'links', 'address', 'summary', 'experience', 'education', 'skills', 'certifications', 'projects', 'languages', 'section_order'
     ];
 
     protected $casts = [
@@ -24,6 +23,7 @@ class Resume extends Model
         'certifications' => 'array',
         'projects' => 'array',
         'languages' => 'array',
+        'section_order' => 'array',
     ];
 
     public function user()
