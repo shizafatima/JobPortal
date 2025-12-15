@@ -74,7 +74,7 @@
             <!-- Personal Information -->
             <div class="mb-2 border-b pb-2">
                 <div>
-                    <h2 class="text-2xl font-bold ">{{ $resume->full_name ?? ''  }}</h2>
+                    <h2 class="text-3xl font-bold ">{{ $resume->full_name ?? ''  }}</h2>
                     <p class="text-sm">
                         <strong>Email:</strong> {{ $resume->email ?? '' }} |
                         <strong>Phone no:</strong> {{ $resume->phone ?? '' }} |
