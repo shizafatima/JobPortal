@@ -26,6 +26,16 @@
 </style>
     <div class="container mx-auto max-w-[794px] bg-white font-[arial] text-sm leading-[1.3]">
             @php
+                $sections = [
+                    'work-experience' => 'Work Experience',
+                    'projects' => 'Projects',
+                    'education' => 'Education',
+                    'certification' => 'Certifications',
+                    'skills' => 'Skills',
+                    'languages' => 'Languages',
+                ];
+
+                $order = $sectionOrder ?? array_keys($sections); // fallback if no order provided
 
                 $hasLinks = false;
                 if (!empty($resume->links)) {
@@ -120,113 +130,131 @@
             @endif
 
             <!-- Work Experience -->
-            @if(!empty($hasExperience))
-                <h2>Work Experience</h2>
-                @foreach($resume->experience as $exp)
-                    <ul class="title" style="list-style: disc; margin: 2px 0 2px 20px;">
-                        <li>
-                            <strong>{{ $exp['title'] }}</strong>, {{ $exp['company'] }}
-                            @php
-                                $start = !empty($exp['start_date']) ? Carbon::parse($exp['start_date'])->format('F Y') : '';
-                                $end = (!empty($exp['current']) && $exp['current']) ? 'Present' : (!empty($exp['end_date']) ? Carbon::parse($exp['end_date'])->format('F Y') : '');
-                            @endphp
-                            ({{ $start }} - {{ $end }})
-                        </li>
-                    </ul>
-                    @php
-                        $lines = preg_split('/\r\n|\r|\n/', $exp['description']);
-                    @endphp
-                    <ul class="description">
-                        @foreach ($lines as $line)
-                            @if(trim($line) !== '')
-                                <li>{{ $line }}</li>
-                            @endif
-                        @endforeach
-                    </ul>
-                @endforeach
-            @endif
+            @foreach ($order as $sectionId)
+                @switch($sectionId)
+    
+                    @case('work-experience')
+                        @if(!empty($hasExperience))
+                            <h2>Work Experience</h2>
+                            @foreach($resume->experience as $exp)
+                                <ul class="title" style="list-style: disc; margin: 2px 0 2px 20px;">
+                                    <li>
+                                        <strong>{{ $exp['title'] }}</strong>, {{ $exp['company'] }}
+                                        @php
+                                            $start = !empty($exp['start_date']) ? Carbon::parse($exp['start_date'])->format('F Y') : '';
+                                            $end = (!empty($exp['current']) && $exp['current']) ? 'Present' : (!empty($exp['end_date']) ? Carbon::parse($exp['end_date'])->format('F Y') : '');
+                                        @endphp
+                                        ({{ $start }} - {{ $end }})
+                                    </li>
+                                </ul>
+                                @php
+                                    $lines = preg_split('/\r\n|\r|\n/', $exp['description']);
+                                @endphp
+                                <ul class="description">
+                                    @foreach ($lines as $line)
+                                        @if(trim($line) !== '')
+                                            <li>{{ $line }}</li>
+                                        @endif
+                                    @endforeach
+                                </ul>
+                            @endforeach
+                        @endif
+                    @break
 
-            <!-- Projects -->
-            @if(!empty($hasProjects))
-                <h2>Projects</h2>
-                @foreach($resume->projects as $project)
-                    @php
-                        $link = $project['link'] ?? '';
-                        if ($link && !str_starts_with($link, 'http')) {
-                            $link = 'https://' . $link;
-                        }
-                    @endphp
+                    <!-- Projects -->
+                    @case('projects')
+                        @if(!empty($hasProjects))
+                            <h2>Projects</h2>
+                            @foreach($resume->projects as $project)
+                                @php
+                                    $link = $project['link'] ?? '';
+                                    if ($link && !str_starts_with($link, 'http')) {
+                                        $link = 'https://' . $link;
+                                    }
+                                @endphp
 
-                    <ul class= "title">
-                        <li>
-                            <strong>{{ $project['name'] ?? '' }}</strong> | 
-                            <a href="{{ $link }}" target="_blank" class="text-blue-600 underline">
-                                {{ $project['link'] ?? '' }}
-                            </a>
-                        </li>
-                    </ul>
-                    @php
-                        $lines = preg_split('/\r\n|\r|\n/', $project['description']);
-                    @endphp
+                                <ul class= "title">
+                                    <li>
+                                        <strong>{{ $project['name'] ?? '' }}</strong> | 
+                                        <a href="{{ $link }}" target="_blank" class="text-blue-600 underline">
+                                            {{ $project['link'] ?? '' }}
+                                        </a>
+                                    </li>
+                                </ul>
+                                @php
+                                    $lines = preg_split('/\r\n|\r|\n/', $project['description']);
+                                @endphp
 
-                    <ul class="description">
-                        @foreach ($lines as $line)
-                            @if(trim($line) !== '')
-                                <li>{{ $line }}</li>
-                            @endif
-                        @endforeach
-                    </ul>
-                @endforeach
-            @endif
+                                <ul class="description">
+                                    @foreach ($lines as $line)
+                                        @if(trim($line) !== '')
+                                            <li>{{ $line }}</li>
+                                        @endif
+                                    @endforeach
+                                </ul>
+                            @endforeach
+                        @endif
+                    @break
 
-            <!-- Education -->
-            @if(!empty($hasEducation))
-                <h2>Education</h2>
-                <ul class= "title">
-                    @foreach($resume->education as $edu)
-                        <li>
-                            <strong>{{ $edu['degree'] ?? '' }}</strong>,
-                            {{ $edu['institution'] ?? ''}} ({{  $edu['year'] ?? ''}})
-                            @if (!empty($edu['gpa']))
-                                | <strong>GPA:</strong> {{ ($edu['gpa'] ?? '') }}
-                            @endif
-                        </li>
-                    @endforeach
-                </ul>
-            @endif
+                    <!-- Education -->
+                    @case('education')
+                        @if(!empty($hasEducation))
+                            <h2>Education</h2>
+                            <ul class= "title">
+                                @foreach($resume->education as $edu)
+                                    <li>
+                                        <strong>{{ $edu['degree'] ?? '' }}</strong>,
+                                        {{ $edu['institution'] ?? ''}} ({{  $edu['year'] ?? ''}})
+                                        @if (!empty($edu['gpa']))
+                                            | <strong>GPA:</strong> {{ ($edu['gpa'] ?? '') }}
+                                        @endif
+                                    </li>
+                                @endforeach
+                            </ul>
+                        @endif
+                    @break
 
-            <!-- Certifications -->
-            @if(!empty($hasCertificates))
-                <h2>Certifications</h2>
-                <ul class= "title">
-                    @foreach($resume->certifications as $cert)
-                        <li>
-                            <strong>{{ $cert['name'] ?? '' }}</strong>, {{ $cert['organization'] ?? ''}}
-                            ({{ $cert['year'] ?? '' }})
-                        </li>
-                    @endforeach
-                </ul>
-            @endif
 
-            <!-- Skills -->
-            @if(!empty($hasSkills))
-                <h2>Skills</h2>
-                <ul class= "title">
-                    @foreach($resume->skills as $skill)
-                        <li>{{ $skill }}</li>
-                    @endforeach
-                </ul>
-            @endif
+                    <!-- Certifications -->
+                    @case('certification')
+                        @if(!empty($hasCertificates))
+                            <h2>Certifications</h2>
+                            <ul class= "title">
+                                @foreach($resume->certifications as $cert)
+                                    <li>
+                                        <strong>{{ $cert['name'] ?? '' }}</strong>, {{ $cert['organization'] ?? ''}}
+                                        ({{ $cert['year'] ?? '' }})
+                                    </li>
+                                @endforeach
+                            </ul>
+                        @endif
+                    @break
 
-            <!-- Languages-->
-            @if(!empty($hasLanguages))
-                <h2>Languages</h2>
-                <ul class= "title">
-                    @foreach($resume->languages as $language)
-                        <li>{{ $language }}</li>
-                    @endforeach
-                </ul>
-            @endif
+                    <!-- Skills -->
+                    @case('skills')
+                        @if(!empty($hasSkills))
+                            <h2>Skills</h2>
+                            <ul class= "title">
+                                @foreach($resume->skills as $skill)
+                                    <li>{{ $skill }}</li>
+                                @endforeach
+                            </ul>
+                        @endif
+                    @break
+
+                    <!-- Languages-->
+                    @case('languages')
+                        @if(!empty($hasLanguages))
+                            <h2>Languages</h2>
+                            <ul class= "title">
+                                @foreach($resume->languages as $language)
+                                    <li>{{ $language }}</li>
+                                @endforeach
+                            </ul>
+                        @endif
+                    @break
+                @endswitch
+            @endforeach
         </div>
 
 
