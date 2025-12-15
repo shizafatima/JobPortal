@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Validator;
 
+use function Pest\Laravel\json;
 
 class ResumeController extends Controller
 {
@@ -44,6 +45,7 @@ class ResumeController extends Controller
             'certifications' => 'nullable|array',
             'projects' => 'nullable|array',
             'languages' => 'nullable|string',
+            'section_order' => 'nullable|string',
         ]);
 
         if ($validator->fails()) {
@@ -64,6 +66,21 @@ class ResumeController extends Controller
                 })
                 ->values()
                 ->toArray();
+        }
+
+        // Parse section order - ADD THIS
+        if (isset($data['section_order'])) {
+            $data['section_order'] = json_decode($data['section_order'], true);
+        } else {
+            // Set default order if not provided
+            $data['section_order'] = [
+                'work-experience',
+                'projects',
+                'education',
+                'certification',
+                'skills',
+                'languages'
+            ];
         }
 
 
@@ -96,7 +113,16 @@ class ResumeController extends Controller
         // $education = $resume->education;
         // $certifications = $resume->certifications;
 
-        return view('preview', compact('resume'));
+        $sectionOrder = $resume->section_order ?? [
+            'work-experience',
+            'projects',
+            'education',
+            'certification',
+            'skills',
+            'languages'
+        ];
+
+        return view('preview', compact('resume', 'sectionOrder'));
     }
 
     public function downloadPdf(Resume $resume)
