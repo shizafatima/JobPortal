@@ -1,6 +1,11 @@
 @extends('layouts.plain')
 
 @section('content')
+    <style>
+        .section {
+            cursor: grab;
+        }
+    </style>
     <div class="container mx-auto px-4 py-8 font-[arial]">
         <div class="max-w-4xl mx-auto">
             <h1 class="text-3xl font-bold mb-6">ATS Resume Builder</h1>
@@ -8,342 +13,349 @@
             <div id="alert-container"></div>
 
             <form id="resumeForm" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+                <div id="resumeSections">
+                    <!-- Personal Information -->
+                    <div data-id="personal-info" class="section mb-6">
+                        <h2 class="text-2xl font-semibold mb-4 border-b pb-2">Personal Information</h2>
 
-                <!-- Personal Information -->
-                <div class="mb-6">
-                    <h2 class="text-2xl font-semibold mb-4 border-b pb-2">Personal Information</h2>
-
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <div>
-                            <label class="block text-gray-700 text-sm font-bold mb-2">Full Name <span
-                                    class="text-red-600">*</span></label>
-                            <input type="text" name="full_name" required placeholder="e.g, Ali Hussain"
-                                class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
-                        </div>
-
-                        <div>
-                            <label class="block text-gray-700 text-sm font-bold mb-2">Email <span
-                                    class="text-red-600">*</span></label>
-                            <input type="email" name="email" required placeholder="e.g, e@example.com"
-                                class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
-                        </div>
-
-                        <div>
-                            <label class="block text-gray-700 text-sm font-bold mb-2">Phone No <span
-                                    class="text-red-600">*</span></label>
-                            <input type="tel" name="phone" required placeholder="e.g, 03xxxxxxxxx"
-                                class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
-                        </div>
-
-                        <div>
-                            <label class="block text-gray-700 text-sm font-bold mb-2">Address <span
-                                    class="text-red-600">*</span></label>
-                            <input type="text" name="address" required placeholder="e.g, Karachi, Pakistan"
-                                class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
-                        </div>
-
-
-                    </div>
-
-
-                    <!-- Links -->
-                    <div id="linkContainer">
-                        <div class="link-item border p-4 mb-4 rounded md:col-span-2 mt-4">
-                            <div class=" flex justify-between items-center">
-                                <div>
-                                    <label class="block text-gray-700 text-sm font-bold mb-2">Name</label>
-                                </div>
-                                <div>
-                                    <button type="button" class="removeBtn text-black text-sm rounded cursor-pointer">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                            fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                            stroke-linejoin="round" class="lucide lucide-x-icon lucide-x">
-                                            <path d="M18 6 6 18" />
-                                            <path d="m6 6 12 12" />
-                                        </svg>
-                                    </button>
-                                </div>
-                            </div>
-                            <input type="text" name="links[0][name]" placeholder="e.g, Linkedin"
-                                class="shadow appearance-none border rounded w-full mb-2 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
-
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                             <div>
-                                <label class="block text-gray-700 text-sm font-bold mb-2">Link</label>
-                                <input type="url" name="links[0][link]" placeholder="e.g, https://linkedin.com"
+                                <label class="block text-gray-700 text-sm font-bold mb-2">Full Name <span
+                                        class="text-red-600">*</span></label>
+                                <input type="text" name="full_name" required placeholder="e.g, Ali Hussain"
                                     class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
                             </div>
+
+                            <div>
+                                <label class="block text-gray-700 text-sm font-bold mb-2">Email <span
+                                        class="text-red-600">*</span></label>
+                                <input type="email" name="email" required placeholder="e.g, e@example.com"
+                                    class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                            </div>
+
+                            <div>
+                                <label class="block text-gray-700 text-sm font-bold mb-2">Phone No <span
+                                        class="text-red-600">*</span></label>
+                                <input type="tel" name="phone" required placeholder="e.g, 03xxxxxxxxx"
+                                    class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                            </div>
+
+                            <div>
+                                <label class="block text-gray-700 text-sm font-bold mb-2">Address <span
+                                        class="text-red-600">*</span></label>
+                                <input type="text" name="address" required placeholder="e.g, Karachi, Pakistan"
+                                    class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                            </div>
+
+
                         </div>
-                    </div>
 
-                    <button type="button" id="addLinkBtn"
-                        class="bg-[#309689] hover:bg-[#3db6a6] text-white px-2 py-2 mt-2 font-bold rounded focus:outline-none focus:shadow-outline">
-                        + Add Link
-                    </button>
-                </div>
 
-                <!-- Professional Summary -->
-                <div class="mb-6">
-                    <h2 class="text-2xl font-semibold mb-4 border-b pb-2">Professional Summary</h2>
-                    <textarea name="summary" rows="5"
-                        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                        placeholder="Brief overview of your professional background and career objectives"></textarea>
-                </div>
-
-                <!-- Work Experience -->
-                <div class="mb-6">
-                    <h2 class="text-2xl font-semibold mb-4 border-b pb-2">Work Experience</h2>
-                    <div id="experienceContainer">
-                        <div class="experience-item border p-4 mb-4 rounded">
-                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                <div>
-                                    <label class="block text-gray-700 text-sm font-bold mb-2">Job Title</label>
-                                    <input type="text" name="experience[0][title]" placeholder="e.g, Web Developer - Intern"
-                                        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
-                                </div>
-
-                                <div>
-                                    <div class="flex justify-between items-center">
-                                        <div>
-                                            <label class="block text-gray-700 text-sm font-bold mb-2">Company</label>
-                                        </div>
-                                        <div>
-                                            <button type="button"
-                                                class="removeBtn text-black text-sm rounded cursor-pointer">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                                    stroke-linecap="round" stroke-linejoin="round"
-                                                    class="lucide lucide-x-icon lucide-x">
-                                                    <path d="M18 6 6 18" />
-                                                    <path d="m6 6 12 12" />
-                                                </svg>
-                                            </button>
-                                        </div>
+                        <!-- Links -->
+                        <div id="linkContainer">
+                            <div class="link-item border p-4 mb-4 rounded md:col-span-2 mt-4">
+                                <div class=" flex justify-between items-center">
+                                    <div>
+                                        <label class="block text-gray-700 text-sm font-bold mb-2">Name</label>
                                     </div>
-                                    <input type="text" name="experience[0][company]" placeholder="e.g, Bano Qabil"
-                                        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                                    <div>
+                                        <button type="button" class="removeBtn text-black text-sm rounded cursor-pointer">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                                viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                                stroke-linecap="round" stroke-linejoin="round"
+                                                class="lucide lucide-x-icon lucide-x">
+                                                <path d="M18 6 6 18" />
+                                                <path d="m6 6 12 12" />
+                                            </svg>
+                                        </button>
+                                    </div>
                                 </div>
+                                <input type="text" name="links[0][name]" placeholder="e.g, Linkedin"
+                                    class="shadow appearance-none border rounded w-full mb-2 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
 
                                 <div>
-                                    <label class="block text-gray-700 text-sm font-bold mb-2">Start Date</label>
-                                    <input type="month" name="experience[0][start_date]"
+                                    <label class="block text-gray-700 text-sm font-bold mb-2">Link</label>
+                                    <input type="url" name="links[0][link]" placeholder="e.g, https://linkedin.com"
                                         class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
-                                </div>
-
-                                <div>
-                                    <label class="block text-gray-700 text-sm font-bold mb-2">End Date</label>
-                                    <input type="month" name="experience[0][end_date]"
-                                        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
-                                    <label class="inline-flex items-center mt-2">
-                                        <input type="checkbox" name="experience[0][current]" class="form-checkbox">
-                                        <span class="ml-2 text-sm">Currently working</span>
-                                    </label>
-                                </div>
-
-                                <div class="md:col-span-2">
-                                    <label class="block text-gray-700 text-sm font-bold mb-2">Description <span
-                                            class="text-gray-500">(Use action verbs + measurable results for good ATS
-                                            score)</span></label>
-                                    <textarea name="experience[0][description]" rows="4"
-                                        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                                        placeholder="Describe your key responsibilities and achievements."></textarea>
                                 </div>
                             </div>
                         </div>
+
+                        <button type="button" id="addLinkBtn"
+                            class="bg-[#309689] hover:bg-[#3db6a6] text-white px-2 py-2 mt-2 font-bold rounded focus:outline-none focus:shadow-outline">
+                            + Add Link
+                        </button>
                     </div>
-                    <button type="button" id="addExperienceBtn"
-                        class="bg-[#309689] hover:bg-[#3db6a6] text-white font-bold py-2 px-3 rounded focus:outline-none focus:shadow-outline">
-                        + Add Experience
-                    </button>
-                </div>
 
-                <!-- Education -->
-                <div class="mb-6">
-                    <h2 class="text-2xl font-semibold mb-4 border-b pb-2">Education</h2>
-                    <div id="educationContainer">
-                        <div class="education-item border p-4 mb-4 rounded">
-                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                <div>
-                                    <label class="block text-gray-700 text-sm font-bold mb-2">Degree</label>
-                                    <input type="text" name="education[0][degree]"
-                                        placeholder="e.g, Bachelors of Science(BSc)"
-                                        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
-                                </div>
-
-                                <div>
-                                    <div class="flex justify-between items-center">
-                                        <div>
-                                            <label class="block text-gray-700 text-sm font-bold mb-2">Institution</label>
-                                        </div>
-                                        <div>
-                                            <button type="button"
-                                                class="removeBtn text-black text-sm rounded cursor-pointer">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                                    stroke-linecap="round" stroke-linejoin="round"
-                                                    class="lucide lucide-x-icon lucide-x">
-                                                    <path d="M18 6 6 18" />
-                                                    <path d="m6 6 12 12" />
-                                                </svg>
-                                            </button>
-                                        </div>
-                                    </div>
-
-                                    <input type="text" name="education[0][institution]"
-                                        placeholder="e.g, Karachi University"
-                                        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
-                                </div>
-
-                                <div>
-                                    <label class="block text-gray-700 text-sm font-bold mb-2">Year</label>
-                                    <input type="number" name="education[0][year]" min="1950" max="2030"
-                                        placeholder="e.g, 2025"
-                                        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
-                                </div>
-
-                                <div>
-                                    <label class="block text-gray-700 text-sm font-bold mb-2">GPA (Optional)</label>
-                                    <input type="text" name="education[0][gpa]" placeholder="e.g, 3.4"
-                                        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
-                                </div>
-                            </div>
-
-                        </div>
-                    </div>
-                    <button type="button" id="addEducationBtn"
-                        class="bg-[#309689] hover:bg-[#3db6a6] text-white font-bold py-2 px-3 rounded focus:outline-none focus:shadow-outline">
-                        + Add Education
-                    </button>
-                </div>
-
-                <!-- Skills -->
-                <div class="mb-6">
-                    <h2 class="text-2xl font-semibold mb-4 border-b pb-2">Skills</h2>
-                    <div>
-                        <label class="block text-gray-700 text-sm font-bold mb-2">Skills <span class="text-gray-500">(comma
-                                separated)</span></label>
-                        <textarea name="skills" rows="3"
+                    <!-- Professional Summary -->
+                    <div data-id="summary" class="section mb-6">
+                        <h2 class="text-2xl font-semibold mb-4 border-b pb-2">Professional Summary</h2>
+                        <textarea name="summary" rows="5"
                             class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                            placeholder="e.g., JavaScript, Python, Project Management, Communication"></textarea>
+                            placeholder="Brief overview of your professional background and career objectives"></textarea>
                     </div>
-                </div>
 
-                <!-- Certifications -->
-                <div class="mb-6">
-                    <h2 class="text-2xl font-semibold mb-4 border-b pb-2">Certifications <span
-                            class="text-gray-500">(Optional)</span></h2>
-                    <div id="certificationContainer">
-                        <div class="certification-item border p-4 mb-4 rounded">
-                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                <div>
-                                    <label class="block text-gray-700 text-sm font-bold mb-2">Certification Name</label>
-                                    <input type="text" name="certifications[0][name]"
-                                        placeholder="e.g, WebWizard Web Development"
-                                        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
-                                </div>
-
-                                <div>
-                                    <div class="flex justify-between items-center">
-                                        <div>
-                                            <label class="block text-gray-700 text-sm font-bold mb-2">Issuing
-                                                Organization</label>
-                                        </div>
-                                        <div>
-                                            <button type="button"
-                                                class="removeBtn text-black text-sm rounded cursor-pointer">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                                    stroke-linecap="round" stroke-linejoin="round"
-                                                    class="lucide lucide-x-icon lucide-x">
-                                                    <path d="M18 6 6 18" />
-                                                    <path d="m6 6 12 12" />
-                                                </svg>
-                                            </button>
-                                        </div>
+                    <!-- Work Experience -->
+                    <div data-id="work-experience" class="section mb-6">
+                        <h2 class="text-2xl font-semibold mb-4 border-b pb-2">Work Experience</h2>
+                        <div id="experienceContainer">
+                            <div class="experience-item border p-4 mb-4 rounded">
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    <div>
+                                        <label class="block text-gray-700 text-sm font-bold mb-2">Job Title</label>
+                                        <input type="text" name="experience[0][title]"
+                                            placeholder="e.g, Web Developer - Intern"
+                                            class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
                                     </div>
 
-                                    <input type="text" name="certifications[0][organization]" placeholder="e.g, Bano Qabil"
-                                        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
-                                </div>
-                                <div>
-                                    <label class="block text-gray-700 text-sm font-bold mb-2">Year</label>
-                                    <input type="number" name="certifications[0][year]" min="1950" max="2030"
-                                        placeholder="e.g, 2025"
-                                        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                                    <div>
+                                        <div class="flex justify-between items-center">
+                                            <div>
+                                                <label class="block text-gray-700 text-sm font-bold mb-2">Company</label>
+                                            </div>
+                                            <div>
+                                                <button type="button"
+                                                    class="removeBtn text-black text-sm rounded cursor-pointer">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                                        viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                                        class="lucide lucide-x-icon lucide-x">
+                                                        <path d="M18 6 6 18" />
+                                                        <path d="m6 6 12 12" />
+                                                    </svg>
+                                                </button>
+                                            </div>
+                                        </div>
+                                        <input type="text" name="experience[0][company]" placeholder="e.g, Bano Qabil"
+                                            class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                                    </div>
+
+                                    <div>
+                                        <label class="block text-gray-700 text-sm font-bold mb-2">Start Date</label>
+                                        <input type="month" name="experience[0][start_date]"
+                                            class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                                    </div>
+
+                                    <div>
+                                        <label class="block text-gray-700 text-sm font-bold mb-2">End Date</label>
+                                        <input type="month" name="experience[0][end_date]"
+                                            class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                                        <label class="inline-flex items-center mt-2">
+                                            <input type="checkbox" name="experience[0][current]" class="form-checkbox">
+                                            <span class="ml-2 text-sm">Currently working</span>
+                                        </label>
+                                    </div>
+
+                                    <div class="md:col-span-2">
+                                        <label class="block text-gray-700 text-sm font-bold mb-2">Description <span
+                                                class="text-gray-500">(Use action verbs + measurable results for good ATS
+                                                score)</span></label>
+                                        <textarea name="experience[0][description]" rows="4"
+                                            class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                            placeholder="Describe your key responsibilities and achievements."></textarea>
+                                    </div>
                                 </div>
                             </div>
                         </div>
+                        <button type="button" id="addExperienceBtn"
+                            class="bg-[#309689] hover:bg-[#3db6a6] text-white font-bold py-2 px-3 rounded focus:outline-none focus:shadow-outline">
+                            + Add Experience
+                        </button>
                     </div>
-                    <button type="button" id="addCertificationBtn"
-                        class="bg-[#309689] hover:bg-[#3db6a6] text-white font-bold py-2 px-3 rounded focus:outline-none focus:shadow-outline">
-                        + Add Certification
-                    </button>
-                </div>
 
-                <!-- Projects -->
-                <div class="mb-6">
-                    <h2 class="text-2xl font-semibold mb-4 border-b pb-2">Projects <span
-                            class="text-gray-500">(Optional)</span></h2>
-                    <div id="projectContainer">
-                        <div class="project-item border p-4 mb-4 rounded">
-                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                <div>
-                                    <label class="block text-gray-700 text-sm font-bold mb-2">Project Name</label>
-                                    <input type="text" name="projects[0][name]" placeholder="e.g, Job Portal"
-                                        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
-                                </div>
-
-                                <div>
-                                    <div class="flex justify-between items-center">
-                                        <div>
-                                            <label class="block text-gray-700 text-sm font-bold mb-2">Project Link <span
-                                                    class="text-gray-500">(Github
-                                                    Repository/deployement)</span></label>
-                                        </div>
-                                        <div>
-                                            <button type="button"
-                                                class="removeBtn text-black text-sm rounded cursor-pointer">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                                    stroke-linecap="round" stroke-linejoin="round"
-                                                    class="lucide lucide-x-icon lucide-x">
-                                                    <path d="M18 6 6 18" />
-                                                    <path d="m6 6 12 12" />
-                                                </svg>
-                                            </button>
-                                        </div>
+                    <!-- Education -->
+                    <div data-id="education" class="section mb-6">
+                        <h2 class="text-2xl font-semibold mb-4 border-b pb-2">Education</h2>
+                        <div id="educationContainer">
+                            <div class="education-item border p-4 mb-4 rounded">
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    <div>
+                                        <label class="block text-gray-700 text-sm font-bold mb-2">Degree</label>
+                                        <input type="text" name="education[0][degree]"
+                                            placeholder="e.g, Bachelors of Science(BSc)"
+                                            class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
                                     </div>
 
-                                    <input type="url" name="projects[0][link]"
-                                        placeholder="e.g, https://your-domain.com or https://github.com"
-                                        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                                    <div>
+                                        <div class="flex justify-between items-center">
+                                            <div>
+                                                <label
+                                                    class="block text-gray-700 text-sm font-bold mb-2">Institution</label>
+                                            </div>
+                                            <div>
+                                                <button type="button"
+                                                    class="removeBtn text-black text-sm rounded cursor-pointer">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                                        viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                                        class="lucide lucide-x-icon lucide-x">
+                                                        <path d="M18 6 6 18" />
+                                                        <path d="m6 6 12 12" />
+                                                    </svg>
+                                                </button>
+                                            </div>
+                                        </div>
+
+                                        <input type="text" name="education[0][institution]"
+                                            placeholder="e.g, Karachi University"
+                                            class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                                    </div>
+
+                                    <div>
+                                        <label class="block text-gray-700 text-sm font-bold mb-2">Year</label>
+                                        <input type="number" name="education[0][year]" min="1950" max="2030"
+                                            placeholder="e.g, 2025"
+                                            class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                                    </div>
+
+                                    <div>
+                                        <label class="block text-gray-700 text-sm font-bold mb-2">GPA (Optional)</label>
+                                        <input type="text" name="education[0][gpa]" placeholder="e.g, 3.4"
+                                            class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                                    </div>
                                 </div>
-                                <div class="md:col-span-2">
-                                    <label class="block text-gray-700 text-sm font-bold mb-2">Description</label>
-                                    <textarea name="projects[0][description]" rows="4"
-                                        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                                        placeholder="Describe key features of your project"></textarea>
+
+                            </div>
+                        </div>
+                        <button type="button" id="addEducationBtn"
+                            class="bg-[#309689] hover:bg-[#3db6a6] text-white font-bold py-2 px-3 rounded focus:outline-none focus:shadow-outline">
+                            + Add Education
+                        </button>
+                    </div>
+
+                    <!-- Skills -->
+                    <div data-id="skills" class="section mb-6">
+                        <h2 class="text-2xl font-semibold mb-4 border-b pb-2">Skills</h2>
+                        <div>
+                            <label class="block text-gray-700 text-sm font-bold mb-2">Skills <span
+                                    class="text-gray-500">(comma
+                                    separated)</span></label>
+                            <textarea name="skills" rows="3"
+                                class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                placeholder="e.g., JavaScript, Python, Project Management, Communication"></textarea>
+                        </div>
+                    </div>
+
+                    <!-- Certifications -->
+                    <div data-id="certification" class="section mb-6">
+                        <h2 class="text-2xl font-semibold mb-4 border-b pb-2">Certifications <span
+                                class="text-gray-500">(Optional)</span></h2>
+                        <div id="certificationContainer">
+                            <div class="certification-item border p-4 mb-4 rounded">
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    <div>
+                                        <label class="block text-gray-700 text-sm font-bold mb-2">Certification Name</label>
+                                        <input type="text" name="certifications[0][name]"
+                                            placeholder="e.g, WebWizard Web Development"
+                                            class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                                    </div>
+
+                                    <div>
+                                        <div class="flex justify-between items-center">
+                                            <div>
+                                                <label class="block text-gray-700 text-sm font-bold mb-2">Issuing
+                                                    Organization</label>
+                                            </div>
+                                            <div>
+                                                <button type="button"
+                                                    class="removeBtn text-black text-sm rounded cursor-pointer">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                                        viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                                        class="lucide lucide-x-icon lucide-x">
+                                                        <path d="M18 6 6 18" />
+                                                        <path d="m6 6 12 12" />
+                                                    </svg>
+                                                </button>
+                                            </div>
+                                        </div>
+
+                                        <input type="text" name="certifications[0][organization]"
+                                            placeholder="e.g, Bano Qabil"
+                                            class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                                    </div>
+                                    <div>
+                                        <label class="block text-gray-700 text-sm font-bold mb-2">Year</label>
+                                        <input type="number" name="certifications[0][year]" min="1950" max="2030"
+                                            placeholder="e.g, 2025"
+                                            class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                                    </div>
                                 </div>
                             </div>
                         </div>
+                        <button type="button" id="addCertificationBtn"
+                            class="bg-[#309689] hover:bg-[#3db6a6] text-white font-bold py-2 px-3 rounded focus:outline-none focus:shadow-outline">
+                            + Add Certification
+                        </button>
                     </div>
-                    <button type="button" id="addProjectBtn"
-                        class="bg-[#309689] hover:bg-[#3db6a6] text-white font-bold py-2 px-3 rounded focus:outline-none focus:shadow-outline">
-                        + Add Project
-                    </button>
-                </div>
 
-                <!-- Languages -->
-                <div class="mb-6">
-                    <h2 class="text-2xl font-semibold mb-4 border-b pb-2">Languages</h2>
-                    <div>
-                        <label class="block text-gray-700 text-sm font-bold mb-2">Languages <span
-                                class="text-gray-500">(comma separated)</span></label>
-                        <textarea name="languages" rows="3"
-                            class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                            placeholder="e.g., English(fluent), Urdu(native)"></textarea>
+                    <!-- Projects -->
+                    <div data-id="projects" class="section mb-6">
+                        <h2 class="text-2xl font-semibold mb-4 border-b pb-2">Projects <span
+                                class="text-gray-500">(Optional)</span></h2>
+                        <div id="projectContainer">
+                            <div class="project-item border p-4 mb-4 rounded">
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    <div>
+                                        <label class="block text-gray-700 text-sm font-bold mb-2">Project Name</label>
+                                        <input type="text" name="projects[0][name]" placeholder="e.g, Job Portal"
+                                            class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                                    </div>
+
+                                    <div>
+                                        <div class="flex justify-between items-center">
+                                            <div>
+                                                <label class="block text-gray-700 text-sm font-bold mb-2">Project Link <span
+                                                        class="text-gray-500">(Github
+                                                        Repository/deployement)</span></label>
+                                            </div>
+                                            <div>
+                                                <button type="button"
+                                                    class="removeBtn text-black text-sm rounded cursor-pointer">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                                        viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                                        class="lucide lucide-x-icon lucide-x">
+                                                        <path d="M18 6 6 18" />
+                                                        <path d="m6 6 12 12" />
+                                                    </svg>
+                                                </button>
+                                            </div>
+                                        </div>
+
+                                        <input type="url" name="projects[0][link]"
+                                            placeholder="e.g, https://your-domain.com or https://github.com"
+                                            class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                                    </div>
+                                    <div class="md:col-span-2">
+                                        <label class="block text-gray-700 text-sm font-bold mb-2">Description</label>
+                                        <textarea name="projects[0][description]" rows="4"
+                                            class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                            placeholder="Describe key features of your project"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <button type="button" id="addProjectBtn"
+                            class="bg-[#309689] hover:bg-[#3db6a6] text-white font-bold py-2 px-3 rounded focus:outline-none focus:shadow-outline">
+                            + Add Project
+                        </button>
                     </div>
-                </div>
 
+                    <!-- Languages -->
+                    <div data-id="languages" class="section mb-6">
+                        <h2 class="text-2xl font-semibold mb-4 border-b pb-2">Languages</h2>
+                        <div>
+                            <label class="block text-gray-700 text-sm font-bold mb-2">Languages <span
+                                    class="text-gray-500">(comma separated)</span></label>
+                            <textarea name="languages" rows="3"
+                                class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                placeholder="e.g., English(fluent), Urdu(native)"></textarea>
+                        </div>
+                    </div>
+
+                    <input type="hidden" name="section_order" id="sectionOrder">
+                </div>
                 <!-- Submit Buttons -->
                 <div class="flex items-center justify-between mt-8">
                     <div>
@@ -376,6 +388,7 @@
         </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script>
 
     <script>
         /* -----------------------------------------
@@ -694,9 +707,17 @@
             return json;
         }
 
+        var el = document.getElementById('resumeSections');
+
+        Sortable.create(el, {
+            animation: 150
+        });
         const form = document.getElementById('resumeForm');
 
         form.addEventListener('submit', function (e) {
+            const sections = document.querySelectorAll('#resumeSections .section');
+            const order = Array.from(sections).map(s => s.dataset.id);
+            document.getElementById('sectionOrder').value = JSON.stringify(order);
             e.preventDefault(); // prevent reload if Enter key is pressed
         });
 
