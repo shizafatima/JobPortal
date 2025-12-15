@@ -9,8 +9,6 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Validator;
 
-use function Pest\Laravel\json;
-
 class ResumeController extends Controller
 {
     public function viewPdf($filename)
