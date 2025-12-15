@@ -125,7 +125,16 @@ class ResumeController extends Controller
 
     public function downloadPdf(Resume $resume)
     {
-        $pdf = PDF::loadView('pdf', compact('resume'));
+        $sectionOrder = $resume->section_order ?? [
+            'work-experience',
+            'projects',
+            'education',
+            'certification',
+            'skills',
+            'languages'
+        ];
+        $pdf = PDF::loadView('pdf', compact('resume', 'sectionOrder')); 
+
 
         return $pdf->download('pdf');
     }
