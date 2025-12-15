@@ -34,9 +34,8 @@ class ResumeController extends Controller
             'full_name' => 'required|string|max:255',
             'email' => 'required|email|max:255',
             'phone' => 'required|string|max:20',
-            // 'links' => 'nullable|url',
-            'links.*.name' => 'string|max:255',
-            'links.*.link' => 'url',
+            'links.*.name' => 'nullable|string|max:255',
+            'links.*.link' => 'nullable|url',
             'address' => 'required|nullable|string|max:500',
             'summary' => 'nullable|string',
             'experience' => 'nullable|array',
@@ -56,6 +55,17 @@ class ResumeController extends Controller
         }
 
         $data = $request->all();
+
+        // Filter out empty links
+        if (isset($data['links'])) {
+            $data['links'] = collect($data['links'])
+                ->filter(function ($link) {
+                    return !empty($link['name']) && !empty($link['link']);
+                })
+                ->values()
+                ->toArray();
+        }
+
 
         // Convert skills string to array
         if (isset($data['skills'])) {

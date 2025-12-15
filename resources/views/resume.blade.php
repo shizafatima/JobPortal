@@ -47,26 +47,25 @@
 
 
                     <!-- Links -->
-                    <div id="linkContainer"> 
+                    <div id="linkContainer">
                         <div class="link-item border p-4 mb-4 rounded md:col-span-2 mt-4">
-                                <div class=" flex justify-between items-center">
-                                    <div>
-                                        <label class="block text-gray-700 text-sm font-bold mb-2">Name</label>
-                                    </div>
-                                    <div>
-                                        <button type="button" class="removeBtn text-black text-sm rounded cursor-pointer">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                                viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                                stroke-linecap="round" stroke-linejoin="round"
-                                                class="lucide lucide-x-icon lucide-x">
-                                                <path d="M18 6 6 18" />
-                                                <path d="m6 6 12 12" />
-                                            </svg>
-                                        </button>
-                                    </div>
+                            <div class=" flex justify-between items-center">
+                                <div>
+                                    <label class="block text-gray-700 text-sm font-bold mb-2">Name</label>
                                 </div>
-                                <input type="text" name="links[0][name]" placeholder="e.g, Linkedin"
-                                    class="shadow appearance-none border rounded w-full mb-2 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                                <div>
+                                    <button type="button" class="removeBtn text-black text-sm rounded cursor-pointer">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                            fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                            stroke-linejoin="round" class="lucide lucide-x-icon lucide-x">
+                                            <path d="M18 6 6 18" />
+                                            <path d="m6 6 12 12" />
+                                        </svg>
+                                    </button>
+                                </div>
+                            </div>
+                            <input type="text" name="links[0][name]" placeholder="e.g, Linkedin"
+                                class="shadow appearance-none border rounded w-full mb-2 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
 
                             <div>
                                 <label class="block text-gray-700 text-sm font-bold mb-2">Link</label>
@@ -703,6 +702,16 @@
 
         // -------- Save Resume --------
         document.getElementById('saveResumeBtn').addEventListener('click', async function () {
+
+            // --- Fix links before submission ---
+            const linkInputs = document.querySelectorAll('[name$="[link]"]');
+            linkInputs.forEach(input => {
+                let value = input.value.trim();
+                if (value && !/^https?:\/\//i.test(value)) {
+                    input.value = 'https://' + value;
+                }
+            });
+
             const data = formToJson(form);
 
             try {
@@ -833,10 +842,10 @@
                 -------------------- */
                 if (resume.links && resume.links.length > 0) {
                     // First item
-                    const firstLink =linkContainer.querySelector('.link-item');
+                    const firstLink = linkContainer.querySelector('.link-item');
                     firstLink.querySelector('input[name="links[0][name]"]').value = resume.links[0].name || '';
                     firstLink.querySelector('input[name="links[0][link]"]').value = resume.links[0].link || '';
-    
+
                     // Other items
                     for (let i = 1; i < resume.links.length; i++) {
                         addLinkBtn.click(); // clone
