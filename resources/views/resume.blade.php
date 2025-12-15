@@ -13,88 +13,87 @@
             <div id="alert-container"></div>
 
             <form id="resumeForm" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
-                <div id="resumeSections">
-                    <!-- Personal Information -->
-                    <div data-id="personal-info" class="section mb-6">
-                        <h2 class="text-2xl font-semibold mb-4 border-b pb-2">Personal Information</h2>
 
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                            <div>
-                                <label class="block text-gray-700 text-sm font-bold mb-2">Full Name <span
-                                        class="text-red-600">*</span></label>
-                                <input type="text" name="full_name" required placeholder="e.g, Ali Hussain"
-                                    class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
-                            </div>
+                <!-- Personal Information -->
+                <div class="mb-6">
+                    <h2 class="text-2xl font-semibold mb-4 border-b pb-2">Personal Information</h2>
 
-                            <div>
-                                <label class="block text-gray-700 text-sm font-bold mb-2">Email <span
-                                        class="text-red-600">*</span></label>
-                                <input type="email" name="email" required placeholder="e.g, e@example.com"
-                                    class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
-                            </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-gray-700 text-sm font-bold mb-2">Full Name <span
+                                    class="text-red-600">*</span></label>
+                            <input type="text" name="full_name" required placeholder="e.g, Ali Hussain"
+                                class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                        </div>
 
-                            <div>
-                                <label class="block text-gray-700 text-sm font-bold mb-2">Phone No <span
-                                        class="text-red-600">*</span></label>
-                                <input type="tel" name="phone" required placeholder="e.g, 03xxxxxxxxx"
-                                    class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
-                            </div>
+                        <div>
+                            <label class="block text-gray-700 text-sm font-bold mb-2">Email <span
+                                    class="text-red-600">*</span></label>
+                            <input type="email" name="email" required placeholder="e.g, e@example.com"
+                                class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                        </div>
 
-                            <div>
-                                <label class="block text-gray-700 text-sm font-bold mb-2">Address <span
-                                        class="text-red-600">*</span></label>
-                                <input type="text" name="address" required placeholder="e.g, Karachi, Pakistan"
-                                    class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
-                            </div>
+                        <div>
+                            <label class="block text-gray-700 text-sm font-bold mb-2">Phone No <span
+                                    class="text-red-600">*</span></label>
+                            <input type="tel" name="phone" required placeholder="e.g, 03xxxxxxxxx"
+                                class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                        </div>
 
-
+                        <div>
+                            <label class="block text-gray-700 text-sm font-bold mb-2">Address <span
+                                    class="text-red-600">*</span></label>
+                            <input type="text" name="address" required placeholder="e.g, Karachi, Pakistan"
+                                class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
                         </div>
 
 
-                        <!-- Links -->
-                        <div id="linkContainer">
-                            <div class="link-item border p-4 mb-4 rounded md:col-span-2 mt-4">
-                                <div class=" flex justify-between items-center">
-                                    <div>
-                                        <label class="block text-gray-700 text-sm font-bold mb-2">Name</label>
-                                    </div>
-                                    <div>
-                                        <button type="button" class="removeBtn text-black text-sm rounded cursor-pointer">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                                viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                                stroke-linecap="round" stroke-linejoin="round"
-                                                class="lucide lucide-x-icon lucide-x">
-                                                <path d="M18 6 6 18" />
-                                                <path d="m6 6 12 12" />
-                                            </svg>
-                                        </button>
-                                    </div>
-                                </div>
-                                <input type="text" name="links[0][name]" placeholder="e.g, Linkedin"
-                                    class="shadow appearance-none border rounded w-full mb-2 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                    </div>
 
+
+                    <!-- Links -->
+                    <div id="linkContainer">
+                        <div class="link-item border p-4 mb-4 rounded md:col-span-2 mt-4">
+                            <div class=" flex justify-between items-center">
                                 <div>
-                                    <label class="block text-gray-700 text-sm font-bold mb-2">Link</label>
-                                    <input type="url" name="links[0][link]" placeholder="e.g, https://linkedin.com"
-                                        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                                    <label class="block text-gray-700 text-sm font-bold mb-2">Name</label>
+                                </div>
+                                <div>
+                                    <button type="button" class="removeBtn text-black text-sm rounded cursor-pointer">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                            fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                            stroke-linejoin="round" class="lucide lucide-x-icon lucide-x">
+                                            <path d="M18 6 6 18" />
+                                            <path d="m6 6 12 12" />
+                                        </svg>
+                                    </button>
                                 </div>
                             </div>
+                            <input type="text" name="links[0][name]" placeholder="e.g, Linkedin"
+                                class="shadow appearance-none border rounded w-full mb-2 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+
+                            <div>
+                                <label class="block text-gray-700 text-sm font-bold mb-2">Link</label>
+                                <input type="url" name="links[0][link]" placeholder="e.g, https://linkedin.com"
+                                    class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                            </div>
                         </div>
-
-                        <button type="button" id="addLinkBtn"
-                            class="bg-[#309689] hover:bg-[#3db6a6] text-white px-2 py-2 mt-2 font-bold rounded focus:outline-none focus:shadow-outline">
-                            + Add Link
-                        </button>
                     </div>
 
-                    <!-- Professional Summary -->
-                    <div data-id="summary" class="section mb-6">
-                        <h2 class="text-2xl font-semibold mb-4 border-b pb-2">Professional Summary</h2>
-                        <textarea name="summary" rows="5"
-                            class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                            placeholder="Brief overview of your professional background and career objectives"></textarea>
-                    </div>
+                    <button type="button" id="addLinkBtn"
+                        class="bg-[#309689] hover:bg-[#3db6a6] text-white px-2 py-2 mt-2 font-bold rounded focus:outline-none focus:shadow-outline">
+                        + Add Link
+                    </button>
+                </div>
 
+                <!-- Professional Summary -->
+                <div class="mb-6">
+                    <h2 class="text-2xl font-semibold mb-4 border-b pb-2">Professional Summary</h2>
+                    <textarea name="summary" rows="5"
+                        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                        placeholder="Brief overview of your professional background and career objectives"></textarea>
+                </div>
+                <div id="resumeSections">
                     <!-- Work Experience -->
                     <div data-id="work-experience" class="section mb-6">
                         <h2 class="text-2xl font-semibold mb-4 border-b pb-2">Work Experience</h2>
