@@ -709,20 +709,37 @@
         var el = document.getElementById('resumeSections');
 
         Sortable.create(el, {
-            animation: 150
+            animation: 150,
+            onEnd: function () {
+                // Update section order whenever dragging ends
+                updateSectionOrder();
+            }
         });
-        const form = document.getElementById('resumeForm');
 
-        form.addEventListener('submit', function (e) {
+        function updateSectionOrder() {
             const sections = document.querySelectorAll('#resumeSections .section');
             const order = Array.from(sections).map(s => s.dataset.id);
             document.getElementById('sectionOrder').value = JSON.stringify(order);
-            e.preventDefault(); // prevent reload if Enter key is pressed
+            console.log('Section order:', order);
+        }
+        const form = document.getElementById('resumeForm');
+
+        form.addEventListener('submit', function (e) {
+            updateSectionOrder();
+            e.preventDefault();
+
         });
 
+        // Call on page load to set initial order
+        document.addEventListener('DOMContentLoaded', function () {
+            updateSectionOrder();
+        });
         // -------- Save Resume --------
         document.getElementById('saveResumeBtn').addEventListener('click', async function () {
 
+            // UPDATE section order before saving
+
+            updateSectionOrder();
             // --- Fix links before submission ---
             const linkInputs = document.querySelectorAll('[name$="[link]"]');
             linkInputs.forEach(input => {
