@@ -352,7 +352,7 @@
                                 placeholder="e.g., English(fluent), Urdu(native)"></textarea>
                         </div>
                     </div>
-
+                    {{-- Hidden Input --}}
                     <input type="hidden" name="section_order" id="sectionOrder">
                 </div>
                 <!-- Submit Buttons -->
@@ -992,6 +992,21 @@
                             resume.projects[i].description || "";
                     }
                 }
+
+                if (resume.section_order) {
+                    let order = Array.isArray(resume.section_order) ? resume.section_order : JSON.parse(resume.section_order);
+
+                    const container = document.getElementById('resumeSections');
+
+                    order.forEach(id => {
+                        const section = container.querySelector(`.section[data-id="${id}"]`);
+                        if (section) container.appendChild(section);
+                    });
+
+                    // Update hidden input so saving keeps the same order
+                    document.getElementById('sectionOrder').value = JSON.stringify(order);
+                }
+
             })
             .catch(err => console.error(err));
 
