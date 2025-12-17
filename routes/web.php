@@ -86,14 +86,14 @@ Route::get('/resume', function() {
     return view('resume');
 });
 
-Route::post('/api/resume/save', [ResumeController::class, 'saveResume']);
+// Route::post('/api/resume/save', [ResumeController::class, 'saveResume']);
 
 Route::get('/resume/preview/{resume}', [ResumeController::class, 'preview'])->name('resume.preview');
 Route::get('/resume/download/{resume}', [ResumeController::class, 'downloadPdf'])->name('resume.download');
-Route::delete('/api/resume/{resume}', [ResumeController::class, 'delete'])->name('resume.delete');
+// Route::delete('/api/resume/{resume}', [ResumeController::class, 'delete'])->name('resume.delete');
 
 
-Route::get('/api/resume/get', [ResumeController::class, 'getResume']);
+// Route::get('/api/resume/get', [ResumeController::class, 'getResume']);
 
 
 
