@@ -13,7 +13,7 @@
             <div id="alert-container"></div>
 
             <form id="resumeForm" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
-
+                @csrf
                 <!-- Personal Information -->
                 <div class="mb-6">
                     <h2 class="text-2xl font-semibold mb-4 border-b pb-2">Personal Information</h2>
