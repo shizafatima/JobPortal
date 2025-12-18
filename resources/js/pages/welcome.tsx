@@ -78,12 +78,10 @@ export default function Index({ jobs, canRegister = true }: IndexProps) {
         if (!url) return
         Inertia.get(url, {}, { preserveState: true })
     }
-
     const [searchTerm, setSearchTerm] = useState("");
     const handleSearch = () => {
         router.get('/jobs', { search: searchTerm }, { preserveState: true });
     };
-
     return (
         <div>
             <header className="flex items-center justify-between w-full px-6 py-4">
@@ -116,8 +114,8 @@ export default function Index({ jobs, canRegister = true }: IndexProps) {
                             <NavigationMenuItem>
                                 <NavigationMenuLink>
                                     <a href="/resume" className={`px-3 py-1 rounded ${window.location.pathname === "/resume"
-                                        ? "bg-[#309689] text-white"
-                                        : "hover:bg-gray-200"
+                                            ? "bg-[#309689] text-white"
+                                            : "hover:bg-gray-200"
                                         }`}>Resume</a>
                                 </NavigationMenuLink>
                             </NavigationMenuItem>
