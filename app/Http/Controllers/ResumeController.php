@@ -31,6 +31,7 @@ class ResumeController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'full_name' => 'required|string|max:255',
+            'designation' => 'nullable|string|max:255',
             'email' => 'required|email|max:255',
             'phone' => 'required|string|max:20',
             'links.*.name' => 'nullable|string|max:255',
