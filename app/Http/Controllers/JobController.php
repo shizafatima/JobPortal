@@ -12,11 +12,28 @@ class JobController extends Controller
 {
     //
 
-    public function index()
+    public function index(Request $request)
     {
         // dd('Hello from all jobs created by every employer');
-        $jobs = Job::with('company')->latest()->paginate(6);
-        // dd($jobs);
+        // $jobs = Job::with('company')->latest()->paginate(6);
+        // // dd($jobs);
+        // return Inertia::render('jobs/Index', [
+        //     'jobs' => $jobs,
+        // ]);
+
+        $query = Job::with('company')->latest();
+
+        // If there is a search term, filter by job title or company name
+        if ($request->has('search') && $request->search != '') {
+            $search = $request->search;
+            $query->where('title', 'like', "%{$search}%")
+                ->orWhereHas('company', function ($q) use ($search) {
+                    $q->where('name', 'like', "%{$search}%");
+                });
+        }
+
+        $jobs = $query->paginate(6)->withQueryString(); // preserve search term in pagination
+
         return Inertia::render('jobs/Index', [
             'jobs' => $jobs,
         ]);
@@ -35,7 +52,7 @@ class JobController extends Controller
         ]);
 
         $validated['company_id'] = Auth::user()->company_id;
-        $validated['user_id'] = Auth::user()->id; 
+        $validated['user_id'] = Auth::user()->id;
 
 
 
@@ -92,10 +109,8 @@ class JobController extends Controller
         $job->delete();
 
         //redirect 
-        return back()->with('success', 'deleted'); 
+        return back()->with('success', 'deleted');
     }
 
-    public function appliedJobs(){
-        
-    }
+    public function appliedJobs() {}
 }

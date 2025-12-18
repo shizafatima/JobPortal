@@ -6,7 +6,7 @@ import { useIsMobile } from "@/hooks/use-mobile"
 import { login, logout, register } from "@/routes"
 import { SharedData } from "@/types"
 import { Link, router, usePage } from "@inertiajs/react"
-import { Bell, Bookmark, BriefcaseBusiness, CircleUser, LogOut, Search } from "lucide-react"
+import { Bell, Bookmark, BriefcaseBusiness, LogOut, Search } from "lucide-react"
 import { useMobileNavigation } from '@/hooks/use-mobile-navigation'
 import { useEffect, useState } from "react"
 import { Input } from "@/components/ui/input"
@@ -72,12 +72,18 @@ export default function Index({ jobs, canRegister = true }: IndexProps) {
                 .then(res => res.json())
                 .then((data: number[]) => setSavedJobs(data));
         }
-    }, []);
+    }, [auth.user]);
 
     const handlePagination = (url?: string | null) => {
         if (!url) return
         Inertia.get(url, {}, { preserveState: true })
     }
+
+    const [searchTerm, setSearchTerm] = useState("");
+    const handleSearch = () => {
+        router.get('/jobs', { search: searchTerm }, { preserveState: true });
+    };
+
     return (
         <div>
             <header className="flex items-center justify-between w-full px-6 py-4">
@@ -110,8 +116,8 @@ export default function Index({ jobs, canRegister = true }: IndexProps) {
                             <NavigationMenuItem>
                                 <NavigationMenuLink>
                                     <a href="/resume" className={`px-3 py-1 rounded ${window.location.pathname === "/resume"
-                                            ? "bg-[#309689] text-white"
-                                            : "hover:bg-gray-200"
+                                        ? "bg-[#309689] text-white"
+                                        : "hover:bg-gray-200"
                                         }`}>Resume</a>
                                 </NavigationMenuLink>
                             </NavigationMenuItem>
@@ -251,9 +257,14 @@ export default function Index({ jobs, canRegister = true }: IndexProps) {
                     <div className="relative w-[50%] mb-5">
                         <Input className="w-full h-15 pr-20 rounded-full px-6"
                             placeholder="Search here..."
+                            value={searchTerm}
+                            onChange={(e) => setSearchTerm(e.target.value)}
+                            onKeyDown={(e) => {
+                                if (e.key === 'Enter') handleSearch();
+                            }}
                         />
                         <Button
-                            // onClick={handleSearch}
+                            onClick={handleSearch}
                             className="absolute right-0 top-0 h-full bg-[#309689] hover:bg-teal-500 text-white px-6 py-3 rounded-full flex items-center gap-2 transition-colors ml-2"
                         >
                             <Search size={18} />
@@ -295,7 +306,7 @@ export default function Index({ jobs, canRegister = true }: IndexProps) {
 
 
                                             router.post(`/jobSeeker/save-job/${job.id}`, {}, {
-                                                onSuccess: (page) => {
+                                                onSuccess: () => {
                                                     // toggle in UI
                                                     setSavedJobs(prev =>
                                                         prev.includes(job.id)

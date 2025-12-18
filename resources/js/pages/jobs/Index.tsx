@@ -1,25 +1,22 @@
-import AppLayout from '@/layouts/app-layout';
+
 // import { dashboard} from '@/routes';
 import { useState } from 'react';
 
-import { toast } from "sonner";
-import { type BreadcrumbItem } from '@/types';
-import { Button } from '@/components/ui/button';
-import { Head, Link } from '@inertiajs/react';
+import { SharedData } from '@/types';
+import { Link, router, usePage } from '@inertiajs/react';
 // import Modal from '@/components/ui/modal';
-import CreateJobForm from './Create';
-import { Dialog, DialogFooter, DialogHeader, DialogContent, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Card, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Inertia } from '@inertiajs/inertia';
 import { Pagination, PaginationContent, PaginationEllipsis, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious } from '@/components/ui/pagination';
+import { login, logout, register } from '@/routes';
+import { Bell, Bookmark, BriefcaseBusiness, LogOut } from 'lucide-react';
+import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip';
+import { DropdownMenu, DropdownMenuContent, DropdownMenuGroup, DropdownMenuItem, DropdownMenuLabel, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { useIsMobile } from '@/hooks/use-mobile';
+import { useMobileNavigation } from '@/hooks/use-mobile-navigation';
+import { NavigationMenu, NavigationMenuItem, NavigationMenuLink, NavigationMenuList } from '@/components/ui/navigation-menu';
 // import { DialogContent, DialogTitle, DialogTrigger } from '@radix-ui/react-dialog';
-
-const breadcrumbs: BreadcrumbItem[] = [
-    {
-        title: 'Jobs',
-        href: '/jobs',
-    },
-];
 
 interface Job {
     id: number;
@@ -38,40 +35,260 @@ interface IndexProps {
         data: Job[];
         links: { url: string | null; label: string; active: boolean }[];
     };
+    canRegister: boolean;
 }
 
-export default function Index({ jobs }: IndexProps) {
+export default function Index({ jobs, canRegister = true }: IndexProps) {
+    const isMobile = useIsMobile()
+    const { url } = usePage()
+    const { auth } = usePage<SharedData>().props;
+
+    // console.log("jobs:", jobs);
+    // console.log("auth:", auth);
+
+    const links = [
+        { href: "/", label: "Home" },
+        { href: "/jobSeeker/aboutUs", label: "About Us" },
+        { href: "/jobSeeker/appliedJobs", label: "Applied Jobs" },
+        { href: "/jobSeeker/contactUs", label: "Contact Us" },
+    ]
+
+
+    const cleanup = useMobileNavigation();
+    const handleLogout = () => {
+        cleanup();
+    };
+
+    const [hasUnread, setHasUnread] = useState(true);
     const handlePagination = (url?: string | null) => {
         if (!url) return
         Inertia.get(url, {}, { preserveState: true })
     }
 
+    const [savedJobs, setSavedJobs] = useState<number[]>([]); // store saved job IDs
+
+    const [animateId, setAnimateId] = useState<number | null>(null);
     return (
-        <AppLayout breadcrumbs={breadcrumbs}>
-            <Head title="Jobs" />
+        <div> 
+            <header className="flex items-center justify-between w-full px-6 py-4">
+                <div className="flex flex-wrap items-center font-bold text-2xl">
+                    <BriefcaseBusiness className="mr-2" />
+                    <h3 className="text-[#309689]"> Job Portal</h3>
+                </div>
+
+                <div>
+                    <NavigationMenu viewport={isMobile}>
+
+                        <NavigationMenuList className="flex-wrap">
+                            {links.map((link) => (
+
+                                <NavigationMenuItem key={link.href}>
+                                    <NavigationMenuLink asChild>
+                                        <Link
+                                            href={link.href}
+                                            className={`px-3 py-1 rounded ${url === link.href
+                                                ? "bg-[#309689] text-white" // active link style
+                                                : "hover:bg-gray-200"
+                                                }`}
+                                        >
+                                            {link.label}
+                                        </Link>
+                                    </NavigationMenuLink>
+                                </NavigationMenuItem>
+
+                            ))}
+                            <NavigationMenuItem>
+                                <NavigationMenuLink>
+                                    <a href="/resume" className={`px-3 py-1 rounded ${window.location.pathname === "/resume"
+                                        ? "bg-[#309689] text-white"
+                                        : "hover:bg-gray-200"
+                                        }`}>Resume</a>
+                                </NavigationMenuLink>
+                            </NavigationMenuItem>
+
+                        </NavigationMenuList>
+
+                    </NavigationMenu>
+
+                </div>
+
+
+                <div className="flex items-center gap-4 align-baseline">
+                    <Tooltip>
+                        <TooltipTrigger asChild>
+                            <Link
+                                href="/jobSeeker/savedJobs"
+                                className="p-2 rounded transition">
+                                {url === "/jobSeeker/savedJobs" ? (
+                                    <Bookmark className="h-6 w-6 text-[#309689]" fill="currentColor" />
+                                ) : (
+                                    <Bookmark className="h-6 w-6 text-gray-600" />
+                                )}
+                            </Link>
+
+                        </TooltipTrigger>
+                        <TooltipContent>
+                            <p>Saved Jobs</p>
+                        </TooltipContent>
+                    </Tooltip>
+
+                    <DropdownMenu>
+
+                        <Tooltip>
+                            <TooltipTrigger asChild>
+                                <DropdownMenuTrigger asChild>
+
+                                    <button className="p-2 rounded transition"
+                                        onClick={() => setHasUnread(false)}>
+                                        <Bell
+                                            className={`h-6 w-6 cursor-pointer ${hasUnread ? "text-[#309689]" : "text-gray-600"
+                                                }`}
+                                        />
+                                    </button>
+
+                                </DropdownMenuTrigger>
+                            </TooltipTrigger>
+
+                            <TooltipContent>
+                                <p>Notifications</p>
+                            </TooltipContent>
+                        </Tooltip>
+
+
+                        <DropdownMenuContent className="w-64 mr-3" align="end">
+                            <DropdownMenuLabel>Notifications</DropdownMenuLabel>
+                            <DropdownMenuGroup>
+                                <DropdownMenuItem>
+                                    You have 3 new job recommendations
+                                </DropdownMenuItem>
+                                <DropdownMenuItem>
+                                    Your application for XYZ Company has been viewed
+                                </DropdownMenuItem>
+                                <DropdownMenuItem>
+                                    New message from ABC Recruiter
+                                </DropdownMenuItem>
+                                <DropdownMenuItem>
+                                    New notification
+                                </DropdownMenuItem>
+                            </DropdownMenuGroup>
+                        </DropdownMenuContent>
+
+                    </DropdownMenu>
+                    {auth.user ? (
+                        <DropdownMenu>
+                            <DropdownMenuTrigger asChild>
+                                <Avatar>
+                                    <AvatarImage
+                                        className="cursor-pointer"
+                                        src="/avatar.jpg"
+                                        alt="avatar image" />
+                                    <AvatarFallback>IMG</AvatarFallback>
+                                </Avatar>
+                            </DropdownMenuTrigger>
+                            <DropdownMenuContent className="w-56 mr-3" align="start">
+                                <DropdownMenuLabel>My Account</DropdownMenuLabel>
+                                <DropdownMenuGroup>
+                                    <DropdownMenuItem>
+                                        <Link
+                                            className="flex items-center w-full"
+                                            href={logout()}
+                                            as="button"
+                                            onClick={handleLogout}
+                                            data-test="logout-button"
+                                        >
+                                            <LogOut className="mr-2 h-4 w-4" />
+                                            Log out
+                                        </Link>
+                                    </DropdownMenuItem>
+                                </DropdownMenuGroup>
+
+                            </DropdownMenuContent>
+                        </DropdownMenu>
+
+                    ) : (
+                        <>
+                            <Link
+                                href={login()}
+                                className="inline-block rounded-sm border border-transparent px-5 py-1.5 text-sm leading-normal text-[#1b1b18] hover:border-[#19140035] dark:text-[#EDEDEC] dark:hover:border-[#3E3E3A]"
+                            >
+                                Log in
+                            </Link>
+                            {canRegister && (
+                            <Link
+                                href={register()}
+                                className="bg-[#309689] inline-block rounded-sm border border-[#19140035] px-5 py-1.5 text-sm leading-normal text-[#fff] hover:border-[#1915014a] dark:border-[#3E3E3A] dark:text-[#EDEDEC] dark:hover:border-[#62605b]"
+                            >
+                                Register
+                            </Link>
+                        )}
+                            <Link
+                                href={'/jobSeeker/forEmployers'}
+                                className=" inline-block border-[#19140035] text-sm hover:border-[#1915014a] dark:border-[#3E3E3A] dark:text-[#EDEDEC] dark:hover:border-[#62605b]">For Employers/Post a Job</Link>
+                        </>
+                    )}
+
+                </div>
+
+
+
+
+            </header >
 
             {/* ✅ Job Cards Section */}
-            <div className="p-3 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-                {jobs.data.length === 0 ? (
-                    <p className="text-gray-500">No jobs found.</p>
-                ) : (
-                    jobs.data.map((job) => (
-                        <Link
+            {
+                jobs?.data?.map((job) => (
+                    <Card key={job.id} className="block mx-20 my-5 transition-transform hover:scale-[1.01]">
+                        <CardHeader className="flex flex-row justify-between items-start">
+                            <div>
+                                <CardTitle className="font-mono">{job.company?.name ?? "No Company"}</CardTitle>
+                                <CardTitle className="text-[#309689]">{job.title}</CardTitle>
+                                <CardDescription>Salary: {job.salary}</CardDescription>
+                            </div>
+                            <div className="flex gap-2 self-start">
 
-                            href={`/jobs/myJobs`}
-                            className="block transition-transform hover:scale-[1.01]"
-                        >
-                            <Card className="block transition-transform hover:scale-[1.01]">
-                                <CardHeader>
-                                    <CardTitle>{job.company?.name ?? "No Company"}</CardTitle>
-                                    <CardTitle className="text-blue-600">{job.title}</CardTitle>
-                                    <CardDescription>Salary: {job.salary}</CardDescription>
-                                </CardHeader>
-                            </Card>
-                        </Link>
-                    ))
-                )}
-            </div>
+                                <Link
+                                    // href="/jobSeeker/savedJobs"
+                                    className="p-2 rounded transition"
+                                    onClick={(e) => {
+                                        e.preventDefault();
+                                        if (!auth.user)
+                                            return router.visit(login());
+
+                                        // trigger animation
+                                        setAnimateId(job.id);
+                                        setTimeout(() => setAnimateId(null), 300);
+
+
+                                        router.post(`/jobSeeker/save-job/${job.id}`, {}, {
+                                            onSuccess: () => {
+                                                // toggle in UI
+                                                setSavedJobs(prev =>
+                                                    prev.includes(job.id)
+                                                        ? prev.filter(id => id !== job.id)
+                                                        : [...prev, job.id]
+                                                );
+                                            }
+                                        })
+                                    }}>
+                                    {auth.user && savedJobs.includes(job.id) ? (
+                                        <Bookmark className={`h-6 w-6 text-[#309689] ${animateId === job.id ? "animate-pop" : ""}`} fill="currentColor" />
+                                    ) : (
+                                        <Bookmark className={`h-6 w-6 text-gray-600 ${animateId === job.id ? "animate-pop" : ""}`} />
+                                    )}
+                                </Link>
+                                <Link
+                                    href={`/jobs/apply/${job.id}`}
+                                    className="text-white bg-[#309689] px-4 py-2 rounded hover:bg-teal-600 transition-colors"
+                                >
+                                    Apply
+                                </Link>
+                            </div>
+
+
+                        </CardHeader>
+                    </Card>
+                ))
+            }
 
             {/* PAGINATION */}
             <Pagination>
@@ -92,9 +309,9 @@ export default function Index({ jobs }: IndexProps) {
 
                         return (
                             <PaginationItem key={index}>
-                                <PaginationLink 
-                                isActive={link.active}
-                                onClick={() => handlePagination(link.url)}
+                                <PaginationLink
+                                    isActive={link.active}
+                                    onClick={() => handlePagination(link.url)}
                                 >
                                     {link.label.replace(/&laquo;|&raquo;/g, '')}
                                 </PaginationLink>
@@ -106,13 +323,10 @@ export default function Index({ jobs }: IndexProps) {
 
                     {/* next */}
                     <PaginationNext
-                    onClick={() => handlePagination(jobs.links[jobs.links.length - 1].url)}
-                    className={!jobs.links[jobs.links.length - 1].url ? "opacity-50 pointer-events-none" : ""}/>
+                        onClick={() => handlePagination(jobs.links[jobs.links.length - 1].url)}
+                        className={!jobs.links[jobs.links.length - 1].url ? "opacity-50 pointer-events-none" : ""} />
                 </PaginationContent>
             </Pagination>
-
-
-
-        </AppLayout >
-    );
-}
+            );
+            </div>
+)}

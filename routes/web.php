@@ -26,12 +26,14 @@ Route::get('/register/jobseeker', function () {
     return Inertia::render('auth/register', ['type' => 'jobSeeker']);
 })->name('register.jobseeker');
 
+Route::get('jobs', [JobController::class, 'index'])->name('jobs.index');
+
 Route::middleware(['auth', 'verified', 'role:recruiter'])->group(function () {
     Route::get('dashboard', function () {
         return Inertia::render('dashboard');
     })->name('dashboard');
 
-    Route::get('jobs', [JobController::class, 'index'])->name('jobs.index');
+    
     Route::get('jobs/create', [JobController::class, 'create'])->name('jobs.create');
     Route::post('/jobs', [JobController::class, 'store'])->name('jobs.store');
     Route::get('/jobs/myJobs', [JobController::class, 'myJobs'])->name('jobs.myJobs');
