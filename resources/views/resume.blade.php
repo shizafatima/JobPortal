@@ -47,6 +47,12 @@
                                 class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
                         </div>
 
+                        <div class="md:col-span-2">
+                            <label class="block text-gray-700 text-sm font-bold mb-2">Designation</label>
+                            <input type="text" name="designation" placeholder="e.g, Full Stack Developer"
+                                class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                        </div>
+
 
                     </div>
 
@@ -869,6 +875,7 @@
                 document.querySelector('input[name="email"]').value = resume.email || '';
                 document.querySelector('input[name="phone"]').value = resume.phone || '';
                 document.querySelector('input[name="address"]').value = resume.address || '';
+                document.querySelector('input[name="designation"]').value = resume.designation || '';
                 document.querySelector('textarea[name="summary"]').value = resume.summary || '';
                 document.querySelector('textarea[name="skills"]').value = resume.skills ? resume.skills.join(', ') : '';
                 document.querySelector('textarea[name="languages"]').value = resume.languages ? resume.languages.join(', ') : '';
