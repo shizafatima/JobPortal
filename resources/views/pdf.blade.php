@@ -100,6 +100,7 @@
 
             <!-- Personal Information -->
             <h1 style="font-weight: bold; font-size: 36px; margin: 0 0 3px 0;">{{ $resume->full_name ?? ''  }}</h1>
+            <p style="font-size:22px; font-weight: semibold; margin: 0 0 3px 0;">{{ $resume->designation ?? '' }}</p>
             <p style="font-size: 14px; margin: 1px 0;">
                 <strong>Email:</strong> {{ $resume->email ?? '' }} |
                 <strong>Phone no:</strong> {{ $resume->phone ?? '' }} |

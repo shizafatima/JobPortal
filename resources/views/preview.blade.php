@@ -85,6 +85,7 @@
             <div class="mb-2 border-b pb-2">
                 <div>
                     <h2 class="text-3xl font-bold ">{{ $resume->full_name ?? ''  }}</h2>
+                    <p class="text-xl font-semibold">{{ $resume->designation ?? '' }}</p>
                     <p class="text-sm">
                         <strong>Email:</strong> {{ $resume->email ?? '' }} |
                         <strong>Phone no:</strong> {{ $resume->phone ?? '' }} |
