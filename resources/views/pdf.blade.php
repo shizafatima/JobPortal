@@ -23,6 +23,20 @@
         margin: 3px 0 5px 56px;
     }
 
+    .resume-section {
+        page-break-inside: auto !important; /* DomPDF */  
+    }
+
+    .resume-section h2 {
+        page-break-after: avoid !important; /* DomPDF */
+        break-after: avoid;  
+    }
+    
+    ul li {
+        page-break-inside: avoid !important; /* DomPDF */
+        break-inside: avoid;
+    }
+
 </style>
     <div class="container mx-auto max-w-[794px] bg-white font-[arial] text-sm leading-[1.3]">
             @php
@@ -136,6 +150,7 @@
     
                     @case('work-experience')
                         @if(!empty($hasExperience))
+                        <div class="resume-section">
                             <h2>Work Experience</h2>
                             @foreach($resume->experience as $exp)
                                 <ul class="title" style="list-style: disc; margin: 2px 0 2px 20px;">
@@ -159,12 +174,14 @@
                                     @endforeach
                                 </ul>
                             @endforeach
+                        </div>
                         @endif
                     @break
 
                     <!-- Projects -->
                     @case('projects')
                         @if(!empty($hasProjects))
+                        <div class="resume-section">
                             <h2>Projects</h2>
                             @foreach($resume->projects as $project)
                                 @php
@@ -194,12 +211,15 @@
                                     @endforeach
                                 </ul>
                             @endforeach
+                        </div>
+                            
                         @endif
                     @break
 
                     <!-- Education -->
                     @case('education')
                         @if(!empty($hasEducation))
+                        <div class="resume-section">
                             <h2>Education</h2>
                             <ul class= "title">
                                 @foreach($resume->education as $edu)
@@ -212,6 +232,7 @@
                                     </li>
                                 @endforeach
                             </ul>
+                        </div>
                         @endif
                     @break
 
@@ -219,6 +240,7 @@
                     <!-- Certifications -->
                     @case('certification')
                         @if(!empty($hasCertificates))
+                        <div class="resume-section">
                             <h2>Certifications</h2>
                             <ul class= "title">
                                 @foreach($resume->certifications as $cert)
@@ -228,30 +250,36 @@
                                     </li>
                                 @endforeach
                             </ul>
+                        </div>
+                            
                         @endif
                     @break
 
                     <!-- Skills -->
                     @case('skills')
                         @if(!empty($hasSkills))
+                        <div class="resume-section">
                             <h2>Skills</h2>
                             <ul class= "title">
                                 @foreach($resume->skills as $skill)
                                     <li>{{ $skill }}</li>
                                 @endforeach
                             </ul>
+                        </div>
                         @endif
                     @break
 
                     <!-- Languages-->
                     @case('languages')
                         @if(!empty($hasLanguages))
+                        <div class="resume-section">
                             <h2>Languages</h2>
                             <ul class= "title">
                                 @foreach($resume->languages as $language)
                                     <li>{{ $language }}</li>
                                 @endforeach
                             </ul>
+                        </div>
                         @endif
                     @break
                 @endswitch
