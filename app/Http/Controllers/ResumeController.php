@@ -94,7 +94,7 @@ class ResumeController extends Controller
 
         $resume = Resume::updateOrCreate(
             ['user_id' => Auth::id()],
-            array_merge($data, ['user_id' => '2']) // Hardcoded user_id for testing
+            array_merge($data, ['user_id' => Auth::id()]) // Hardcoded user_id for testing
         );
 
         return response()->json([
@@ -157,7 +157,7 @@ class ResumeController extends Controller
     public function getResume(Request $request)
     {
         // dd(Auth::id());
-        $resume = Resume::where(['user_id' => '2'])->first();
+        $resume = Resume::where(['user_id' => Auth::id()])->first();
         return response()->json(['resume' => $resume]);
     }
 }
