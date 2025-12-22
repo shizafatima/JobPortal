@@ -13,7 +13,6 @@
             <div id="alert-container"></div>
 
             <form id="resumeForm" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
-                @csrf
                 <!-- Personal Information -->
                 <div class="mb-6">
                     <h2 class="text-2xl font-semibold mb-4 border-b pb-2">Personal Information</h2>
@@ -396,6 +395,12 @@
     <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script>
 
     <script>
+
+        axios.defaults.headers.common['X-CSRF-TOKEN'] =
+            document.querySelector('meta[name="csrf-token"]').content;
+
+        // Include cookies with request (needed for session auth)
+        axios.defaults.withCredentials = true;
         /* -----------------------------------------
         -------- Add Link Functionality ------
         ------------------------------------------*/
