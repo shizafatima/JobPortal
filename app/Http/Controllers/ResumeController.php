@@ -94,7 +94,7 @@ class ResumeController extends Controller
 
         $resume = Resume::updateOrCreate(
             ['user_id' => Auth::id()],
-            array_merge($data, ['user_id' => Auth::id()]) // Hardcoded user_id for testing
+            array_merge($data, ['user_id' => Auth::id()]) 
         );
 
         return response()->json([
@@ -142,9 +142,9 @@ class ResumeController extends Controller
 
     public function delete(Resume $resume)
     {
-        // if ($resume->user_id !== Auth::id()) {
-        //     abort(403, 'Unauthorized');
-        // }
+        if ($resume->user_id !== Auth::id()) {
+            abort(403, 'Unauthorized');
+        }
 
         $resume->delete();
 
